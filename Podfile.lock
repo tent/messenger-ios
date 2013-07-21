@@ -2,9 +2,14 @@ PODS:
   - UIImage-Categories (0.0.1)
 
 DEPENDENCIES:
-  - UIImage-Categories
+  - UIImage-Categories (from `https://github.com/berg/UIImage-Categories.git`, commit `400edbf50e`)
+
+EXTERNAL SOURCES:
+  UIImage-Categories:
+    :commit: 400edbf50e
+    :git: https://github.com/berg/UIImage-Categories.git
 
 SPEC CHECKSUMS:
-  UIImage-Categories: d9f10e0afb9b281b35a3c2b0c7d16d1ca251d824
+  UIImage-Categories: 5e1dd3ff131cf9ec72f151ad6c3cb710c32a0807
 
 COCOAPODS: 0.22.2
