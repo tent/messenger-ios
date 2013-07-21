@@ -1,0 +1,10 @@
+PODS:
+  - UIImage-Categories (0.0.1)
+
+DEPENDENCIES:
+  - UIImage-Categories
+
+SPEC CHECKSUMS:
+  UIImage-Categories: d9f10e0afb9b281b35a3c2b0c7d16d1ca251d824
+
+COCOAPODS: 0.22.2

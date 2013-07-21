@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		883AF391179C753000305E40 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 883AF38C179C753000305E40 /* UIImage+Alpha.m */; };
-		883AF392179C753000305E40 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 883AF38E179C753000305E40 /* UIImage+Resize.m */; };
-		883AF393179C753000305E40 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 883AF390179C753000305E40 /* UIImage+RoundedCorner.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -39,12 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		883AF38B179C753000305E40 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		883AF38C179C753000305E40 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		883AF38D179C753000305E40 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		883AF38E179C753000305E40 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		883AF38F179C753000305E40 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		883AF390179C753000305E40 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		1F607D9D0B604A2B8E920D38 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -68,6 +60,7 @@
 		88DA4B10179B860A006ECD0A /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
 		88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
 		88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
+		F71820E194564976ABA14608 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +71,7 @@
 				88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */,
 				88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */,
 				88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */,
+				2F7C53DACB0F4BF69A00A9CF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +95,7 @@
 				88DA4AF7179B82C9006ECD0A /* MessagesTests */,
 				88DA4AD7179B82C9006ECD0A /* Frameworks */,
 				88DA4AD6179B82C9006ECD0A /* Products */,
+				1F607D9D0B604A2B8E920D38 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +115,7 @@
 				88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */,
 				88DA4ADC179B82C9006ECD0A /* UIKit.framework */,
 				88DA4AF1179B82C9006ECD0A /* XCTest.framework */,
+				F71820E194564976ABA14608 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -144,12 +140,6 @@
 		88DA4ADF179B82C9006ECD0A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				883AF38B179C753000305E40 /* UIImage+Alpha.h */,
-				883AF38C179C753000305E40 /* UIImage+Alpha.m */,
-				883AF38D179C753000305E40 /* UIImage+Resize.h */,
-				883AF38E179C753000305E40 /* UIImage+Resize.m */,
-				883AF38F179C753000305E40 /* UIImage+RoundedCorner.h */,
-				883AF390179C753000305E40 /* UIImage+RoundedCorner.m */,
 				88DA4B07179B82EF006ECD0A /* Main.storyboard */,
 				88DA4AE0179B82C9006ECD0A /* Messages-Info.plist */,
 				88DA4AE1179B82C9006ECD0A /* InfoPlist.strings */,
@@ -184,9 +174,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88DA4B01179B82C9006ECD0A /* Build configuration list for PBXNativeTarget "Messages" */;
 			buildPhases = (
+				17466A7CC0A3457282A85BB1 /* Check Pods Manifest.lock */,
 				88DA4AD1179B82C9006ECD0A /* Sources */,
 				88DA4AD2179B82C9006ECD0A /* Frameworks */,
 				88DA4AD3179B82C9006ECD0A /* Resources */,
+				C554DB46FBB64F51BD254378 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -268,17 +260,47 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17466A7CC0A3457282A85BB1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C554DB46FBB64F51BD254378 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		88DA4AD1179B82C9006ECD0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
-				883AF393179C753000305E40 /* UIImage+RoundedCorner.m in Sources */,
-				883AF392179C753000305E40 /* UIImage+Resize.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
-				883AF391179C753000305E40 /* UIImage+Alpha.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
 			);
@@ -392,6 +414,7 @@
 		};
 		88DA4B02179B82C9006ECD0A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F607D9D0B604A2B8E920D38 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -405,6 +428,7 @@
 		};
 		88DA4B03179B82C9006ECD0A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F607D9D0B604A2B8E920D38 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
