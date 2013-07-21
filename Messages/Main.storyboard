@@ -37,22 +37,33 @@
             </objects>
             <point key="canvasLocation" x="660" y="122"/>
         </scene>
-        <!--Table View Controller - Contacts-->
+        <!--Contacts View Controller - Contacts-->
         <scene sceneID="8LR-VE-ISv">
             <objects>
-                <tableViewController id="RZD-Mn-sHN" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5fh-vq-nqo">
+                <tableViewController id="RZD-Mn-sHN" customClass="ContactsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5fh-vq-nqo">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="75T-7N-hUO">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="RZD-Mn-sHN" id="ryv-cx-M4H"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="GSJ-zN-BXZ">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactCell" id="GSJ-zN-BXZ">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GSJ-zN-BXZ" id="XD1-6j-hKe">
                                     <rect key="frame" x="0.0" y="0.0" width="322" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES" image="YES" staticText="YES"/>
+                                </accessibility>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -61,8 +72,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="uWu-CZ-KVg"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="POe-Fv-Zqm" id="Vm0-yz-t6p"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMM-j2-x3e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="POe-Fv-Zqm">
+                    <connections>
+                        <outlet property="delegate" destination="RZD-Mn-sHN" id="QpX-uj-Pu3"/>
+                        <outlet property="searchBar" destination="75T-7N-hUO" id="2uS-ZH-hjz"/>
+                        <outlet property="searchContentsController" destination="RZD-Mn-sHN" id="tks-DI-ODs"/>
+                        <outlet property="searchResultsDataSource" destination="RZD-Mn-sHN" id="Eyn-Cg-lPG"/>
+                        <outlet property="searchResultsDelegate" destination="RZD-Mn-sHN" id="BSS-vM-CVo"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1094" y="122"/>
         </scene>

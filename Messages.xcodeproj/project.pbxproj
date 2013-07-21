@@ -22,6 +22,7 @@
 		88DA4B08179B82EF006ECD0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88DA4B07179B82EF006ECD0A /* Main.storyboard */; };
 		88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DA4B0D179B84A2006ECD0A /* ConversationsViewController.m */; };
 		88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DA4B10179B860A006ECD0A /* RootNavigationController.m */; };
+		88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		88DA4B0D179B84A2006ECD0A /* ConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsViewController.m; sourceTree = "<group>"; };
 		88DA4B0F179B860A006ECD0A /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
 		88DA4B10179B860A006ECD0A /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
+		88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
+		88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 		88DA4ADE179B82C9006ECD0A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */,
+				88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */,
 				88DA4B0F179B860A006ECD0A /* RootNavigationController.h */,
 				88DA4B10179B860A006ECD0A /* RootNavigationController.m */,
 				88DA4B0C179B84A2006ECD0A /* ConversationsViewController.h */,
@@ -255,6 +260,7 @@
 			files = (
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
+				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
 			);
@@ -451,6 +457,7 @@
 				88DA4B03179B82C9006ECD0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88DA4B04179B82C9006ECD0A /* Build configuration list for PBXNativeTarget "MessagesTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +466,7 @@
 				88DA4B06179B82C9006ECD0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
