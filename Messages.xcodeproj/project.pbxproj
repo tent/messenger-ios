@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		883AF391179C753000305E40 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 883AF38C179C753000305E40 /* UIImage+Alpha.m */; };
+		883AF392179C753000305E40 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 883AF38E179C753000305E40 /* UIImage+Resize.m */; };
+		883AF393179C753000305E40 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 883AF390179C753000305E40 /* UIImage+RoundedCorner.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -36,6 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		883AF38B179C753000305E40 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		883AF38C179C753000305E40 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		883AF38D179C753000305E40 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		883AF38E179C753000305E40 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		883AF38F179C753000305E40 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		883AF390179C753000305E40 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -135,6 +144,12 @@
 		88DA4ADF179B82C9006ECD0A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				883AF38B179C753000305E40 /* UIImage+Alpha.h */,
+				883AF38C179C753000305E40 /* UIImage+Alpha.m */,
+				883AF38D179C753000305E40 /* UIImage+Resize.h */,
+				883AF38E179C753000305E40 /* UIImage+Resize.m */,
+				883AF38F179C753000305E40 /* UIImage+RoundedCorner.h */,
+				883AF390179C753000305E40 /* UIImage+RoundedCorner.m */,
 				88DA4B07179B82EF006ECD0A /* Main.storyboard */,
 				88DA4AE0179B82C9006ECD0A /* Messages-Info.plist */,
 				88DA4AE1179B82C9006ECD0A /* InfoPlist.strings */,
@@ -259,8 +274,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
+				883AF393179C753000305E40 /* UIImage+RoundedCorner.m in Sources */,
+				883AF392179C753000305E40 /* UIImage+Resize.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
+				883AF391179C753000305E40 /* UIImage+Alpha.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
 			);

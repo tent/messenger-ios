@@ -7,6 +7,7 @@
 //
 
 #import "ContactsViewController.h"
+#import "UIImage+Resize.h"
 
 @interface ContactsViewController ()
 @end
@@ -51,7 +52,7 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 2;
+    return 1;
 }
 
 /*- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -65,9 +66,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     cell.textLabel.text = @"Foo";
-    
     cell.multipleSelectionBackgroundView = _blankView;
     
+    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", [indexPath indexAtPosition:0] + 1]];
+    avatar = [avatar thumbnailImage:cell.frame.size.height transparentBorder:2 cornerRadius:6 interpolationQuality:kCGInterpolationHigh];
+
+    NSLog(@"cell dimentions{ width: %f height: %f }", cell.frame.size.width, cell.frame.size.height);
+
+    cell.imageView.image = avatar;
+
     return cell;
 }
 
