@@ -11,5 +11,6 @@
 @interface ContactsViewController : UITableViewController
 {
     UIView *_blankView;
+    NSArray *_contactNames;
 }
 @end

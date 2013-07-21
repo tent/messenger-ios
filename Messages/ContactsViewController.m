@@ -14,6 +14,18 @@
 
 @implementation ContactsViewController
 
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    id ret = [super initWithCoder:decoder];
+
+    _blankView = [[UIView alloc] init];
+
+    _contactNames = @[@"Albert Branton", @"Albertine Athens", @"Andreas Gullickson", @"Andreas Mapes", @"Birdie Slye", @"Birgit Amaya", @"Bobby Pringle", @"Bryan Bowley", @"Burt Dejean", @"Carlos Mcvicker", @"Carmine Broad", @"Clark Prude", @"Clemente Salinas", @"Clora Calmes", @"Clorinda Stokely", @"Cory Dunnigan", @"Dario Reid", @"Derick Greenberg", @"Donita Broad", @"Drema Rushin", @"Dwayne Akers", @"Dwight Cawthon", @"Earnest Ashburn", @"Efren Stauber", @"Ela Cockrell", @"Eli Domino", @"Elias Omara", @"Elliott Kemble", @"Ellsworth Gambill", @"Erin Trudell", @"Exie Oquin", @"Fidel Delong", @"Franklyn Pavlik", @"Fredrick Strauss", @"Gabriel Melugin", @"Hien Hoffmann", @"Hilario Luken", @"Huong Willaims", @"Inell Mcgregor", @"Jacob Alspaugh", @"Jere Densmore", @"Jerrell Krug", @"Joan Tarrance", @"Jolene Juneau", @"Junior Isherwood", @"Justin Mendonca", @"Kristel Deyo", @"Kyla Kuehn", @"Leif Wall", @"Long Gensler", @"Loyd Steven", @"Lucy Lumpkin", @"Luigi Hanning", @"Luz Cabot", @"Myong Forsman", @"Myrtle Dimarco", @"Nora Mandez", @"Norah Peat", @"Omer Oakes", @"Otha Pietrowski", @"Philip Bourquin", @"Phillis Ojeda", @"Qiana Qualls", @"Ramiro Nipper", @"Randal Harriss", @"Reid Shah", @"Reuben Colby", @"Riley Hippler", @"Rolando Rushford", @"Rosenda Boller", @"Ruth Cardoso", @"Scott Swindle", @"Sharon Weinstein", @"Shawanda Tunney", @"Sid Pettigrew", @"Stephan Izzard", @"Teodoro Mckain", @"Tiffany Austell", @"Tobias Varley", @"Una Umana", @"Vaughn Torre", @"Vina Chynoweth", @"Vincenzo Friberg", @"Warren Edgley"];
+
+    return ret;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -29,8 +41,6 @@
 {
     [super viewWillAppear:animated];
     [self.tableView setEditing:YES animated:NO];
-    
-    _blankView = [[UIView alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +55,7 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 26;
+    return _contactNames.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -65,7 +75,7 @@
     static NSString *CellIdentifier = @"contactCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = @"Foo";
+    cell.textLabel.text = [_contactNames objectAtIndex:[indexPath indexAtPosition:0]];
     cell.multipleSelectionBackgroundView = _blankView;
     
     UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", [indexPath indexAtPosition:0] + 1]];
