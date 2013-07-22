@@ -107,12 +107,12 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bzD-Cb-0lU">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bzD-Cb-0lU">
                                 <rect key="frame" x="0.0" y="-5" width="320" height="465"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RLE-c3-YII">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="RLE-c3-YII">
                                 <rect key="frame" x="0.0" y="460" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -145,6 +145,15 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RLE-c3-YII" firstAttribute="top" secondItem="bzD-Cb-0lU" secondAttribute="bottom" id="6UK-WZ-5cB"/>
+                            <constraint firstItem="RLE-c3-YII" firstAttribute="bottom" secondItem="b6w-Od-VKQ" secondAttribute="bottom" id="I8O-Xk-byv"/>
+                            <constraint firstItem="bzD-Cb-0lU" firstAttribute="top" secondItem="b6w-Od-VKQ" secondAttribute="top" constant="-5" id="K1I-x1-SOm"/>
+                            <constraint firstItem="RLE-c3-YII" firstAttribute="leading" secondItem="b6w-Od-VKQ" secondAttribute="leading" id="a4n-rg-DxR"/>
+                            <constraint firstItem="RLE-c3-YII" firstAttribute="trailing" secondItem="b6w-Od-VKQ" secondAttribute="trailing" id="isT-SB-I6u"/>
+                            <constraint firstItem="bzD-Cb-0lU" firstAttribute="trailing" secondItem="RLE-c3-YII" secondAttribute="trailing" id="loo-sX-JKk"/>
+                            <constraint firstItem="RLE-c3-YII" firstAttribute="leading" secondItem="bzD-Cb-0lU" secondAttribute="leading" id="luF-9m-hhk"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="092-jd-7dj"/>
                 </viewController>
