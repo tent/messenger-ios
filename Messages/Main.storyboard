@@ -96,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="1094" y="122"/>
         </scene>
-        <!--View Controller-->
+        <!--Conversation View Controller-->
         <scene sceneID="fqr-7v-b1x">
             <objects>
-                <viewController id="PqS-ba-pNX" sceneMemberID="viewController">
+                <viewController id="PqS-ba-pNX" customClass="ConversationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ooa-QG-7p1"/>
                         <viewControllerLayoutGuide type="bottom" id="r4A-KL-iRG"/>
@@ -159,6 +159,9 @@
                     <navigationItem key="navigationItem" id="hgY-dI-kcb">
                         <barButtonItem key="rightBarButtonItem" title="Add" style="plain" id="tPA-sa-Lvw"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="keyboardHeight" destination="I8O-Xk-byv" id="GQy-Jw-JAA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oqB-QN-PWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
