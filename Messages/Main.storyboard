@@ -25,7 +25,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Conversations" id="8uo-Po-95D">
                         <barButtonItem key="backBarButtonItem" title="Back" id="k9M-W7-tep"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="jTr-iU-4mP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="jTr-iU-4mP">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="RZD-Mn-sHN" kind="push" id="tbX-b3-C2f"/>
