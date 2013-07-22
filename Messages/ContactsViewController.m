@@ -21,7 +21,9 @@
 
     _blankView = [[UIView alloc] init];
 
-    _contactNames = @[@"Albert Branton", @"Albertine Athens", @"Andreas Gullickson", @"Andreas Mapes", @"Birdie Slye", @"Birgit Amaya", @"Bobby Pringle", @"Bryan Bowley", @"Burt Dejean", @"Carlos Mcvicker", @"Carmine Broad", @"Clark Prude", @"Clemente Salinas", @"Clora Calmes", @"Clorinda Stokely", @"Cory Dunnigan", @"Dario Reid", @"Derick Greenberg", @"Donita Broad", @"Drema Rushin", @"Dwayne Akers", @"Dwight Cawthon", @"Earnest Ashburn", @"Efren Stauber", @"Ela Cockrell", @"Eli Domino", @"Elias Omara", @"Elliott Kemble", @"Ellsworth Gambill", @"Erin Trudell", @"Exie Oquin", @"Fidel Delong", @"Franklyn Pavlik", @"Fredrick Strauss", @"Gabriel Melugin", @"Hien Hoffmann", @"Hilario Luken", @"Huong Willaims", @"Inell Mcgregor", @"Jacob Alspaugh", @"Jere Densmore", @"Jerrell Krug", @"Joan Tarrance", @"Jolene Juneau", @"Junior Isherwood", @"Justin Mendonca", @"Kristel Deyo", @"Kyla Kuehn", @"Leif Wall", @"Long Gensler", @"Loyd Steven", @"Lucy Lumpkin", @"Luigi Hanning", @"Luz Cabot", @"Myong Forsman", @"Myrtle Dimarco", @"Nora Mandez", @"Norah Peat", @"Omer Oakes", @"Otha Pietrowski", @"Philip Bourquin", @"Phillis Ojeda", @"Qiana Qualls", @"Ramiro Nipper", @"Randal Harriss", @"Reid Shah", @"Reuben Colby", @"Riley Hippler", @"Rolando Rushford", @"Rosenda Boller", @"Ruth Cardoso", @"Scott Swindle", @"Sharon Weinstein", @"Shawanda Tunney", @"Sid Pettigrew", @"Stephan Izzard", @"Teodoro Mckain", @"Tiffany Austell", @"Tobias Varley", @"Una Umana", @"Vaughn Torre", @"Vina Chynoweth", @"Vincenzo Friberg", @"Warren Edgley"];
+    _contactNames = @[@"Agatha Aguas", @"Agatha Salvato", @"Beula Allshouse", @"Birdie Slye", @"Clorinda Stokely", @"Concetta Turmelle", @"Drema Rushin", @"Dulce Bridges", @"Ericka Nigro", @"Erinn Woolum", @"Franklyn Pavlik", @"Fredrick Strauss", @"Granville Kilmon", @"Guadalupe Sabella", @"Howard Trembley", @"Huong Willaims", @"Ingeborg Chmielewski", @"Irena Winger", @"Julian Mcswain", @"Junior Isherwood", @"Krysten Slayden", @"Kyla Kuehn", @"Lucy Lumpkin", @"Luz Cabot", @"Myong Forsman", @"Myrtle Dimarco", @"Norah Peat", @"Norine Pfau", @"Odilia Mary", @"Omer Oakes", @"Paulette Buttram", @"Phillis Ojeda", @"Qiana Qualls", @"Quanp Mauch", @"Rubi Moseley", @"Ruth Cardoso", @"Shawanda Tunney", @"Stefany Pettit", @"Tiffany Austell", @"Tonia Mcclung", @"Una Umana", @"Uno Kuehn", @"Vina Chynoweth", @"Vina Vancamp", @"Wally Halliday", @"Willa Carl", @"Xanna July", @"Xmar Hack", @"Yadira Yarnell", @"Yen Meuser", @"Zachariah Vento", @"Zetta Fromm"];
+    
+    _groupNames = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
 
     return ret;
 }
@@ -55,13 +57,23 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return _contactNames.count;
+    return _groupNames.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return 2;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return _groupNames;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return index;
 }
 
 /*- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -74,10 +86,10 @@
     static NSString *CellIdentifier = @"contactCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = [_contactNames objectAtIndex:[indexPath indexAtPosition:0]];
+    cell.textLabel.text = [_contactNames objectAtIndex:([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1]];
     cell.multipleSelectionBackgroundView = _blankView;
     
-    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", [indexPath indexAtPosition:0] + 1]];
+    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", ([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1] + 1]];
     avatar = [avatar thumbnailImage:40 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
     
     cell.imageView.image = avatar;

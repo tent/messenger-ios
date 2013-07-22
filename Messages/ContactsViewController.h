@@ -12,5 +12,6 @@
 {
     UIView *_blankView;
     NSArray *_contactNames;
+    NSArray *_groupNames;
 }
 @end
