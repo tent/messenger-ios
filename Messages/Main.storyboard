@@ -71,7 +71,13 @@
                             <outlet property="delegate" destination="RZD-Mn-sHN" id="UWE-kk-bZN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Contacts" id="uWu-CZ-KVg"/>
+                    <navigationItem key="navigationItem" title="Contacts" id="uWu-CZ-KVg">
+                        <barButtonItem key="rightBarButtonItem" title="Continue" style="plain" id="qec-AX-QlI">
+                            <connections>
+                                <segue destination="uNl-sv-9D2" kind="push" id="FxB-Ou-ite"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="POe-Fv-Zqm" id="Vm0-yz-t6p"/>
                     </connections>
@@ -88,6 +94,35 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1094" y="122"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="BkF-MV-Qc2">
+            <objects>
+                <tableViewController id="uNl-sv-9D2" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Vg9-of-Fht">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xqD-l3-GWI">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xqD-l3-GWI" id="i8m-qL-MhW">
+                                    <rect key="frame" x="0.0" y="0.0" width="322" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="uNl-sv-9D2" id="wCJ-ak-tLa"/>
+                            <outlet property="delegate" destination="uNl-sv-9D2" id="12I-KJ-2Gx"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="RvR-CS-9GQ"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Fv-Ft-wLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1538" y="122"/>
         </scene>
         <!--Root Navigation Controller-->
         <scene sceneID="G7x-To-vMZ">
