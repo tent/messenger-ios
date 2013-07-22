@@ -109,7 +109,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bzD-Cb-0lU">
-                                <rect key="frame" x="0.0" y="-5" width="320" height="465"/>
+                                <rect key="frame" x="0.0" y="-5" width="320" height="509"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -147,9 +147,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RLE-c3-YII" firstAttribute="top" secondItem="bzD-Cb-0lU" secondAttribute="bottom" id="6UK-WZ-5cB"/>
                             <constraint firstItem="RLE-c3-YII" firstAttribute="bottom" secondItem="b6w-Od-VKQ" secondAttribute="bottom" id="I8O-Xk-byv"/>
                             <constraint firstItem="bzD-Cb-0lU" firstAttribute="top" secondItem="b6w-Od-VKQ" secondAttribute="top" constant="-5" id="K1I-x1-SOm"/>
+                            <constraint firstItem="bzD-Cb-0lU" firstAttribute="bottom" secondItem="RLE-c3-YII" secondAttribute="bottom" id="VrO-nl-lir"/>
                             <constraint firstItem="RLE-c3-YII" firstAttribute="leading" secondItem="b6w-Od-VKQ" secondAttribute="leading" id="a4n-rg-DxR"/>
                             <constraint firstItem="RLE-c3-YII" firstAttribute="trailing" secondItem="b6w-Od-VKQ" secondAttribute="trailing" id="isT-SB-I6u"/>
                             <constraint firstItem="bzD-Cb-0lU" firstAttribute="trailing" secondItem="RLE-c3-YII" secondAttribute="trailing" id="loo-sX-JKk"/>
