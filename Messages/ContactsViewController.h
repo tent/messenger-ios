@@ -10,8 +10,8 @@
 
 @interface ContactsViewController : UITableViewController
 {
-    UIView *_blankView;
-    NSArray *_contactNames;
-    NSArray *_groupNames;
+    UIView *blankView;
+    NSArray *contactNames;
+    NSArray *groupNames;
 }
 @end

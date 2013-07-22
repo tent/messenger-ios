@@ -19,11 +19,11 @@
 {
     id ret = [super initWithCoder:decoder];
 
-    _blankView = [[UIView alloc] init];
+    blankView = [[UIView alloc] init];
 
-    _contactNames = @[@"Agatha Aguas", @"Agatha Salvato", @"Beula Allshouse", @"Birdie Slye", @"Clorinda Stokely", @"Concetta Turmelle", @"Drema Rushin", @"Dulce Bridges", @"Ericka Nigro", @"Erinn Woolum", @"Franklyn Pavlik", @"Fredrick Strauss", @"Granville Kilmon", @"Guadalupe Sabella", @"Howard Trembley", @"Huong Willaims", @"Ingeborg Chmielewski", @"Irena Winger", @"Julian Mcswain", @"Junior Isherwood", @"Krysten Slayden", @"Kyla Kuehn", @"Lucy Lumpkin", @"Luz Cabot", @"Myong Forsman", @"Myrtle Dimarco", @"Norah Peat", @"Norine Pfau", @"Odilia Mary", @"Omer Oakes", @"Paulette Buttram", @"Phillis Ojeda", @"Qiana Qualls", @"Quanp Mauch", @"Rubi Moseley", @"Ruth Cardoso", @"Shawanda Tunney", @"Stefany Pettit", @"Tiffany Austell", @"Tonia Mcclung", @"Una Umana", @"Uno Kuehn", @"Vina Chynoweth", @"Vina Vancamp", @"Wally Halliday", @"Willa Carl", @"Xanna July", @"Xmar Hack", @"Yadira Yarnell", @"Yen Meuser", @"Zachariah Vento", @"Zetta Fromm"];
+    contactNames = @[@"Agatha Aguas", @"Agatha Salvato", @"Beula Allshouse", @"Birdie Slye", @"Clorinda Stokely", @"Concetta Turmelle", @"Drema Rushin", @"Dulce Bridges", @"Ericka Nigro", @"Erinn Woolum", @"Franklyn Pavlik", @"Fredrick Strauss", @"Granville Kilmon", @"Guadalupe Sabella", @"Howard Trembley", @"Huong Willaims", @"Ingeborg Chmielewski", @"Irena Winger", @"Julian Mcswain", @"Junior Isherwood", @"Krysten Slayden", @"Kyla Kuehn", @"Lucy Lumpkin", @"Luz Cabot", @"Myong Forsman", @"Myrtle Dimarco", @"Norah Peat", @"Norine Pfau", @"Odilia Mary", @"Omer Oakes", @"Paulette Buttram", @"Phillis Ojeda", @"Qiana Qualls", @"Quanp Mauch", @"Rubi Moseley", @"Ruth Cardoso", @"Shawanda Tunney", @"Stefany Pettit", @"Tiffany Austell", @"Tonia Mcclung", @"Una Umana", @"Uno Kuehn", @"Vina Chynoweth", @"Vina Vancamp", @"Wally Halliday", @"Willa Carl", @"Xanna July", @"Xmar Hack", @"Yadira Yarnell", @"Yen Meuser", @"Zachariah Vento", @"Zetta Fromm"];
     
-    _groupNames = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
+    groupNames = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
 
     return ret;
 }
@@ -57,7 +57,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return _groupNames.count;
+    return groupNames.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -68,7 +68,7 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    return _groupNames;
+    return groupNames;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
@@ -86,8 +86,8 @@
     static NSString *CellIdentifier = @"contactCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = [_contactNames objectAtIndex:([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1]];
-    cell.multipleSelectionBackgroundView = _blankView;
+    cell.textLabel.text = [contactNames objectAtIndex:([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1]];
+    cell.multipleSelectionBackgroundView = blankView;
     
     UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", ([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1] + 1]];
     avatar = [avatar thumbnailImage:40 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
