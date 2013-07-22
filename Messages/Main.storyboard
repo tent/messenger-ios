@@ -72,6 +72,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Contacts" id="uWu-CZ-KVg">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="FrJ-2k-ayf"/>
                         <barButtonItem key="rightBarButtonItem" title="Continue" style="plain" id="qec-AX-QlI">
                             <connections>
                                 <segue destination="PqS-ba-pNX" kind="push" id="P4Y-2v-GD0"/>
@@ -155,7 +156,9 @@
                             <constraint firstItem="RLE-c3-YII" firstAttribute="leading" secondItem="bzD-Cb-0lU" secondAttribute="leading" id="luF-9m-hhk"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="092-jd-7dj"/>
+                    <navigationItem key="navigationItem" id="hgY-dI-kcb">
+                        <barButtonItem key="rightBarButtonItem" title="Add" style="plain" id="tPA-sa-Lvw"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oqB-QN-PWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
