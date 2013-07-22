@@ -94,6 +94,7 @@
 		883AF43B179C7B5600305E40 /* 84.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 883AF3E7179C7B5600305E40 /* 84.jpg */; };
 		885429C4179CAB12009F8F78 /* ContactTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 885429C3179CAB12009F8F78 /* ContactTableCell.m */; };
 		885429CB179DA471009F8F78 /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885429CA179DA471009F8F78 /* ConversationViewController.m */; };
+		885429D0179DB6CF009F8F78 /* ConversationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885429CF179DB6CF009F8F78 /* ConversationTitleView.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -212,6 +213,8 @@
 		885429C3179CAB12009F8F78 /* ContactTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCell.m; sourceTree = "<group>"; };
 		885429C9179DA471009F8F78 /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationViewController.h; sourceTree = "<group>"; };
 		885429CA179DA471009F8F78 /* ConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationViewController.m; sourceTree = "<group>"; };
+		885429CE179DB6CF009F8F78 /* ConversationTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationTitleView.h; sourceTree = "<group>"; };
+		885429CF179DB6CF009F8F78 /* ConversationTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleView.m; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -300,6 +303,8 @@
 			children = (
 				885429C9179DA471009F8F78 /* ConversationViewController.h */,
 				885429CA179DA471009F8F78 /* ConversationViewController.m */,
+				885429CE179DB6CF009F8F78 /* ConversationTitleView.h */,
+				885429CF179DB6CF009F8F78 /* ConversationTitleView.m */,
 				885429C2179CAB12009F8F78 /* ContactTableCell.h */,
 				885429C3179CAB12009F8F78 /* ContactTableCell.m */,
 				88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */,
@@ -655,6 +660,7 @@
 			files = (
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
+				885429D0179DB6CF009F8F78 /* ConversationTitleView.m in Sources */,
 				885429CB179DA471009F8F78 /* ConversationViewController.m in Sources */,
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,

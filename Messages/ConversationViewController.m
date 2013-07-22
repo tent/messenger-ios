@@ -7,6 +7,7 @@
 //
 
 #import "ConversationViewController.h"
+#import "ConversationTitleView.h"
 
 @interface ConversationViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
@@ -26,9 +27,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    // Setup avatars in title
-    // UINavigationItem *navigationItem = self.navigationItem;
+
+    CGRect frame = CGRectMake(0, 0, 165, 29);
+    [self.navigationItem setTitleView: [[ConversationTitleView alloc] initWithFrame:frame]];
 }
 
 - (void)didReceiveMemoryWarning
