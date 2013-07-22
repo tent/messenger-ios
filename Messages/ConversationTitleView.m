@@ -32,12 +32,18 @@
         UIView *nMore = [[UIView alloc] initWithFrame:CGRectMake(offset, 0, 29, 29)];
         [nMore.layer setCornerRadius:3];
         [nMore.layer setBorderColor:[UIColor whiteColor].CGColor];
-        [nMore.layer setBorderWidth:1.5f];
+        [nMore.layer setBorderWidth:1];
         UILabel *nMoreText = [[UILabel alloc] initWithFrame:CGRectMake(1.5f, 1.5f, 29 - 3, 29 - 3)];
         nMoreText.text = @"+2";
         [nMoreText setBackgroundColor:[[UIColor alloc] initWithWhite:1 alpha:0]];
         [nMoreText setTextColor:[[UIColor alloc] initWithWhite:1 alpha:1]];
-        [nMoreText setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:13]];
+        int nMoreFontSize;
+        if ([nMoreText.text length] > 3) {
+            nMoreFontSize = 10;
+        } else {
+            nMoreFontSize = 13;
+        }
+        [nMoreText setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:nMoreFontSize]];
         nMoreText.textAlignment = NSTextAlignmentCenter;
         [nMore addSubview:nMoreText];
         [self addSubview:nMore];
