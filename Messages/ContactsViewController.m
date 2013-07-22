@@ -41,6 +41,7 @@
 {
     [super viewWillAppear:animated];
     [self.tableView setEditing:YES animated:NO];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +80,7 @@
     cell.multipleSelectionBackgroundView = _blankView;
     
     UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", [indexPath indexAtPosition:0] + 1]];
-    avatar = [avatar thumbnailImage:cell.frame.size.height transparentBorder:2 cornerRadius:6 interpolationQuality:kCGInterpolationHigh];
+    avatar = [avatar thumbnailImage:40 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
     
     cell.imageView.image = avatar;
     
