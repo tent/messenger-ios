@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConversationDataSource.h"
 
 @interface ConversationViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) ConversationDataSource *tableDataSource;
 @end

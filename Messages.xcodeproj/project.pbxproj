@@ -77,6 +77,7 @@
 		88542A52179DC71F009F8F78 /* 64.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88542A10179DC71F009F8F78 /* 64.jpg */; };
 		88542A53179DC71F009F8F78 /* 65.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88542A11179DC71F009F8F78 /* 65.jpg */; };
 		88542A54179DC71F009F8F78 /* 66.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88542A12179DC71F009F8F78 /* 66.jpg */; };
+		88542A58179E29A6009F8F78 /* ConversationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88542A57179E29A6009F8F78 /* ConversationDataSource.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -179,6 +180,8 @@
 		88542A10179DC71F009F8F78 /* 64.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 64.jpg; sourceTree = "<group>"; };
 		88542A11179DC71F009F8F78 /* 65.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 65.jpg; sourceTree = "<group>"; };
 		88542A12179DC71F009F8F78 /* 66.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 66.jpg; sourceTree = "<group>"; };
+		88542A56179E29A6009F8F78 /* ConversationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationDataSource.h; sourceTree = "<group>"; };
+		88542A57179E29A6009F8F78 /* ConversationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationDataSource.m; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -265,6 +268,8 @@
 		88DA4ADE179B82C9006ECD0A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				88542A56179E29A6009F8F78 /* ConversationDataSource.h */,
+				88542A57179E29A6009F8F78 /* ConversationDataSource.m */,
 				885429C9179DA471009F8F78 /* ConversationViewController.h */,
 				885429CA179DA471009F8F78 /* ConversationViewController.m */,
 				885429CE179DB6CF009F8F78 /* ConversationTitleView.h */,
@@ -593,6 +598,7 @@
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
+				88542A58179E29A6009F8F78 /* ConversationDataSource.m in Sources */,
 				885429C4179CAB12009F8F78 /* ContactTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

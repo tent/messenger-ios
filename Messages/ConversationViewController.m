@@ -10,18 +10,17 @@
 #import "ConversationTitleView.h"
 
 @interface ConversationViewController ()
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
 @end
 
 @implementation ConversationViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)decoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    id ret = [super initWithCoder:decoder];
+
+    self.tableDataSource = [[ConversationDataSource alloc] init];
+
+    return ret;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -49,6 +48,9 @@
 
     // Begin observing the keyboard notifications when the view is loaded.
     [self observeKeyboard];
+
+    [self.tableView setDataSource:self.tableDataSource];
+    [self.tableView setDelegate:self.tableDataSource];
 }
 
 // The callback for frame-changing of keyboard
