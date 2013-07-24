@@ -37,7 +37,6 @@
 
     // Set the render colors.
     [self.nibColor setFill];
-    NSLog(@"nibColor: %@", self.nibColor);
 
     // Adjust the drawing options as needed.
     aPath.lineWidth = 0;
