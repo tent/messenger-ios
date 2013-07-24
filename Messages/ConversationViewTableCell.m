@@ -27,42 +27,19 @@
     int width = bubbleView.frame.size.width - (offsetX * 2);
 
     // name
-    UILabel *nameView = [[UILabel alloc] initWithFrame:CGRectMake(offsetX, offsetY + 11, width, 0)];
-    nameView.text = self.name;
-    nameView.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
-    [nameView setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:11]];
-    [nameView sizeToFit];
+    UILabel *nameView = [self nameViewWithFrame:CGRectMake(offsetX, offsetY + 11, width, 0)];
 
     CGRect frame = nameView.frame;
     offsetY = frame.origin.y + frame.size.height;
 
     // message body
-    UILabel *messageBodyView = [[UILabel alloc] initWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
-    messageBodyView.lineBreakMode = NSLineBreakByWordWrapping;
-    messageBodyView.text = self.messageBody;
-    messageBodyView.numberOfLines = 0;
-    [messageBodyView setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
-    [messageBodyView sizeToFit];
+    UILabel *messageBodyView = [self messageBodyViewWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
 
     frame = messageBodyView.frame;
     offsetY = frame.origin.y + frame.size.height;
 
     // status line
-    UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
-    UILabel *statusTextView = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, width - 10, 0)];
-    statusTextView.text = [self getStringForMessageState];
-    statusTextView.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
-    statusTextView.numberOfLines = 0;
-    [statusTextView setFont:[UIFont fontWithName:@"HelveticaNeue" size:9]];
-    [statusTextView sizeToFit];
-    [statusView setFrame:CGRectMake(statusView.frame.origin.x, statusView.frame.origin.y, statusTextView.frame.size.width, statusTextView.frame.size.height)];
-
-    UIImage *statusIcon = [self getIconForMessageState];
-    UIImageView *statusIconView = [[UIImageView alloc] initWithImage:statusIcon];
-    statusIconView.frame = CGRectMake(0, 1, 8, 8);
-
-    [statusView addSubview:statusIconView];
-    [statusView addSubview:statusTextView];
+    UIView *statusView = [self messageStatusViewWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
 
     frame = statusView.frame;
     offsetY = frame.origin.y + frame.size.height;
@@ -82,6 +59,47 @@
 }
 
 #pragma mark -
+
+- (UILabel*)nameViewWithFrame:(CGRect)frame {
+    UILabel *nameView = [[UILabel alloc] initWithFrame:frame];
+    nameView.text = self.name;
+    nameView.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
+    [nameView setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:11]];
+    [nameView sizeToFit];
+
+    return nameView;
+}
+
+- (UILabel*)messageBodyViewWithFrame:(CGRect)frame {
+    UILabel *messageBodyView = [[UILabel alloc] initWithFrame:frame];
+    messageBodyView.lineBreakMode = NSLineBreakByWordWrapping;
+    messageBodyView.text = self.messageBody;
+    messageBodyView.numberOfLines = 0;
+    [messageBodyView setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
+    [messageBodyView sizeToFit];
+
+    return messageBodyView;
+}
+
+- (UIView*)messageStatusViewWithFrame:(CGRect)frame {
+    UIView *statusView = [[UIView alloc] initWithFrame:frame];
+    UILabel *statusTextView = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, statusView.frame.size.width - 10, 0)];
+    statusTextView.text = [self getStringForMessageState];
+    statusTextView.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+    statusTextView.numberOfLines = 0;
+    [statusTextView setFont:[UIFont fontWithName:@"HelveticaNeue" size:9]];
+    [statusTextView sizeToFit];
+    [statusView setFrame:CGRectMake(statusView.frame.origin.x, statusView.frame.origin.y, statusTextView.frame.size.width, statusTextView.frame.size.height)];
+
+    UIImage *statusIcon = [self getIconForMessageState];
+    UIImageView *statusIconView = [[UIImageView alloc] initWithImage:statusIcon];
+    statusIconView.frame = CGRectMake(0, 1, 8, 8);
+
+    [statusView addSubview:statusIconView];
+    [statusView addSubview:statusTextView];
+
+    return statusView;
+}
 
 - (NSString*)getStringForMessageState {
     ConversationMessageState state = self.messageState;
