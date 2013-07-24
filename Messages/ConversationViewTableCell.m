@@ -83,7 +83,7 @@
 
 #pragma mark -
 
-- (id)getStringForMessageState {
+- (NSString*)getStringForMessageState {
     ConversationMessageState state = self.messageState;
     if (state == ConversationMessageDelivered) {
         return @"Delivered";
@@ -96,7 +96,7 @@
     }
 }
 
-- (id)getIconForMessageState {
+- (UIImage*)getIconForMessageState {
     ConversationMessageState state = self.messageState;
     NSString *iconName = nil;
     if (state == ConversationMessageDelivered) {
@@ -132,7 +132,7 @@
     return frame;
 }
 
-- (id)getBubbleBackgroundColor {
+- (UIColor*)getBubbleBackgroundColor {
     ConversationMessageAlignment alignment = self.messageAlignment;
     if (alignment == ConversationMessageRight) {
         return [[UIColor alloc] initWithRed:214/255.0 green:233/255.0 blue:248/255.0 alpha:1];

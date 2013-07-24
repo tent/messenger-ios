@@ -27,9 +27,9 @@ typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
 @property (nonatomic) ConversationMessageState messageState;
 @property (nonatomic) ConversationMessageAlignment messageAlignment;
 
-- (id)getStringForMessageState;
-- (id)getIconForMessageState;
+- (NSString*)getStringForMessageState;
+- (UIImage*)getIconForMessageState;
 - (CGRect)getBubbleFrameForSide;
-- (id) getBubbleBackgroundColor;
+- (UIColor*) getBubbleBackgroundColor;
 - (CGRect)getBubbleNibFrameForFrame:(CGRect)frame;
 @end
