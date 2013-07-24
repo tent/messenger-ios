@@ -78,6 +78,11 @@
 		88542A53179DC71F009F8F78 /* 65.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88542A11179DC71F009F8F78 /* 65.jpg */; };
 		88542A54179DC71F009F8F78 /* 66.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 88542A12179DC71F009F8F78 /* 66.jpg */; };
 		88542A58179E29A6009F8F78 /* ConversationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 88542A57179E29A6009F8F78 /* ConversationDataSource.m */; };
+		88542A5E179EFF88009F8F78 /* ConversationViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88542A5D179EFF88009F8F78 /* ConversationViewTableCell.m */; };
+		8858476717A038AF00DD4979 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858476417A038AF00DD4979 /* checkmark.png */; };
+		8858476817A038AF00DD4979 /* failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858476517A038AF00DD4979 /* failed.png */; };
+		8858476917A038AF00DD4979 /* timer.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858476617A038AF00DD4979 /* timer.png */; };
+		8858476C17A05F0B00DD4979 /* BubbleNibView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858476B17A05F0B00DD4979 /* BubbleNibView.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -182,6 +187,13 @@
 		88542A12179DC71F009F8F78 /* 66.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 66.jpg; sourceTree = "<group>"; };
 		88542A56179E29A6009F8F78 /* ConversationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationDataSource.h; sourceTree = "<group>"; };
 		88542A57179E29A6009F8F78 /* ConversationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationDataSource.m; sourceTree = "<group>"; };
+		88542A5C179EFF88009F8F78 /* ConversationViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationViewTableCell.h; sourceTree = "<group>"; };
+		88542A5D179EFF88009F8F78 /* ConversationViewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationViewTableCell.m; sourceTree = "<group>"; };
+		8858476417A038AF00DD4979 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		8858476517A038AF00DD4979 /* failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = failed.png; sourceTree = "<group>"; };
+		8858476617A038AF00DD4979 /* timer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timer.png; sourceTree = "<group>"; };
+		8858476A17A05F0B00DD4979 /* BubbleNibView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleNibView.h; sourceTree = "<group>"; };
+		8858476B17A05F0B00DD4979 /* BubbleNibView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleNibView.m; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -233,6 +245,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8858475D17A0344C00DD4979 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				8858476417A038AF00DD4979 /* checkmark.png */,
+				8858476517A038AF00DD4979 /* failed.png */,
+				8858476617A038AF00DD4979 /* timer.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		88DA4ACC179B82C9006ECD0A = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +290,10 @@
 		88DA4ADE179B82C9006ECD0A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				8858476A17A05F0B00DD4979 /* BubbleNibView.h */,
+				8858476B17A05F0B00DD4979 /* BubbleNibView.m */,
+				88542A5C179EFF88009F8F78 /* ConversationViewTableCell.h */,
+				88542A5D179EFF88009F8F78 /* ConversationViewTableCell.m */,
 				88542A56179E29A6009F8F78 /* ConversationDataSource.h */,
 				88542A57179E29A6009F8F78 /* ConversationDataSource.m */,
 				885429C9179DA471009F8F78 /* ConversationViewController.h */,
@@ -293,6 +319,7 @@
 		88DA4ADF179B82C9006ECD0A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8858475D17A0344C00DD4979 /* Icons */,
 				88FFA613179C3B2000B1F3BB /* Avatars */,
 				88DA4B07179B82EF006ECD0A /* Main.storyboard */,
 				88DA4AE0179B82C9006ECD0A /* Messages-Info.plist */,
@@ -491,6 +518,7 @@
 				88542A46179DC71F009F8F78 /* 52.jpg in Resources */,
 				88542A48179DC71F009F8F78 /* 54.jpg in Resources */,
 				88542A17179DC71F009F8F78 /* 5.jpg in Resources */,
+				8858476817A038AF00DD4979 /* failed.png in Resources */,
 				88542A24179DC71F009F8F78 /* 18.jpg in Resources */,
 				88542A23179DC71F009F8F78 /* 17.jpg in Resources */,
 				88542A31179DC71F009F8F78 /* 31.jpg in Resources */,
@@ -502,6 +530,7 @@
 				88542A52179DC71F009F8F78 /* 64.jpg in Resources */,
 				88542A37179DC71F009F8F78 /* 37.jpg in Resources */,
 				88542A30179DC71F009F8F78 /* 30.jpg in Resources */,
+				8858476717A038AF00DD4979 /* checkmark.png in Resources */,
 				88542A4B179DC71F009F8F78 /* 57.jpg in Resources */,
 				88542A4F179DC71F009F8F78 /* 61.jpg in Resources */,
 				88542A1E179DC71F009F8F78 /* 12.jpg in Resources */,
@@ -522,6 +551,7 @@
 				88542A45179DC71F009F8F78 /* 51.jpg in Resources */,
 				88542A3B179DC71F009F8F78 /* 41.jpg in Resources */,
 				88542A27179DC71F009F8F78 /* 21.jpg in Resources */,
+				8858476917A038AF00DD4979 /* timer.png in Resources */,
 				88542A40179DC71F009F8F78 /* 46.jpg in Resources */,
 				88542A42179DC71F009F8F78 /* 48.jpg in Resources */,
 				88542A15179DC71F009F8F78 /* 3.jpg in Resources */,
@@ -592,6 +622,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
+				8858476C17A05F0B00DD4979 /* BubbleNibView.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
 				885429D0179DB6CF009F8F78 /* ConversationTitleView.m in Sources */,
 				885429CB179DA471009F8F78 /* ConversationViewController.m in Sources */,
@@ -599,6 +630,7 @@
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
 				88542A58179E29A6009F8F78 /* ConversationDataSource.m in Sources */,
+				88542A5E179EFF88009F8F78 /* ConversationViewTableCell.m in Sources */,
 				885429C4179CAB12009F8F78 /* ContactTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

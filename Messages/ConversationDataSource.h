@@ -9,4 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ConversationDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
+@property (strong, nonatomic) NSArray *dataSet;
 @end
