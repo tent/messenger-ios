@@ -27,6 +27,9 @@ typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
 @property (nonatomic) ConversationMessageState messageState;
 @property (nonatomic) ConversationMessageAlignment messageAlignment;
 
+@property (nonatomic) UIView *messageBubbleView;
+@property (nonatomic) BubbleNibView *messageBubbleNibView;
+
 - (UILabel*)nameViewWithFrame:(CGRect)frame;
 - (UILabel*)messageBodyViewWithFrame:(CGRect)frame;
 - (UIView*)messageStatusViewWithFrame:(CGRect)frame;

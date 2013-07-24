@@ -15,16 +15,19 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 
+    [self.messageBubbleView removeFromSuperview];
+    [self.messageBubbleNibView removeFromSuperview];
+
     // message bubble
     CGRect bubbleViewFrame = [self getBubbleFrameForSide];
-    UIView *bubbleView = [[UIView alloc] initWithFrame:bubbleViewFrame];
+    self.messageBubbleView = [[UIView alloc] initWithFrame:bubbleViewFrame];
 
-    [bubbleView.layer setCornerRadius:3];
-    bubbleView.backgroundColor = [self getBubbleBackgroundColor];
+    [self.messageBubbleView.layer setCornerRadius:3];
+    self.messageBubbleView.backgroundColor = [self getBubbleBackgroundColor];
 
     int offsetY = 0;
     int offsetX = 10;
-    int width = bubbleView.frame.size.width - (offsetX * 2);
+    int width = self.messageBubbleView.frame.size.width - (offsetX * 2);
 
     // name
     UILabel *nameView = [self nameViewWithFrame:CGRectMake(offsetX, offsetY + 11, width, 0)];
@@ -39,23 +42,23 @@
     offsetY = frame.origin.y + frame.size.height;
 
     // status line
-    UIView *statusView = [self messageStatusViewWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
+    UIView *messageStatusView = [self messageStatusViewWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
 
-    frame = statusView.frame;
+    frame = messageStatusView.frame;
     offsetY = frame.origin.y + frame.size.height;
 
     // adjust bubble and cell dimentions based on content
-    [bubbleView setFrame:CGRectMake(bubbleView.frame.origin.x, bubbleView.frame.origin.y, bubbleView.frame.size.width, offsetY + 10)];
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, bubbleView.frame.size.height + 10)];
+    [self.messageBubbleView setFrame:CGRectMake(self.messageBubbleView.frame.origin.x, self.messageBubbleView.frame.origin.y, self.messageBubbleView.frame.size.width, offsetY + 10)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.messageBubbleView.frame.size.height + 10)];
 
-    BubbleNibView *nibView = [[BubbleNibView alloc] initWithFrame:[self getBubbleNibFrameForFrame:bubbleView.frame] fillColor:[self getBubbleBackgroundColor] alignment:[self getBubbleNibAlignment]];
-    nibView.backgroundColor = self.backgroundColor;
-    [self addSubview:nibView];
+    self.messageBubbleNibView = [[BubbleNibView alloc] initWithFrame:[self getBubbleNibFrameForFrame:self.messageBubbleView.frame] fillColor:[self getBubbleBackgroundColor] alignment:[self getBubbleNibAlignment]];
+    self.messageBubbleNibView.backgroundColor = self.backgroundColor;
+    [self addSubview:self.messageBubbleNibView];
 
-    [bubbleView addSubview:nameView];
-    [bubbleView addSubview:messageBodyView];
-    [bubbleView addSubview:statusView];
-    [self addSubview:bubbleView];
+    [self.messageBubbleView addSubview:nameView];
+    [self.messageBubbleView addSubview:messageBodyView];
+    [self.messageBubbleView addSubview:messageStatusView];
+    [self addSubview:self.messageBubbleView];
 }
 
 #pragma mark -
