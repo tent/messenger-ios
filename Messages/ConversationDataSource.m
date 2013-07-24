@@ -15,7 +15,73 @@
 {
     id ret = [super init];
 
-    self.dataSet = @[ @{@"name": @"Ingeborg Chmielewski", @"messageBody": @"The quick brown fox jumps over the lazy dog! The slow red dog is lazy.", @"messageState": @(ConversationMessageDelivered), @"messageAlignment": @(ConversationMessageLeft)}, @{@"name": @"Howard Trembley", @"messageBody": @"More is less", @"messageState": @(ConversationMessageDelivering), @"messageAlignment": @(ConversationMessageLeft)}, @{@"name": @"Yadira Yarnell", @"messageBody": @"We can only do our best", @"messageState": @(ConversationMessageDeliveryFailed), @"messageAlignment": @(ConversationMessageRight)} ];
+    self.dataSet = @[
+                     @{
+                         @"name": @"Granville Kilmon",
+                         @"messageBody": @"Qui unde voluptas commodi. Quod suscipit impedit temporibus aliquam quo",
+                         @"messageState": @(ConversationMessageDelivered),
+                         @"messageAlignment": @(ConversationMessageRight)
+                         },
+
+                     @{
+                         @"name": @"Granville Kilmon",
+                         @"messageBody": @"Blanditiis repudiandae doloremque quidem perferendis",
+                         @"messageState": @(ConversationMessageDelivered),
+                         @"messageAlignment": @(ConversationMessageRight)
+                         },
+
+                     @{
+                         @"name": @"Erinn Woolum",
+                         @"messageBody": @"Iusto omnis qui velit quia aut optio",
+                         @"messageAlignment": @(ConversationMessageLeft)
+                         },
+
+                     @{
+                         @"name": @"Tiffany Austell",
+                         @"messageBody": @"Consequatur laborum asperiores",
+                         @"messageAlignment": @(ConversationMessageLeft)
+                         },
+
+                     @{
+                         @"name": @"Granville Kilmon",
+                         @"messageBody": @"Voluptatum!",
+                         @"messageState": @(ConversationMessageDeliveryFailed),
+                         @"messageAlignment": @(ConversationMessageRight)
+                         },
+
+                     @{
+                         @"name": @"Erinn Woolum",
+                         @"messageBody": @"Inventore culpa esse",
+                         @"messageAlignment": @(ConversationMessageLeft)
+                         },
+
+                     @{
+                         @"name": @"Erinn Woolum",
+                         @"messageBody": @"Erinn Woolum Qui ut laudantium reprehenderit quisquam optio repellendus voluptatem",
+                         @"messageAlignment": @(ConversationMessageLeft)
+                         },
+
+                     @{
+                         @"name": @"Granville Kilmon",
+                         @"messageBody": @"Granville Kilmon Fugiat cum et temporibus assumenda maxime veniam",
+                         @"messageState": @(ConversationMessageDelivered),
+                         @"messageAlignment": @(ConversationMessageRight)
+                         },
+
+                     @{
+                         @"name": @"Tiffany Austell",
+                         @"messageBody": @"Harum?",
+                         @"messageAlignment": @(ConversationMessageLeft)
+                         },
+
+                     @{
+                         @"name": @"Granville Kilmon",
+                         @"messageBody": @"Doloribus iust Iste delectus eaque quibusdam exercitationem soluta",
+                         @"messageState": @(ConversationMessageDelivering),
+                         @"messageAlignment": @(ConversationMessageRight)
+                         }
+
+                    ];
 
     return ret;
 }
