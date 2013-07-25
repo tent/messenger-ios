@@ -54,6 +54,13 @@
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 60, 0)];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:YES];
+}
+
 // The callback for frame-changing of keyboard
 - (void)keyboardWillShow:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
