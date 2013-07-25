@@ -49,7 +49,7 @@
 
     // adjust bubble and cell dimentions based on content
     [self.messageBubbleView setFrame:CGRectMake(self.messageBubbleView.frame.origin.x, self.messageBubbleView.frame.origin.y, self.messageBubbleView.frame.size.width, offsetY + 10)];
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.messageBubbleView.frame.size.height + 10)];
+    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.messageBubbleView.frame.size.height + self.messageBubbleView.frame.origin.y)];
 
     self.messageBubbleNibView = [[BubbleNibView alloc] initWithFrame:[self getBubbleNibFrameForFrame:self.messageBubbleView.frame] fillColor:[self getBubbleBackgroundColor] alignment:[self getBubbleNibAlignment]];
     self.messageBubbleNibView.backgroundColor = self.backgroundColor;

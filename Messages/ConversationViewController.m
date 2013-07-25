@@ -51,6 +51,7 @@
 
     [self.tableView setDataSource:self.tableDataSource];
     [self.tableView setDelegate:self.tableDataSource];
+    [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 60, 0)];
 }
 
 // The callback for frame-changing of keyboard
