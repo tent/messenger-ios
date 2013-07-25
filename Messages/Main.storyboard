@@ -94,7 +94,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1094" y="122"/>
+            <point key="canvasLocation" x="1077" y="122"/>
         </scene>
         <!--Conversation View Controller-->
         <scene sceneID="fqr-7v-b1x">
@@ -180,22 +180,25 @@
             </objects>
             <point key="canvasLocation" x="1497" y="122"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Participants View Controller - Participants-->
         <scene sceneID="p3H-dw-B3A">
             <objects>
-                <tableViewController id="xyF-DL-Arq" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="afO-SS-wzb">
+                <tableViewController title="Participants" id="xyF-DL-Arq" customClass="ParticipantsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="afO-SS-wzb">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6TG-fs-npd">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="participantCell" id="6TG-fs-npd" customClass="ParticipantTableCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6TG-fs-npd" id="HBQ-R9-gFh">
-                                    <rect key="frame" x="0.0" y="0.0" width="322" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="322" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" image="YES" staticText="YES"/>
+                                </accessibility>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -203,10 +206,15 @@
                             <outlet property="delegate" destination="xyF-DL-Arq" id="pig-gL-gPb"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Participants" id="rA6-aw-Ckm">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="Vhi-fJ-sjW"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQF-lp-Ao4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1497" y="791"/>
+            <point key="canvasLocation" x="1497" y="826"/>
         </scene>
         <!--Root Navigation Controller-->
         <scene sceneID="G7x-To-vMZ">
@@ -220,7 +228,7 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="cQd-cW-6uA" kind="relationship" relationship="rootViewController" id="Txe-31-0cG"/>
+                        <segue destination="cQd-cW-6uA" kind="relationship" relationship="rootViewController" id="WX1-hc-Jfk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5f3-hh-GQp" userLabel="First Responder" sceneMemberID="firstResponder"/>

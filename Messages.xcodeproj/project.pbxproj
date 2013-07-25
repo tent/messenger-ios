@@ -83,6 +83,8 @@
 		8858476C17A05F0B00DD4979 /* BubbleNibView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858476B17A05F0B00DD4979 /* BubbleNibView.m */; };
 		8858476F17A08F6B00DD4979 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858476D17A08F6B00DD4979 /* checkmark.png */; };
 		8858477017A08F6B00DD4979 /* failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8858476E17A08F6B00DD4979 /* failed.png */; };
+		8858477317A1E5D500DD4979 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477217A1E5D500DD4979 /* ParticipantsViewController.m */; };
+		8858477617A1EC3100DD4979 /* ParticipantTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477517A1EC3100DD4979 /* ParticipantTableCell.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -194,6 +196,10 @@
 		8858476B17A05F0B00DD4979 /* BubbleNibView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleNibView.m; sourceTree = "<group>"; };
 		8858476D17A08F6B00DD4979 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		8858476E17A08F6B00DD4979 /* failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = failed.png; sourceTree = "<group>"; };
+		8858477117A1E5D500DD4979 /* ParticipantsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsViewController.h; sourceTree = "<group>"; };
+		8858477217A1E5D500DD4979 /* ParticipantsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsViewController.m; sourceTree = "<group>"; };
+		8858477417A1EC3100DD4979 /* ParticipantTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantTableCell.h; sourceTree = "<group>"; };
+		8858477517A1EC3100DD4979 /* ParticipantTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantTableCell.m; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -304,6 +310,10 @@
 				885429C3179CAB12009F8F78 /* ContactTableCell.m */,
 				88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */,
 				88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */,
+				8858477117A1E5D500DD4979 /* ParticipantsViewController.h */,
+				8858477217A1E5D500DD4979 /* ParticipantsViewController.m */,
+				8858477417A1EC3100DD4979 /* ParticipantTableCell.h */,
+				8858477517A1EC3100DD4979 /* ParticipantTableCell.m */,
 				88DA4B0F179B860A006ECD0A /* RootNavigationController.h */,
 				88DA4B10179B860A006ECD0A /* RootNavigationController.m */,
 				88DA4B0C179B84A2006ECD0A /* ConversationsViewController.h */,
@@ -621,6 +631,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8858477617A1EC3100DD4979 /* ParticipantTableCell.m in Sources */,
+				8858477317A1E5D500DD4979 /* ParticipantsViewController.m in Sources */,
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
 				8858476C17A05F0B00DD4979 /* BubbleNibView.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
