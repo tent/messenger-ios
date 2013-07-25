@@ -128,6 +128,7 @@
     cell.name = cellData[@"name"];
     cell.messageBody = cellData[@"messageBody"];
     cell.messageState = [cellData[@"messageState"] unsignedIntegerValue];
+    cell.messageAlignment = [cellData[@"messageAlignment"] unsignedIntegerValue];
 
     [cell layoutSubviews];
 
