@@ -26,9 +26,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    CGRect frame = CGRectMake(0, 0, 165, 29);
-    [self.navigationItem setTitleView: [[ConversationTitleView alloc] initWithFrame:frame]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +49,11 @@
     [self.tableView setDataSource:self.tableDataSource];
     [self.tableView setDelegate:self.tableDataSource];
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 60, 0)];
+
+
+    CGRect frame = CGRectMake(0, 0, 165, 29);
+    ConversationTitleView *titleView = [[ConversationTitleView alloc] initWithFrame:frame];
+    [self.navigationItem setTitleView: titleView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
