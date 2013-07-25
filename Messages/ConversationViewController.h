@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) ConversationDataSource *tableDataSource;
+
+- (void)participantsButtonPressed:(id)sender;
 @end

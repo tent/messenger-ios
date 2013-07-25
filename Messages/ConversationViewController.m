@@ -14,6 +14,11 @@
 
 @implementation ConversationViewController
 
+- (void)participantsButtonPressed:(id)sender
+{
+    [self performSegueWithIdentifier:@"loadParticipants" sender:self];
+}
+
 - (id)initWithCoder:(NSCoder *)decoder
 {
     id ret = [super initWithCoder:decoder];
@@ -54,6 +59,11 @@
     CGRect frame = CGRectMake(0, 0, 165, 29);
     ConversationTitleView *titleView = [[ConversationTitleView alloc] initWithFrame:frame];
     [self.navigationItem setTitleView: titleView];
+
+    UIButton *participantsButton = [[UIButton alloc] initWithFrame:titleView.frame];
+    [titleView addSubview:participantsButton];
+    [titleView bringSubviewToFront:participantsButton];
+    [participantsButton addTarget:self action:@selector(participantsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidAppear:(BOOL)animated
