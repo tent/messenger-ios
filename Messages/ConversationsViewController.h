@@ -13,4 +13,6 @@
 {
     NSArray *conversations;
 }
+
+- (void)handleConversationTap:(id)sender;
 @end

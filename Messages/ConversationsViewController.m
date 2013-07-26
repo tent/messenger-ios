@@ -15,6 +15,10 @@
 
 @implementation ConversationsViewController
 
+- (void)handleConversationTap:(id)sender {
+    [self performSegueWithIdentifier:@"loadConversation" sender:self];
+}
+
 - (id)initWithCoder:(NSCoder *)decoder
 {
     id ret = [super initWithCoder:decoder];
@@ -112,6 +116,9 @@
     avatar = [avatar thumbnailImage:60 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
 
     cell.imageView.image = avatar;
+
+    UIGestureRecognizer *tapParent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleConversationTap:)];
+    [cell addGestureRecognizer:tapParent];
 
     return cell;
 }
