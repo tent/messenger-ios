@@ -13,7 +13,8 @@ typedef NS_ENUM(NSUInteger, ConversationMessageState) {
     ConversationMessageDelivering,
     ConversationMessageDelivered,
     ConversationMessageDeliveryFailed,
-    ConversationMessageTyping
+    ConversationMessageTyping,
+    ConversationMessageExists
 };
 
 typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {

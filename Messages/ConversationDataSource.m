@@ -33,12 +33,14 @@
                      @{
                          @"name": @"Erinn Woolum",
                          @"messageBody": @"Iusto omnis qui velit quia aut optio",
+                         @"messageState": @(ConversationMessageExists),
                          @"messageAlignment": @(ConversationMessageLeft)
                          },
 
                      @{
                          @"name": @"Tiffany Austell",
                          @"messageBody": @"Consequatur laborum asperiores",
+                         @"messageState": @(ConversationMessageExists),
                          @"messageAlignment": @(ConversationMessageLeft)
                          },
 
@@ -46,18 +48,21 @@
                          @"name": @"Granville Kilmon",
                          @"messageBody": @"Voluptatum!",
                          @"messageState": @(ConversationMessageDeliveryFailed),
+                         @"messageState": @(ConversationMessageExists),
                          @"messageAlignment": @(ConversationMessageRight)
                          },
 
                      @{
                          @"name": @"Erinn Woolum",
                          @"messageBody": @"Inventore culpa esse",
+                         @"messageState": @(ConversationMessageExists),
                          @"messageAlignment": @(ConversationMessageLeft)
                          },
 
                      @{
                          @"name": @"Erinn Woolum",
                          @"messageBody": @"Erinn Woolum Qui ut laudantium reprehenderit quisquam optio repellendus voluptatem",
+                         @"messageState": @(ConversationMessageExists),
                          @"messageAlignment": @(ConversationMessageLeft)
                          },
 
@@ -71,6 +76,7 @@
                      @{
                          @"name": @"Tiffany Austell",
                          @"messageBody": @"Harum?",
+                         @"messageState": @(ConversationMessageExists),
                          @"messageAlignment": @(ConversationMessageLeft)
                          },
 
