@@ -8,16 +8,16 @@
         <scene sceneID="d7P-4C-KtP">
             <objects>
                 <tableViewController id="cQd-cW-6uA" customClass="ConversationsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="45" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hrs-Di-HF5">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="81" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hrs-Di-HF5">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="EGK-sW-4jl">
-                                <rect key="frame" x="0.0" y="22" width="320" height="45"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="conversationCell" id="EGK-sW-4jl" customClass="ConversationsCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="81"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EGK-sW-4jl" id="7Ka-hV-iMN">
-                                    <rect key="frame" x="0.0" y="0.0" width="322" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="322" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -25,6 +25,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Conversations" id="8uo-Po-95D">
                         <barButtonItem key="backBarButtonItem" title="Back" id="k9M-W7-tep"/>
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="MTd-bG-Vgb"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="jTr-iU-4mP">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -35,7 +36,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="laA-Rn-G9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660" y="122"/>
+            <point key="canvasLocation" x="600" y="122"/>
         </scene>
         <!--Contacts View Controller - Contacts-->
         <scene sceneID="8LR-VE-ISv">

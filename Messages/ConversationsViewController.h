@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConversationsCell.h"
 
 @interface ConversationsViewController : UITableViewController
-
+{
+    NSArray *conversations;
+}
 @end

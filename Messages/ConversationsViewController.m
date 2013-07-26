@@ -7,6 +7,7 @@
 //
 
 #import "ConversationsViewController.h"
+#import "UIImage+Resize.h"
 
 @interface ConversationsViewController ()
 
@@ -14,12 +15,56 @@
 
 @implementation ConversationsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder *)decoder
 {
-    self = [super initWithStyle:style];
-    if (self) {
-    }
-    return self;
+    id ret = [super initWithCoder:decoder];
+
+    conversations = @[
+
+                      @{
+                          @"name": @"Agatha Salvato",
+                          @"messageBody": @"Cumque pariatur consectetur rerum earum. Tenetur excepturi magnam explicabo deserunt ipsa distinctio",
+                          @"timestamp": @"3:45 PM"
+
+                          },
+
+                      @{
+                          @"name": @"Concetta Turmelle",
+                          @"messageBody": @"Velit provident fugiat. Voluptatem sunt occaecati qui. Accusantium laboriosam fugit rerum nulla magnam consequatur qui.",
+                          @"timestamp": @"Yesterday"
+
+                          },
+
+                      @{
+                          @"name": @"Drema Rushin",
+                          @"messageBody": @"Iure asperiores sapiente. Ipsa autem illo quis amet porro esse ut. Nemo nam assumenda ut iure.",
+                          @"timestamp": @"Yesterday"
+
+                          },
+
+                      @{
+                          @"name": @"Howard Trembley",
+                          @"messageBody": @"Ullam ut omnis modi quae esse reiciendis quam. Et voluptas sit asperiores facilis.",
+                          @"timestamp": @"3:45 PM"
+
+                          },
+
+                      @{
+                          @"name": @"Myong Forsman",
+                          @"messageBody": @"Dolore eos pariatur. Aut sunt ad fugit delectus. Labore recusandae autem ducimus. Maiores et reprehenderit.",
+                          @"timestamp": @"17/3/13"
+
+                          },
+
+                      @{
+                          @"name": @"Tiffany Austell",
+                          @"messageBody": @"Blanditiis mollitia et temporibus provident.",
+                          @"timestamp": @"17/3/13"
+
+                          }
+                      ];
+
+    return ret;
 }
 
 - (void)viewDidLoad
@@ -44,74 +89,31 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return conversations.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    static NSString *CellIdentifier = @"conversationCell";
+    ConversationsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
+    NSDictionary *conversation = [conversations objectAtIndex:[indexPath indexAtPosition:1]];
+    cell.name = conversation[@"name"];
+    cell.messageBody = conversation[@"messageBody"];
+    cell.timestamp = conversation[@"timestamp"];
+
+    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", ([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1] + 1]];
+    avatar = [avatar thumbnailImage:60 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
+
+    cell.imageView.image = avatar;
+
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
