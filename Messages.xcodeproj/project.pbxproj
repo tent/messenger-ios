@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2F7C53DACB0F4BF69A00A9CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F71820E194564976ABA14608 /* libPods.a */; };
+		880221D217A4576B004B3ED8 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880221D017A4576B004B3ED8 /* DataModel.xcdatamodeld */; };
 		885429C4179CAB12009F8F78 /* ContactTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 885429C3179CAB12009F8F78 /* ContactTableCell.m */; };
 		885429CB179DA471009F8F78 /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885429CA179DA471009F8F78 /* ConversationViewController.m */; };
 		885429D0179DB6CF009F8F78 /* ConversationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 885429CF179DB6CF009F8F78 /* ConversationTitleView.m */; };
@@ -101,6 +102,9 @@
 		88DA4B08179B82EF006ECD0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88DA4B07179B82EF006ECD0A /* Main.storyboard */; };
 		88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DA4B0D179B84A2006ECD0A /* ConversationsViewController.m */; };
 		88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DA4B10179B860A006ECD0A /* RootNavigationController.m */; };
+		88DD55D417A583E200954C01 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DD55D317A583E200954C01 /* Message.m */; };
+		88DD55D717A583E300954C01 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DD55D617A583E300954C01 /* Contact.m */; };
+		88DD55DA17A583E300954C01 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DD55D917A583E300954C01 /* Conversation.m */; };
 		88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +120,7 @@
 
 /* Begin PBXFileReference section */
 		1F607D9D0B604A2B8E920D38 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		880221D117A4576B004B3ED8 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		885429C2179CAB12009F8F78 /* ContactTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactTableCell.h; sourceTree = "<group>"; };
 		885429C3179CAB12009F8F78 /* ContactTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactTableCell.m; sourceTree = "<group>"; };
 		885429C9179DA471009F8F78 /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationViewController.h; sourceTree = "<group>"; };
@@ -224,6 +229,12 @@
 		88DA4B0D179B84A2006ECD0A /* ConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsViewController.m; sourceTree = "<group>"; };
 		88DA4B0F179B860A006ECD0A /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
 		88DA4B10179B860A006ECD0A /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
+		88DD55D217A583E200954C01 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		88DD55D317A583E200954C01 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		88DD55D517A583E300954C01 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		88DD55D617A583E300954C01 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		88DD55D817A583E300954C01 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
+		88DD55D917A583E300954C01 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
 		88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		F71820E194564976ABA14608 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,6 +265,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		880221DC17A45A73004B3ED8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				88DD55D817A583E300954C01 /* Conversation.h */,
+				88DD55D917A583E300954C01 /* Conversation.m */,
+				88DD55D517A583E300954C01 /* Contact.h */,
+				88DD55D617A583E300954C01 /* Contact.m */,
+				88DD55D217A583E200954C01 /* Message.h */,
+				88DD55D317A583E200954C01 /* Message.m */,
+				880221D017A4576B004B3ED8 /* DataModel.xcdatamodeld */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 		8858475D17A0344C00DD4979 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +350,7 @@
 				88DA4B0D179B84A2006ECD0A /* ConversationsViewController.m */,
 				88DA4AE7179B82C9006ECD0A /* AppDelegate.h */,
 				88DA4AE8179B82C9006ECD0A /* AppDelegate.m */,
+				880221DC17A45A73004B3ED8 /* Data */,
 				88DA4AEA179B82C9006ECD0A /* Images.xcassets */,
 				88DA4ADF179B82C9006ECD0A /* Supporting Files */,
 			);
@@ -637,13 +663,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8858477617A1EC3100DD4979 /* ParticipantTableCell.m in Sources */,
+				88DD55D717A583E300954C01 /* Contact.m in Sources */,
 				8858477317A1E5D500DD4979 /* ParticipantsViewController.m in Sources */,
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
 				8858476C17A05F0B00DD4979 /* BubbleNibView.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
+				88DD55DA17A583E300954C01 /* Conversation.m in Sources */,
 				885429D0179DB6CF009F8F78 /* ConversationTitleView.m in Sources */,
+				880221D217A4576B004B3ED8 /* DataModel.xcdatamodeld in Sources */,
 				8858477917A20ACB00DD4979 /* ConversationsCell.m in Sources */,
 				885429CB179DA471009F8F78 /* ConversationViewController.m in Sources */,
+				88DD55D417A583E200954C01 /* Message.m in Sources */,
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
@@ -858,6 +888,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		880221D017A4576B004B3ED8 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				880221D117A4576B004B3ED8 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 880221D117A4576B004B3ED8 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 88DA4ACD179B82C9006ECD0A /* Project object */;
 }
