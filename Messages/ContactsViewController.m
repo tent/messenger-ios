@@ -8,6 +8,8 @@
 
 #import "ContactsViewController.h"
 #import "UIImage+Resize.h"
+#import "Contact.h"
+#import "AppDelegate.h"
 
 @interface ContactsViewController ()
 @end
@@ -21,10 +23,6 @@
 
     blankView = [[UIView alloc] init];
 
-    contactNames = @[@"Agatha Aguas", @"Agatha Salvato", @"Beula Allshouse", @"Birdie Slye", @"Clorinda Stokely", @"Concetta Turmelle", @"Drema Rushin", @"Dulce Bridges", @"Ericka Nigro", @"Erinn Woolum", @"Franklyn Pavlik", @"Fredrick Strauss", @"Granville Kilmon", @"Guadalupe Sabella", @"Howard Trembley", @"Huong Willaims", @"Ingeborg Chmielewski", @"Irena Winger", @"Julian Mcswain", @"Junior Isherwood", @"Krysten Slayden", @"Kyla Kuehn", @"Lucy Lumpkin", @"Luz Cabot", @"Myong Forsman", @"Myrtle Dimarco", @"Norah Peat", @"Norine Pfau", @"Odilia Mary", @"Omer Oakes", @"Paulette Buttram", @"Phillis Ojeda", @"Qiana Qualls", @"Quanp Mauch", @"Rubi Moseley", @"Ruth Cardoso", @"Shawanda Tunney", @"Stefany Pettit", @"Tiffany Austell", @"Tonia Mcclung", @"Una Umana", @"Uno Kuehn", @"Vina Chynoweth", @"Vina Vancamp", @"Wally Halliday", @"Willa Carl", @"Xanna July", @"Xmar Hack", @"Yadira Yarnell", @"Yen Meuser", @"Zachariah Vento", @"Zetta Fromm"];
-    
-    groupNames = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
-
     return ret;
 }
 
@@ -37,6 +35,8 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    [self setupFetchedResultsController];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -52,33 +52,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setupFetchedResultsController {
+    NSManagedObjectContext *context = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
+
+    // Configure the request's entity, and optionally its predicate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:@"sectionName" cacheName:@"Contacts"];
+
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return groupNames.count;
+    return [self.fetchedResultsController.sections count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 2;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    return groupNames;
+    return [self.fetchedResultsController sectionIndexTitles];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [groupNames objectAtIndex:section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo name];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-    return index;
+    return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
 }
 
 /*- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,11 +105,13 @@
 {
     static NSString *CellIdentifier = @"contactCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    cell.textLabel.text = [contactNames objectAtIndex:([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1]];
+
+    Contact *contact = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    cell.textLabel.text = contact.name;
     cell.multipleSelectionBackgroundView = blankView;
     
-    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", ([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1] + 1]];
+    UIImage *avatar = [UIImage imageWithData:contact.avatar];
     avatar = [avatar thumbnailImage:40 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
     
     cell.imageView.image = avatar;

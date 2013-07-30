@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface ContactsViewController : UITableViewController
+
 {
     UIView *blankView;
-    NSArray *contactNames;
-    NSArray *groupNames;
 }
+
+@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+- (void)setupFetchedResultsController;
+
 @end
