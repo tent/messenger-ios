@@ -29,6 +29,7 @@
 
     message.body = messageText;
     message.conversation = self.tableDataSource.conversationManagedObject;
+    message.conversation.latestMessage = message; // TODO: use an observer for this
     message.timestamp = [[NSDate alloc] init];
 
     NSError *error;
