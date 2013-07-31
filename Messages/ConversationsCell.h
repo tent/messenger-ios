@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Conversation.h"
 
 @interface ConversationsCell : UITableViewCell
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *messageBody;
 @property (nonatomic) NSString *timestamp;
+@property (nonatomic) Conversation *conversation;
 @end

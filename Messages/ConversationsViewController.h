@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ConversationsCell.h"
+#import "Conversation.h"
 
 @interface ConversationsViewController : UITableViewController
 {
     NSArray *conversations;
     NSManagedObjectContext *managedObjectContext;
+    Conversation *selectedConversation;
 }
 
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;

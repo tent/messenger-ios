@@ -7,6 +7,7 @@
 //
 
 #import "ConversationsViewController.h"
+#import "ConversationViewController.h"
 #import "UIImage+Resize.h"
 #import "AppDelegate.h"
 #import "Conversation.h"
@@ -45,7 +46,10 @@
     [self.fetchedResultsController performFetch:&error];
 }
 
-- (void)handleConversationTap:(id)sender {
+- (void)handleConversationTap:(UITapGestureRecognizer *)sender {
+    ConversationsCell *cell = (ConversationsCell *)sender.view;
+    selectedConversation = cell.conversation;
+
     [self performSegueWithIdentifier:@"loadConversation" sender:self];
 }
 
@@ -90,6 +94,8 @@
     Conversation *conversation = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSArray *contacts = [conversation.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 
+    cell.conversation = conversation;
+
     NSMutableArray *contactNames = [[NSMutableArray alloc] init];
     for (Contact *contact in contacts) {
         [contactNames addObject:contact.name];
@@ -113,6 +119,16 @@
     [cell addGestureRecognizer:tapParent];
 
     return cell;
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"loadConversation"]) {
+        ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);
+        conversationViewController.tableDataSource.conversationManagedObject = selectedConversation;
+    }
 }
 
 @end
