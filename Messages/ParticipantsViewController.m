@@ -8,6 +8,8 @@
 
 #import "ParticipantsViewController.h"
 #import "UIImage+Resize.h"
+#import "AppDelegate.h"
+#import "Contact.h"
 
 @interface ParticipantsViewController ()
 
@@ -19,9 +21,16 @@
 {
     id ret = [super initWithCoder:decoder];
 
-    participantNames = @[@"Agatha Salvato", @"Concetta Turmelle", @"Drema Rushin", @"Howard Trembley", @"Myong Forsman", @"Tiffany Austell"];
-
     return ret;
+}
+
+- (void)viewDidLoad {
+    participants = [self.conversationManagedObject.contacts.allObjects sortedArrayUsingComparator:^(Contact *obj1, Contact *obj2) {
+        NSString *name1 = obj1.name;
+        NSString *name2 = obj2.name;
+
+        return [name1 caseInsensitiveCompare:name2];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -32,16 +41,9 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return participantNames.count;
+    return participants.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -49,10 +51,12 @@
     static NSString *CellIdentifier = @"participantCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
-    cell.textLabel.text = [participantNames objectAtIndex:([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1]];
+    Contact *contact = [participants objectAtIndex:[indexPath indexAtPosition:1]];
+
+    cell.textLabel.text = contact.name;
     cell.multipleSelectionBackgroundView = [[UIView alloc] init];
 
-    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", ([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1] + 1]];
+    UIImage *avatar = [UIImage imageWithData:contact.avatar];
     avatar = [avatar thumbnailImage:40 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
 
     cell.imageView.image = avatar;

@@ -8,6 +8,7 @@
 
 #import "ConversationViewController.h"
 #import "ConversationTitleView.h"
+#import "ParticipantsViewController.h"
 
 @interface ConversationViewController ()
 @end
@@ -98,6 +99,19 @@
     [UIView animateWithDuration:animationDuration animations:^{
         [self.view layoutIfNeeded];
     }];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"loadParticipants"]) {
+        ParticipantsViewController *participantsViewController = (ParticipantsViewController *)([segue destinationViewController]);
+
+        Conversation *conversation = [self.tableDataSource conversationManagedObject];
+
+        participantsViewController.conversationManagedObject = conversation;
+    }
 }
 
 @end

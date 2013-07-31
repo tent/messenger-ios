@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Conversation.h"
 
 @interface ParticipantsViewController : UITableViewController
+
 {
-    NSArray *participantNames;
+    NSArray *participants;
 }
+
+@property (nonatomic) Conversation *conversationManagedObject;
 @end
