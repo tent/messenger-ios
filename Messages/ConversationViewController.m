@@ -9,6 +9,7 @@
 #import "ConversationViewController.h"
 #import "ConversationTitleView.h"
 #import "ParticipantsViewController.h"
+#import "Message.h"
 
 @interface ConversationViewController ()
 @end
@@ -18,6 +19,28 @@
 - (void)participantsButtonPressed:(id)sender
 {
     [self performSegueWithIdentifier:@"loadParticipants" sender:self];
+}
+
+- (void)sendButtonPressed:(id)sender {
+    NSString *messageText = self.messageTextField.text;
+
+    NSManagedObjectContext *context = [self.tableDataSource managedObjectContext];
+    Message *message = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:context];
+
+    message.body = messageText;
+    message.conversation = self.tableDataSource.conversationManagedObject;
+    message.timestamp = [[NSDate alloc] init];
+
+    NSError *error;
+    BOOL success = [context save:&error];
+
+    if (success) {
+        self.messageTextField.text = @"";
+
+        NSLog(@"new message: %@", message);
+    } else {
+        NSLog(@"failed to save message: %@ error: %@", message, error);
+    }
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -64,6 +87,8 @@
     [titleView addSubview:participantsButton];
     [titleView bringSubviewToFront:participantsButton];
     [participantsButton addTarget:self action:@selector(participantsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidAppear:(BOOL)animated

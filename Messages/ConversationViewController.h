@@ -13,7 +13,10 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (nonatomic) ConversationDataSource *tableDataSource;
 
 - (void)participantsButtonPressed:(id)sender;
+- (void)sendButtonPressed:(id)sender;
 @end

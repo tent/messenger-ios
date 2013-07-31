@@ -176,6 +176,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="keyboardHeight" destination="I8O-Xk-byv" id="GQy-Jw-JAA"/>
+                        <outlet property="messageTextField" destination="0x2-Cq-leG" id="pCY-Sp-ZfK"/>
+                        <outlet property="sendButton" destination="ph4-b6-Gbt" id="bmx-tL-EXt"/>
                         <outlet property="tableView" destination="bzD-Cb-0lU" id="ydc-AW-bXs"/>
                         <segue destination="xyF-DL-Arq" kind="push" identifier="loadParticipants" id="use-WV-Of0"/>
                     </connections>
