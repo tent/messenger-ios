@@ -79,7 +79,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="FrJ-2k-ayf"/>
                         <barButtonItem key="rightBarButtonItem" title="Continue" id="qec-AX-QlI">
                             <connections>
-                                <segue destination="PqS-ba-pNX" kind="push" id="P4Y-2v-GD0"/>
+                                <segue destination="PqS-ba-pNX" kind="push" identifier="newConversationSegue" id="P4Y-2v-GD0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -246,6 +246,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nTP-18-0rI"/>
+        <segue reference="P4Y-2v-GD0"/>
     </inferredMetricsTieBreakers>
 </document>

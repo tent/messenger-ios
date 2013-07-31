@@ -9,6 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+typedef NS_ENUM(NSUInteger, ConversationMessageState) {
+    ConversationMessageDelivering,
+    ConversationMessageDelivered,
+    ConversationMessageDeliveryFailed,
+    ConversationMessageTyping,
+    ConversationMessageExists
+};
+
+typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
+    ConversationMessageLeft,
+    ConversationMessageRight
+};
+
 @class Contact, Conversation;
 
 @interface Message : NSManagedObject
@@ -17,5 +30,7 @@
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) Contact *contact;
 @property (nonatomic, retain) Conversation *conversation;
+
+- (ConversationMessageAlignment)getAlignment;
 
 @end

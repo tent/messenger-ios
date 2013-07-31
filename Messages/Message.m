@@ -18,4 +18,9 @@
 @dynamic contact;
 @dynamic conversation;
 
+- (ConversationMessageAlignment)getAlignment {
+    // TODO: calculate alignment based on who authored the message (us or them)
+    return ConversationMessageLeft;
+}
+
 @end

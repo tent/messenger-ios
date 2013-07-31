@@ -8,19 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BubbleNibView.h"
-
-typedef NS_ENUM(NSUInteger, ConversationMessageState) {
-    ConversationMessageDelivering,
-    ConversationMessageDelivered,
-    ConversationMessageDeliveryFailed,
-    ConversationMessageTyping,
-    ConversationMessageExists
-};
-
-typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
-    ConversationMessageLeft,
-    ConversationMessageRight
-};
+#import "Message.h"
 
 @interface ConversationViewTableCell : UITableViewCell
 @property (nonatomic) NSString *name;

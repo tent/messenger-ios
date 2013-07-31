@@ -8,14 +8,24 @@
 
 #import "ConversationTitleView.h"
 #import "UIImage+Resize.h"
+#import "Contact.h"
 
 @implementation ConversationTitleView
+
+- (id)initWithFrame:(CGRect)frame withDataSource:(ConversationDataSource *)source {
+    dataSource = source;
+    self = [self initWithFrame:frame];
+    return self;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+
+    NSSet *contacts = dataSource.conversationManagedObject.contacts;
+
     if (self) {
-        int avatarCount = 6;
+        int avatarCount = contacts.count;
         int avatarSize = 29;
         int avatarMarginRight = 5;
         int offset = 0;
@@ -31,8 +41,9 @@
             }
         }
 
-        for (int i=0; i<displayAvatarCount; i++) {
-            UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", i + 1]];
+        int i = displayAvatarCount;
+        for (Contact *contact in contacts) {
+            UIImage *avatar = [UIImage imageWithData:contact.avatar];
             avatar = [avatar thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
 
             UIView *avatarView = [[UIImageView alloc] initWithImage:avatar];
@@ -41,6 +52,11 @@
             [self addSubview:avatarView];
 
             offset = avatarView.frame.origin.x + avatarView.frame.size.width + avatarMarginRight;
+
+            i--;
+            if (i == 0) {
+                break;
+            }
         }
 
         if (avatarCount > 5) {

@@ -12,10 +12,13 @@
 
 {
     UIView *blankView;
+    NSMutableSet *selectedContacts;
+    NSManagedObjectContext *managedObjectContext;
 }
 
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+- (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;
 
 @end

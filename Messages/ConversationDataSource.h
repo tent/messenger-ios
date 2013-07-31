@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ConversationViewTableCell.h"
+#import "Conversation.h"
 
 @interface ConversationDataSource : NSObject <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) NSArray *dataSet;
+
+{
+    NSManagedObjectContext *managedObjectContext;
+}
+
+@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) Conversation *conversationManagedObject;
+
+- (NSManagedObjectContext *)managedObjectContext;
+- (void)setupFetchedResultsController;
+- (void)configureCell:(ConversationViewTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end

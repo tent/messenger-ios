@@ -55,9 +55,8 @@
     [self.tableView setDelegate:self.tableDataSource];
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 60, 0)];
 
-
     CGRect frame = CGRectMake(0, 0, 165, 29);
-    ConversationTitleView *titleView = [[ConversationTitleView alloc] initWithFrame:frame];
+    ConversationTitleView *titleView = [[ConversationTitleView alloc] initWithFrame:frame withDataSource:self.tableDataSource];
     [self.navigationItem setTitleView: titleView];
 
     UIButton *participantsButton = [[UIButton alloc] initWithFrame:titleView.frame];

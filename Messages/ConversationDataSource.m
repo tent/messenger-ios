@@ -7,7 +7,9 @@
 //
 
 #import "ConversationDataSource.h"
-#import "ConversationViewTableCell.h"
+#import "AppDelegate.h"
+#import "Message.h"
+#import "Contact.h"
 
 @implementation ConversationDataSource
 
@@ -15,104 +17,60 @@
 {
     id ret = [super init];
 
-    self.dataSet = @[
-                     @{
-                         @"name": @"Granville Kilmon",
-                         @"messageBody": @"Qui unde voluptas commodi. Quod suscipit impedit temporibus aliquam quo",
-                         @"messageState": @(ConversationMessageDelivered),
-                         @"messageAlignment": @(ConversationMessageRight)
-                         },
-
-                     @{
-                         @"name": @"Granville Kilmon",
-                         @"messageBody": @"Blanditiis repudiandae doloremque quidem perferendis",
-                         @"messageState": @(ConversationMessageDelivered),
-                         @"messageAlignment": @(ConversationMessageRight)
-                         },
-
-                     @{
-                         @"name": @"Erinn Woolum",
-                         @"messageBody": @"Iusto omnis qui velit quia aut optio",
-                         @"messageState": @(ConversationMessageExists),
-                         @"messageAlignment": @(ConversationMessageLeft)
-                         },
-
-                     @{
-                         @"name": @"Tiffany Austell",
-                         @"messageBody": @"Consequatur laborum asperiores",
-                         @"messageState": @(ConversationMessageExists),
-                         @"messageAlignment": @(ConversationMessageLeft)
-                         },
-
-                     @{
-                         @"name": @"Granville Kilmon",
-                         @"messageBody": @"Voluptatum!",
-                         @"messageState": @(ConversationMessageDeliveryFailed),
-                         @"messageState": @(ConversationMessageExists),
-                         @"messageAlignment": @(ConversationMessageRight)
-                         },
-
-                     @{
-                         @"name": @"Erinn Woolum",
-                         @"messageBody": @"Inventore culpa esse",
-                         @"messageState": @(ConversationMessageExists),
-                         @"messageAlignment": @(ConversationMessageLeft)
-                         },
-
-                     @{
-                         @"name": @"Erinn Woolum",
-                         @"messageBody": @"Erinn Woolum Qui ut laudantium reprehenderit quisquam optio repellendus voluptatem",
-                         @"messageState": @(ConversationMessageExists),
-                         @"messageAlignment": @(ConversationMessageLeft)
-                         },
-
-                     @{
-                         @"name": @"Granville Kilmon",
-                         @"messageBody": @"Granville Kilmon Fugiat cum et temporibus assumenda maxime veniam",
-                         @"messageState": @(ConversationMessageDelivered),
-                         @"messageAlignment": @(ConversationMessageRight)
-                         },
-
-                     @{
-                         @"name": @"Tiffany Austell",
-                         @"messageBody": @"Harum?",
-                         @"messageState": @(ConversationMessageExists),
-                         @"messageAlignment": @(ConversationMessageLeft)
-                         },
-
-                     @{
-                         @"name": @"Granville Kilmon",
-                         @"messageBody": @"Doloribus iust Iste delectus eaque quibusdam exercitationem soluta",
-                         @"messageState": @(ConversationMessageDelivering),
-                         @"messageAlignment": @(ConversationMessageRight)
-                         }
-
-                    ];
+    [self setupFetchedResultsController];
 
     return ret;
 }
 
+
+- (NSManagedObjectContext *)managedObjectContext {
+    if (!managedObjectContext) {
+        managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
+    }
+
+    return managedObjectContext;
+}
+
+- (void)setupFetchedResultsController {
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Message"];
+
+    // Configure the request's entity, and optionally its predicate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"ConversationMessages"];
+
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+}
+
+- (void)configureCell:(ConversationViewTableCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    cell.name = message.contact.name;
+    cell.messageBody = message.body;
+    // cell.messageState = message.state;
+    cell.messageAlignment = [message getAlignment];
+}
+
 #pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"conversationCell";
     ConversationViewTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
-    int dataIndex = [indexPath indexAtPosition:1];
-    NSDictionary *cellData = [self.dataSet objectAtIndex:dataIndex];
-
-    cell.name = cellData[@"name"];
-    cell.messageBody = cellData[@"messageBody"];
-    cell.messageState = [cellData[@"messageState"] unsignedIntegerValue];
-    cell.messageAlignment = [cellData[@"messageAlignment"] unsignedIntegerValue];
+    [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.dataSet.count;
 }
 
 #pragma mark - UITableViewDelegate
@@ -128,15 +86,7 @@
 
     ConversationViewTableCell *cell = [[ConversationViewTableCell alloc] init];
 
-    int dataIndex = [indexPath indexAtPosition:1];
-    NSDictionary *cellData = [self.dataSet objectAtIndex:dataIndex];
-
-    cell.name = cellData[@"name"];
-    cell.messageBody = cellData[@"messageBody"];
-    cell.messageState = [cellData[@"messageState"] unsignedIntegerValue];
-    cell.messageAlignment = [cellData[@"messageAlignment"] unsignedIntegerValue];
-
-    [cell layoutSubviews];
+    [self configureCell:cell atIndexPath:indexPath];
 
     return cell.frame.size.height;
 }

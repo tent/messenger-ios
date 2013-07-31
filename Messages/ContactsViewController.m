@@ -10,18 +10,27 @@
 #import "UIImage+Resize.h"
 #import "Contact.h"
 #import "AppDelegate.h"
+#import "ConversationViewController.h"
 
 @interface ContactsViewController ()
 @end
 
 @implementation ContactsViewController
 
+- (NSManagedObjectContext *)managedObjectContext {
+    if (!managedObjectContext) {
+        managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
+    }
+
+    return managedObjectContext;
+}
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
     id ret = [super initWithCoder:decoder];
 
     blankView = [[UIView alloc] init];
+    selectedContacts = [[NSMutableSet alloc] init];
 
     return ret;
 }
@@ -53,7 +62,7 @@
 }
 
 - (void)setupFetchedResultsController {
-    NSManagedObjectContext *context = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
 
@@ -158,16 +167,32 @@
 }
 */
 
-/*
-#pragma mark - Navigation
+#pragma mark - UITableViewDelegate
 
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Contact *contact = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [selectedContacts addObject:contact];
 }
 
- */
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Contact *contact = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [selectedContacts removeObject:contact];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"newConversationSegue"]) {
+        ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);
+
+        NSManagedObjectContext *context = [self managedObjectContext];
+
+        Conversation *conversation = [NSEntityDescription insertNewObjectForEntityForName:@"Conversation" inManagedObjectContext:context];
+        [conversation addContacts:selectedContacts];
+
+        conversationViewController.tableDataSource.conversationManagedObject = conversation;
+    }
+}
 
 @end
