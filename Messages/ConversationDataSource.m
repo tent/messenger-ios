@@ -80,6 +80,7 @@
     ConversationViewTableCell *cell = [[ConversationViewTableCell alloc] init];
 
     [self configureCell:cell atIndexPath:indexPath];
+    [cell layoutSubviews];
 
     return cell.frame.size.height;
 }
