@@ -13,16 +13,6 @@
 
 @implementation ConversationDataSource
 
-- (id)init
-{
-    id ret = [super init];
-
-    [self setupFetchedResultsController];
-
-    return ret;
-}
-
-
 - (NSManagedObjectContext *)managedObjectContext {
     if (!managedObjectContext) {
         managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
@@ -39,6 +29,9 @@
     // Configure the request's entity, and optionally its predicate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversation == %@", self.conversationManagedObject];
+    [fetchRequest setPredicate:predicate];
 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"ConversationMessages"];
 

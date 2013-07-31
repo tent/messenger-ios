@@ -75,6 +75,8 @@
     // Begin observing the keyboard notifications when the view is loaded.
     [self observeKeyboard];
 
+    [self.tableDataSource setupFetchedResultsController];
+
     [self.tableView setDataSource:self.tableDataSource];
     [self.tableView setDelegate:self.tableDataSource];
     [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 60, 0)];
