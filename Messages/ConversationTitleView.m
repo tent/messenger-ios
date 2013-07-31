@@ -22,7 +22,12 @@
 {
     self = [super initWithFrame:frame];
 
-    NSSet *contacts = dataSource.conversationManagedObject.contacts;
+    NSArray *contacts = [dataSource.conversationManagedObject.contacts.allObjects sortedArrayUsingComparator:^(Contact *obj1, Contact *obj2) {
+        NSString *name1 = obj1.name;
+        NSString *name2 = obj2.name;
+
+        return [name1 caseInsensitiveCompare:name2];
+    }];
 
     if (self) {
         int avatarCount = contacts.count;
@@ -41,8 +46,9 @@
             }
         }
 
-        int i = displayAvatarCount;
-        for (Contact *contact in contacts) {
+        for (int i = 0; i < displayAvatarCount; i++) {
+            Contact *contact = [contacts objectAtIndex:i];
+
             UIImage *avatar = [UIImage imageWithData:contact.avatar];
             avatar = [avatar thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
 
@@ -52,11 +58,6 @@
             [self addSubview:avatarView];
 
             offset = avatarView.frame.origin.x + avatarView.frame.size.width + avatarMarginRight;
-
-            i--;
-            if (i == 0) {
-                break;
-            }
         }
 
         if (avatarCount > 5) {
