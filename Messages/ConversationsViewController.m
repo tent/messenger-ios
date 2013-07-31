@@ -8,12 +8,42 @@
 
 #import "ConversationsViewController.h"
 #import "UIImage+Resize.h"
+#import "AppDelegate.h"
+#import "Conversation.h"
+#import "Message.h"
+#import "Contact.h"
 
 @interface ConversationsViewController ()
 
 @end
 
 @implementation ConversationsViewController
+
+- (NSManagedObjectContext *)managedObjectContext {
+    if (!managedObjectContext) {
+        managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
+    }
+
+    return managedObjectContext;
+}
+
+- (void)setupFetchedResultsController {
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Conversation"];
+
+    // Configure the request's entity, and optionally its predicate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latestMessage.timestamp" ascending:YES];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"contacts.@count > 0"];
+    [fetchRequest setPredicate:predicate];
+
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Conversations"];
+
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+}
 
 - (void)handleConversationTap:(id)sender {
     [self performSegueWithIdentifier:@"loadConversation" sender:self];
@@ -22,51 +52,6 @@
 - (id)initWithCoder:(NSCoder *)decoder
 {
     id ret = [super initWithCoder:decoder];
-
-    conversations = @[
-
-                      @{
-                          @"name": @"Agatha Salvato",
-                          @"messageBody": @"Cumque pariatur consectetur rerum earum. Tenetur excepturi magnam explicabo deserunt ipsa distinctio",
-                          @"timestamp": @"3:45 PM"
-
-                          },
-
-                      @{
-                          @"name": @"Concetta Turmelle",
-                          @"messageBody": @"Velit provident fugiat. Voluptatem sunt occaecati qui. Accusantium laboriosam fugit rerum nulla magnam consequatur qui.",
-                          @"timestamp": @"Yesterday"
-
-                          },
-
-                      @{
-                          @"name": @"Drema Rushin",
-                          @"messageBody": @"Iure asperiores sapiente. Ipsa autem illo quis amet porro esse ut. Nemo nam assumenda ut iure.",
-                          @"timestamp": @"Yesterday"
-
-                          },
-
-                      @{
-                          @"name": @"Howard Trembley",
-                          @"messageBody": @"Ullam ut omnis modi quae esse reiciendis quam. Et voluptas sit asperiores facilis.",
-                          @"timestamp": @"3:45 PM"
-
-                          },
-
-                      @{
-                          @"name": @"Myong Forsman",
-                          @"messageBody": @"Dolore eos pariatur. Aut sunt ad fugit delectus. Labore recusandae autem ducimus. Maiores et reprehenderit.",
-                          @"timestamp": @"17/3/13"
-
-                          },
-
-                      @{
-                          @"name": @"Tiffany Austell",
-                          @"messageBody": @"Blanditiis mollitia et temporibus provident.",
-                          @"timestamp": @"17/3/13"
-
-                          }
-                      ];
 
     return ret;
 }
@@ -80,6 +65,8 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:<#(SEL)#>];
+
+    [self setupFetchedResultsController];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,16 +77,9 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return conversations.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,12 +87,24 @@
     static NSString *CellIdentifier = @"conversationCell";
     ConversationsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
-    NSDictionary *conversation = [conversations objectAtIndex:[indexPath indexAtPosition:1]];
-    cell.name = conversation[@"name"];
-    cell.messageBody = conversation[@"messageBody"];
-    cell.timestamp = conversation[@"timestamp"];
+    Conversation *conversation = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSArray *contacts = [conversation.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 
-    UIImage *avatar = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", ([indexPath indexAtPosition:0] * 2) + [indexPath indexAtPosition:1] + 1]];
+    NSMutableArray *contactNames = [[NSMutableArray alloc] init];
+    for (Contact *contact in contacts) {
+        [contactNames addObject:contact.name];
+    }
+    cell.name = [contactNames componentsJoinedByString:@", "];
+
+    if (conversation.latestMessage) {
+        cell.messageBody = conversation.latestMessage.body;
+        cell.timestamp = [NSString stringWithFormat:@"%@", conversation.latestMessage.timestamp];
+    }
+
+    Contact *contact = [contacts objectAtIndex:0];
+    UIImage *avatar = [UIImage imageWithData:contact.avatar];
+
+    // TODO: tile avatars
     avatar = [avatar thumbnailImage:60 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
 
     cell.imageView.image = avatar;

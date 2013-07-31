@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSSet *contacts;
 @property (nonatomic, retain) NSSet *messages;
+@property (nonatomic, retain) Message *latestMessage;
 @end
 
 @interface Conversation (CoreDataGeneratedAccessors)

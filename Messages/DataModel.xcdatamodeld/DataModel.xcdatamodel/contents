@@ -9,6 +9,7 @@
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="conversations" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="latestMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName="Message" syncable="YES">
@@ -18,8 +19,8 @@
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Message" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Contact" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Conversation" positionX="243" positionY="27" width="128" height="90"/>
+        <element name="Message" positionX="333" positionY="327" width="128" height="105"/>
     </elements>
 </model>

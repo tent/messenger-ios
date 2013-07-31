@@ -15,5 +15,6 @@
 
 @dynamic contacts;
 @dynamic messages;
+@dynamic latestMessage;
 
 @end

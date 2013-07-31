@@ -12,7 +12,12 @@
 @interface ConversationsViewController : UITableViewController
 {
     NSArray *conversations;
+    NSManagedObjectContext *managedObjectContext;
 }
 
+@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+- (NSManagedObjectContext *)managedObjectContext;
+- (void)setupFetchedResultsController;
 - (void)handleConversationTap:(id)sender;
 @end
