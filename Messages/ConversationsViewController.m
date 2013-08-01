@@ -31,7 +31,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Conversation"];
 
     // Configure the request's entity, and optionally its predicate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latestMessage.timestamp" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latestMessage.timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"contacts.@count > 0"];
