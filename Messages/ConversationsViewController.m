@@ -49,7 +49,17 @@
     ConversationsCell *cell = (ConversationsCell *)sender.view;
     selectedConversation = cell.conversation;
 
-    [self performSegueWithIdentifier:@"loadConversation" sender:self];
+
+    if (cell.editing) {
+        cell.selected = !cell.selected;
+        if (cell.selected) {
+            [self.selectedIndexPaths addObject:cell.indexPath];
+        } else {
+            [self.selectedIndexPaths removeObject:cell.indexPath];
+        }
+    } else {
+        [self performSegueWithIdentifier:@"loadConversation" sender:self];
+    }
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -84,6 +94,10 @@
     return NO;
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -102,7 +116,20 @@
     UIGestureRecognizer *tapParent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleConversationTap:)];
     [cell addGestureRecognizer:tapParent];
 
+    cell.tableViewController = self;
+    cell.indexPath = indexPath;
+
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        ConversationsCell *cell = (ConversationsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [[self managedObjectContext] deleteObject:cell.conversation];
+
+        NSError *error;
+        [[self managedObjectContext] save:&error];
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -118,6 +145,52 @@
     if ([segue.identifier isEqualToString:@"loadConversation"]) {
         ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);
         conversationViewController.conversation = selectedConversation;
+    }
+}
+
+#pragma mark - IBAction
+
+- (IBAction)editButtonPressed:(id)sender {
+    self.selectedIndexPaths = [[NSMutableSet alloc] init];
+
+    if (self.tableView.editing) {
+        [self.tableView setEditing:NO animated:NO];
+
+        // Change edit button style
+        self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self.editButton.target action:self.editButton.action];
+        self.navigationItem.leftBarButtonItem = self.editButton;
+
+        // Change action button style
+        self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self.actionButton.target action:self.actionButton.action];
+        self.navigationItem.rightBarButtonItem = self.actionButton;
+    } else {
+        [self.tableView setEditing:YES animated:NO];
+
+        // Change edit button style
+        UIBarButtonItem *newItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.editButton.target action:self.editButton.action];
+        self.editButton = newItem;
+        self.navigationItem.leftBarButtonItem = newItem;
+
+        // Change action button style
+        self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self.actionButton.target action:self.actionButton.action];
+        self.navigationItem.rightBarButtonItem = self.actionButton;
+    }
+}
+
+- (IBAction)actionButtonPressed:(id)sender {
+    if (self.tableView.editing) {
+        ConversationsCell *cell;
+        for (NSIndexPath *indexPath in self.selectedIndexPaths) {
+            cell = (ConversationsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            [[self managedObjectContext] deleteObject:cell.conversation];
+        }
+
+        NSError *error;
+        [[self managedObjectContext] save:&error];
+
+        [self editButtonPressed:self];
+    } else {
+        [self performSegueWithIdentifier:@"newMessage" sender:self];
     }
 }
 

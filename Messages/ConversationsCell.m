@@ -20,6 +20,16 @@
     contacts = [self.conversation.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    if (!editing) {
+        self.selected = NO;
+    }
+
+    self.tableViewController.tableView.allowsMultipleSelectionDuringEditing = editing;
+
+    [super setEditing:editing animated:animated];
+}
+
 - (UILabel *)timeViewWithFrame:(CGRect)frame {
     UILabel *view = [[UILabel alloc] initWithFrame:frame];
 
@@ -181,6 +191,16 @@
     [refreshTimer invalidate];
 
     CGRect imageFrame = CGRectMake(10, 10, 60, 60);
+
+    if (self.editing) {
+        imageFrame = CGRectOffset(imageFrame, 40, 0);
+
+        ConversationsViewController *c = (ConversationsViewController *)self.tableViewController;
+        if ([c.selectedIndexPaths containsObject:self.indexPath]) {
+            self.selected = true;
+        }
+    }
+
     imageView = [self imageViewWithFrame:imageFrame];
 
     CGRect contentFrame = CGRectMake(imageFrame.origin.x + imageFrame.size.width + 5, imageFrame.origin.y, self.frame.size.width - imageFrame.origin.x - imageFrame.size.width - 13, imageFrame.size.height);

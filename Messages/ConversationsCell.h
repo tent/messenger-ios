@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Conversation.h"
+#import "ConversationsViewController.h"
 
 @interface ConversationsCell : UITableViewCell
 
@@ -20,6 +21,8 @@
 }
 
 @property (nonatomic) Conversation *conversation;
+@property (nonatomic) UITableViewController *tableViewController;
+@property (nonatomic) NSIndexPath *indexPath;
 
 - (void)initConversation:(Conversation *)conversation;
 - (void)updateTimeView;

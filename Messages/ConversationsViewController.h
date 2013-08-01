@@ -17,9 +17,14 @@
     Conversation *selectedConversation;
 }
 
+@property (nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (nonatomic) IBOutlet UIBarButtonItem *actionButton;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) NSMutableSet *selectedIndexPaths;
 
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;
 - (void)handleConversationTap:(id)sender;
+- (IBAction)editButtonPressed:(id)sender;
+- (IBAction)actionButtonPressed:(id)sender;
 @end
