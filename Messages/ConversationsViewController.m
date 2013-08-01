@@ -9,6 +9,7 @@
 #import "ConversationsViewController.h"
 #import "ConversationViewController.h"
 #import "UIImage+Resize.h"
+#import "NSDate+TimeAgo.h"
 #import "AppDelegate.h"
 #import "Conversation.h"
 #import "Message.h"
@@ -104,7 +105,7 @@
 
     if (conversation.latestMessage) {
         cell.messageBody = conversation.latestMessage.body;
-        cell.timestamp = [NSString stringWithFormat:@"%@", conversation.latestMessage.timestamp];
+        cell.timestamp = [conversation.latestMessage.timestamp dateTimeAgo]; // TODO: update in view every n seconds
     }
 
     Contact *contact = [contacts objectAtIndex:0];
