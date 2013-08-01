@@ -178,13 +178,15 @@
         [contentView removeFromSuperview];
     }
 
+    [refreshTimer invalidate];
+
     CGRect imageFrame = CGRectMake(10, 10, 60, 60);
     imageView = [self imageViewWithFrame:imageFrame];
 
     CGRect contentFrame = CGRectMake(imageFrame.origin.x + imageFrame.size.width + 5, imageFrame.origin.y, self.frame.size.width - imageFrame.origin.x - imageFrame.size.width - 13, imageFrame.size.height);
     contentView = [[UIView alloc] initWithFrame:contentFrame];
 
-    UILabel *timeView = [self timeViewWithFrame:CGRectMake(contentFrame.size.width - 60, 0, 60, 20)];
+    timeView = [self timeViewWithFrame:CGRectMake(contentFrame.size.width - 60, 0, 60, 20)];
 
     UILabel *nameView = [self nameViewWithFrame:CGRectMake(0, 0, contentFrame.size.width - timeView.frame.size.width - 5, 20)];
     UILabel *bodyView = [self bodyViewWithFrame:CGRectMake(0, nameView.frame.origin.y + nameView.frame.size.height, contentFrame.size.width, contentFrame.size.height - nameView.frame.origin.y - nameView.frame.size.height - 5)];
@@ -195,6 +197,15 @@
 
     [self addSubview:imageView];
     [self addSubview:contentView];
+
+    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimeView) userInfo:nil repeats:YES];
+}
+
+- (void)updateTimeView {
+    UILabel *newTimeView = [self timeViewWithFrame:timeView.frame];
+    [timeView removeFromSuperview];
+    timeView = newTimeView;
+    [contentView addSubview:timeView];
 }
 
 @end

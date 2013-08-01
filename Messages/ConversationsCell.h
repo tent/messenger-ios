@@ -15,9 +15,12 @@
     NSArray *contacts;
     UIView *imageView;
     UIView *contentView;
+    UILabel *timeView;
+    NSTimer *refreshTimer;
 }
 
 @property (nonatomic) Conversation *conversation;
 
 - (void)initConversation:(Conversation *)conversation;
+- (void)updateTimeView;
 @end
