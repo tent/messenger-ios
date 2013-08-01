@@ -166,6 +166,10 @@
 - (void)sendButtonPressed:(id)sender {
     NSString *messageText = self.messageTextField.text;
 
+    if ([self.messageTextField isFirstResponder]) {
+        [self.messageTextField resignFirstResponder];
+    }
+
     NSManagedObjectContext *context = [self managedObjectContext];
     Message *message = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:context];
 
