@@ -110,8 +110,8 @@
         avatar = [[UIImage imageWithData:contact.avatar] thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
         imageSubView = [[UIImageView alloc] initWithImage:avatar];
 
-        int offsetX = (nthCol * avatarSize) + (avatarMargin * nthCol);
-        int offsetY = (nthRow * avatarSize) + (avatarMargin * nthRow);
+        int offsetX = (nthCol * avatarSize) + (avatarMargin * (nthCol+1));
+        int offsetY = (nthRow * avatarSize) + (avatarMargin * (nthRow+1));
 
         imageSubView.frame = CGRectMake(offsetX, offsetY, avatarSize, avatarSize);
 
@@ -130,8 +130,8 @@
     if (nMore > 0) {
         // +n view
 
-        int offsetX = (nthCol * avatarSize) + (avatarMargin * nthCol);
-        int offsetY = (nthRow * avatarSize) + (avatarMargin * nthRow);
+        int offsetX = (nthCol * avatarSize) + (avatarMargin * (nthCol+1));
+        int offsetY = (nthRow * avatarSize) + (avatarMargin * (nthRow+1));
 
         UIView *nMoreView = [[UIView alloc] initWithFrame:CGRectMake(offsetX, offsetY, avatarSize, avatarSize)];
         [nMoreView.layer setCornerRadius:3];
