@@ -39,6 +39,8 @@
 
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Conversations"];
 
+    self.fetchedResultsController.delegate = self;
+
     NSError *error;
     [self.fetchedResultsController performFetch:&error];
 }
@@ -95,6 +97,12 @@
     [cell addGestureRecognizer:tapParent];
 
     return cell;
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

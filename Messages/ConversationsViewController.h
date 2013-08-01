@@ -10,7 +10,7 @@
 #import "ConversationsCell.h"
 #import "Conversation.h"
 
-@interface ConversationsViewController : UITableViewController
+@interface ConversationsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 {
     NSArray *conversations;
     NSManagedObjectContext *managedObjectContext;
