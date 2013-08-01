@@ -10,8 +10,12 @@
 #import "Conversation.h"
 
 @interface ConversationsCell : UITableViewCell
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSString *messageBody;
-@property (nonatomic) NSString *timestamp;
+
+{
+    NSArray *contacts;
+}
+
 @property (nonatomic) Conversation *conversation;
+
+- (void)initConversation:(Conversation *)conversation;
 @end

@@ -8,12 +8,8 @@
 
 #import "ConversationsViewController.h"
 #import "ConversationViewController.h"
-#import "UIImage+Resize.h"
-#import "NSDate+TimeAgo.h"
 #import "AppDelegate.h"
 #import "Conversation.h"
-#import "Message.h"
-#import "Contact.h"
 
 @interface ConversationsViewController ()
 
@@ -93,28 +89,7 @@
     ConversationsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     Conversation *conversation = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSArray *contacts = [conversation.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
-
-    cell.conversation = conversation;
-
-    NSMutableArray *contactNames = [[NSMutableArray alloc] init];
-    for (Contact *contact in contacts) {
-        [contactNames addObject:contact.name];
-    }
-    cell.name = [contactNames componentsJoinedByString:@", "];
-
-    if (conversation.latestMessage) {
-        cell.messageBody = conversation.latestMessage.body;
-        cell.timestamp = [conversation.latestMessage.timestamp dateTimeAgo]; // TODO: update in view every n seconds
-    }
-
-    Contact *contact = [contacts objectAtIndex:0];
-    UIImage *avatar = [UIImage imageWithData:contact.avatar];
-
-    // TODO: tile avatars
-    avatar = [avatar thumbnailImage:60 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
-
-    cell.imageView.image = avatar;
+    [cell initConversation:conversation];
 
     UIGestureRecognizer *tapParent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleConversationTap:)];
     [cell addGestureRecognizer:tapParent];
