@@ -73,14 +73,102 @@
 - (UIView *)imageViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
 
-    Contact *contact = [contacts objectAtIndex:0];
-    UIImage *avatar = [UIImage imageWithData:contact.avatar];
+    int avatarSize;
+    int avatarMargin;
+    int displayCount;
+    int nMore;
 
-    // TODO: tile avatars
-    avatar = [avatar thumbnailImage:60 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
+    if (contacts.count > 8) {
+        avatarMargin = 2;
+        avatarSize = (frame.size.height / 3) - avatarMargin;
 
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:avatar];
-    [view addSubview:imageView];
+        if (contacts.count == 9) {
+            displayCount = 9;
+        } else {
+            displayCount = 8;
+            nMore = contacts.count - displayCount;
+        }
+    } else if (contacts.count > 1) {
+        avatarMargin = 2;
+        avatarSize = (frame.size.height / 2) - avatarMargin;
+
+        if (contacts.count > 4) {
+            displayCount = 3;
+            nMore = contacts.count - displayCount;
+        } else {
+            displayCount = contacts.count;
+        }
+    } else {
+        avatarMargin = 0;
+        avatarSize = frame.size.height;
+        displayCount = 1;
+    }
+
+    UIImageView *imageView;
+    UIImage *avatar;
+    Contact *contact;
+    int nthCol = 0;
+    int nthRow = 0;
+    int nPerRow = (int)(frame.size.height / avatarSize);
+    for (int i = 0; i < displayCount; i++) {
+        contact = [contacts objectAtIndex:i];
+        avatar = [[UIImage imageWithData:contact.avatar] thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
+        imageView = [[UIImageView alloc] initWithImage:avatar];
+
+        int offsetX = (nthCol * avatarSize) + (avatarMargin * nthCol);
+        int offsetY = (nthRow * avatarSize) + (avatarMargin * nthRow);
+
+        imageView.frame = CGRectMake(offsetX, offsetY, avatarSize, avatarSize);
+
+        [view addSubview:imageView];
+
+        if (nthCol == nPerRow - 1) {
+            nthCol = 0;
+            nthRow++;
+        } else {
+            nthCol++;
+        }
+    }
+
+
+    NSLog(@"nMore: %i", nMore);
+
+    if (nMore > 0) {
+        // +n view
+
+        int offsetX = (nthCol * avatarSize) + (avatarMargin * nthCol);
+        int offsetY = (nthRow * avatarSize) + (avatarMargin * nthRow);
+
+        UIView *nMoreView = [[UIView alloc] initWithFrame:CGRectMake(offsetX, offsetY, avatarSize, avatarSize)];
+        [nMoreView.layer setCornerRadius:3];
+        [nMoreView.layer setBorderColor:[UIColor blackColor].CGColor];
+        [nMoreView.layer setBorderWidth:1];
+
+        UILabel *nMoreText = [[UILabel alloc] initWithFrame:CGRectMake(1.5f, 1.5f, avatarSize - 3, avatarSize - 3)];
+        nMoreText.text = [[NSString alloc] initWithFormat:@"+%d", contacts.count - displayCount];
+        [nMoreText setBackgroundColor:[[UIColor alloc] initWithWhite:1 alpha:0]];
+        [nMoreText setTextColor:[[UIColor alloc] initWithWhite:0 alpha:1]];
+
+        int baseFontSize;
+        if (nPerRow > 2) {
+            baseFontSize = 8;
+        } else {
+            baseFontSize = 13;
+        }
+
+        int nMoreFontSize;
+        if ([nMoreText.text length] > 3) {
+            nMoreFontSize = baseFontSize - 3;
+        } else {
+            nMoreFontSize = baseFontSize;
+        }
+
+        [nMoreText setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:nMoreFontSize]];
+        nMoreText.textAlignment = NSTextAlignmentCenter;
+        [nMoreView addSubview:nMoreText];
+
+        [view addSubview:nMoreView];
+    }
 
     return view;
 }
