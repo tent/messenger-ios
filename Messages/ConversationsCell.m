@@ -73,46 +73,38 @@
 - (UIView *)imageViewWithFrame:(CGRect)frame {
     UIView *view = [[UIView alloc] initWithFrame:frame];
 
-    int avatarSize;
     int avatarMargin;
-    int displayCount;
-    int nMore;
+    int nPerRow;
 
-    if (contacts.count > 8) {
+    if (contacts.count > 1) {
         avatarMargin = 2;
-        avatarSize = (frame.size.height / 3) - avatarMargin;
 
-        if (contacts.count == 9) {
-            displayCount = 9;
-            nMore = 0;
+        if (contacts.count > 8) {
+            nPerRow = 3;
         } else {
-            displayCount = 8;
-            nMore = contacts.count - displayCount;
-        }
-    } else if (contacts.count > 1) {
-        avatarMargin = 2;
-        avatarSize = (frame.size.height / 2) - avatarMargin;
-
-        if (contacts.count > 4) {
-            displayCount = 3;
-            nMore = contacts.count - displayCount;
-        } else {
-            nMore = 0;
-            displayCount = contacts.count;
+            nPerRow = 2;
         }
     } else {
         avatarMargin = 0;
-        avatarSize = frame.size.height;
-        displayCount = 1;
-        nMore = 0;
+        nPerRow = 1;
     }
+
+    int displayCount;
+
+    if (contacts.count > (nPerRow * nPerRow)) {
+        displayCount = (nPerRow * nPerRow) - 1;
+    } else {
+        displayCount = contacts.count;
+    }
+
+    int nMore = contacts.count - displayCount;
+    int avatarSize = (frame.size.height / nPerRow) - avatarMargin;
 
     UIImageView *imageSubView;
     UIImage *avatar;
     Contact *contact;
     int nthCol = 0;
     int nthRow = 0;
-    int nPerRow = (int)(frame.size.height / avatarSize);
     for (int i = 0; i < displayCount; i++) {
         contact = [contacts objectAtIndex:i];
         avatar = [[UIImage imageWithData:contact.avatar] thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
