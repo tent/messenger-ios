@@ -67,7 +67,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:YES];
+    [self scrollToBottom];
 }
 
 // The callback for frame-changing of keyboard
@@ -147,6 +147,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     NSLog(@"controllerDidChangeContent %@", self.tableView);
     [self.tableView reloadData];
+    [self scrollToBottom];
 }
 
 #pragma mark -
@@ -179,8 +180,6 @@
 
     if (success) {
         self.messageTextField.text = @"";
-
-        NSLog(@"new message: %@", message);
     } else {
         NSLog(@"failed to save message: %@ error: %@", message, error);
     }
@@ -221,6 +220,10 @@
     cell.messageBody = message.body;
     // cell.messageState = message.state;
     cell.messageAlignment = [message getAlignment];
+}
+
+- (void)scrollToBottom {
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:YES];
 }
 
 @end

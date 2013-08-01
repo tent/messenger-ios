@@ -29,4 +29,5 @@
 - (NSFetchedResultsController *)fetchedResultsController;
 - (void)performFetch;
 - (void)configureCell:(ConversationViewTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)scrollToBottom;
 @end
