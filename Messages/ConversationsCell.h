@@ -13,6 +13,8 @@
 
 {
     NSArray *contacts;
+    UIView *imageView;
+    UIView *contentView;
 }
 
 @property (nonatomic) Conversation *conversation;

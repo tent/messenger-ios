@@ -84,6 +84,7 @@
 
         if (contacts.count == 9) {
             displayCount = 9;
+            nMore = 0;
         } else {
             displayCount = 8;
             nMore = contacts.count - displayCount;
@@ -106,7 +107,7 @@
         nMore = 0;
     }
 
-    UIImageView *imageView;
+    UIImageView *imageSubView;
     UIImage *avatar;
     Contact *contact;
     int nthCol = 0;
@@ -115,14 +116,14 @@
     for (int i = 0; i < displayCount; i++) {
         contact = [contacts objectAtIndex:i];
         avatar = [[UIImage imageWithData:contact.avatar] thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
-        imageView = [[UIImageView alloc] initWithImage:avatar];
+        imageSubView = [[UIImageView alloc] initWithImage:avatar];
 
         int offsetX = (nthCol * avatarSize) + (avatarMargin * nthCol);
         int offsetY = (nthRow * avatarSize) + (avatarMargin * nthRow);
 
-        imageView.frame = CGRectMake(offsetX, offsetY, avatarSize, avatarSize);
+        imageSubView.frame = CGRectMake(offsetX, offsetY, avatarSize, avatarSize);
 
-        [view addSubview:imageView];
+        [view addSubview:imageSubView];
 
         if (nthCol == nPerRow - 1) {
             nthCol = 0;
@@ -177,11 +178,19 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 
+    if (imageView) {
+        [imageView removeFromSuperview];
+    }
+
+    if (contentView) {
+        [contentView removeFromSuperview];
+    }
+
     CGRect imageFrame = CGRectMake(10, 10, 60, 60);
-    UIView *imageView = [self imageViewWithFrame:imageFrame];
+    imageView = [self imageViewWithFrame:imageFrame];
 
     CGRect contentFrame = CGRectMake(imageFrame.origin.x + imageFrame.size.width + 5, imageFrame.origin.y, self.frame.size.width - imageFrame.origin.x - imageFrame.size.width - 13, imageFrame.size.height);
-    UIView *contentView = [[UIView alloc] initWithFrame:contentFrame];
+    contentView = [[UIView alloc] initWithFrame:contentFrame];
 
     UILabel *timeView = [self timeViewWithFrame:CGRectMake(contentFrame.size.width - 60, 0, 60, 20)];
 
