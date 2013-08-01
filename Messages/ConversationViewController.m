@@ -145,7 +145,6 @@
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    NSLog(@"controllerDidChangeContent %@", self.tableView);
     [self.tableView reloadData];
     [self scrollToBottom];
 }
