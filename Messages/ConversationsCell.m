@@ -96,12 +96,14 @@
             displayCount = 3;
             nMore = contacts.count - displayCount;
         } else {
+            nMore = 0;
             displayCount = contacts.count;
         }
     } else {
         avatarMargin = 0;
         avatarSize = frame.size.height;
         displayCount = 1;
+        nMore = 0;
     }
 
     UIImageView *imageView;
@@ -131,7 +133,6 @@
     }
 
 
-    NSLog(@"nMore: %i", nMore);
 
     if (nMore > 0) {
         // +n view
@@ -145,7 +146,7 @@
         [nMoreView.layer setBorderWidth:1];
 
         UILabel *nMoreText = [[UILabel alloc] initWithFrame:CGRectMake(1.5f, 1.5f, avatarSize - 3, avatarSize - 3)];
-        nMoreText.text = [[NSString alloc] initWithFormat:@"+%d", contacts.count - displayCount];
+        nMoreText.text = [[NSString alloc] initWithFormat:@"+%d", nMore];
         [nMoreText setBackgroundColor:[[UIColor alloc] initWithWhite:1 alpha:0]];
         [nMoreText setTextColor:[[UIColor alloc] initWithWhite:0 alpha:1]];
 
