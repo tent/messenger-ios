@@ -103,7 +103,7 @@
 {
     if ([segue.identifier isEqualToString:@"loadConversation"]) {
         ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);
-        conversationViewController.tableDataSource.conversationManagedObject = selectedConversation;
+        conversationViewController.conversation = selectedConversation;
     }
 }
 

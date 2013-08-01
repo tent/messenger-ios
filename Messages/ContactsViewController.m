@@ -191,7 +191,7 @@
         Conversation *conversation = [NSEntityDescription insertNewObjectForEntityForName:@"Conversation" inManagedObjectContext:context];
         [conversation addContacts:selectedContacts];
 
-        conversationViewController.tableDataSource.conversationManagedObject = conversation;
+        conversationViewController.conversation = conversation;
     }
 }
 

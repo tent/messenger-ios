@@ -12,7 +12,7 @@
 
 @implementation ConversationTitleView
 
-- (id)initWithFrame:(CGRect)frame withDataSource:(ConversationDataSource *)source {
+- (id)initWithFrame:(CGRect)frame withDataSource:(ConversationViewController *)source {
     dataSource = source;
     self = [self initWithFrame:frame];
     return self;
@@ -22,7 +22,7 @@
 {
     self = [super initWithFrame:frame];
 
-    NSArray *contacts = [dataSource.conversationManagedObject.contacts.allObjects sortedArrayUsingComparator:^(Contact *obj1, Contact *obj2) {
+    NSArray *contacts = [dataSource.conversation.contacts.allObjects sortedArrayUsingComparator:^(Contact *obj1, Contact *obj2) {
         NSString *name1 = obj1.name;
         NSString *name2 = obj2.name;
 

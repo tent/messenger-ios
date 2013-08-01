@@ -7,16 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ConversationDataSource.h"
+#import "ConversationViewTableCell.h"
+#import "Conversation.h"
 
-@interface ConversationViewController : UIViewController
+@interface ConversationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+
+{
+    NSManagedObjectContext *managedObjectContext;
+    NSFetchedResultsController *fetchedResultsController;
+}
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (nonatomic) ConversationDataSource *tableDataSource;
+@property (nonatomic) Conversation *conversation;
 
 - (void)participantsButtonPressed:(id)sender;
 - (void)sendButtonPressed:(id)sender;
+- (NSManagedObjectContext *)managedObjectContext;
+- (NSFetchedResultsController *)fetchedResultsController;
+- (void)performFetch;
+- (void)configureCell:(ConversationViewTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end

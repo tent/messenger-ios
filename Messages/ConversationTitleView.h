@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ConversationDataSource.h"
+#import "ConversationViewController.h"
 
 @interface ConversationTitleView : UIView
 {
-    ConversationDataSource *dataSource;
+    ConversationViewController *dataSource;
 }
 
-- (id)initWithFrame:(CGRect)frame withDataSource:(ConversationDataSource *)source;
+- (id)initWithFrame:(CGRect)frame withDataSource:(ConversationViewController *)source;
 @end
