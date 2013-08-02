@@ -10,100 +10,144 @@
 
 @implementation ConversationViewTableCell
 
+{
+    UILabel *nameView;
+    UIView *messageStatusView;
+    UILabel *messageBodyView;
+    UIView *messageBubbleView;
+    BubbleNibView *messageBubbleNibView;
+}
+
 #pragma mark - UIView
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    id ret = [super initWithCoder:aDecoder];
+
+    [self setupViews];
+
+    return ret;
+}
+
 - (void)layoutSubviews {
-    [super layoutSubviews];
-
-    [self.messageBubbleView removeFromSuperview];
-    [self.messageBubbleNibView removeFromSuperview];
-
     // message bubble
-    CGRect bubbleViewFrame = [self getBubbleFrameForSide];
-    self.messageBubbleView = [[UIView alloc] initWithFrame:bubbleViewFrame];
+    messageBubbleView.frame = [self getBubbleFrameForSide];
 
-    self.messageBubbleView.userInteractionEnabled = NO;
-
-    [self.messageBubbleView.layer setCornerRadius:3];
-    self.messageBubbleView.backgroundColor = [self getBubbleBackgroundColor];
+    [messageBubbleView.layer setCornerRadius:3];
+    messageBubbleView.backgroundColor = [self getBubbleBackgroundColor];
 
     int offsetY = 0;
     int offsetX = 10;
-    int width = self.messageBubbleView.frame.size.width - (offsetX * 2);
+    int width = messageBubbleView.frame.size.width - (offsetX * 2);
 
     // name
-    UILabel *nameView = [self nameViewWithFrame:CGRectMake(offsetX, offsetY + 11, width, 0)];
+    nameView.frame = CGRectMake(offsetX, offsetY + 11, width, 0);
+    [self refreshNameViewContent];
 
     CGRect frame = nameView.frame;
     offsetY = frame.origin.y + frame.size.height;
 
     // message body
-    UILabel *messageBodyView = [self messageBodyViewWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
+    messageBodyView.frame = CGRectMake(offsetX, offsetY + 5, width, 0);
+    [self refreshBodyViewContent];
 
     frame = messageBodyView.frame;
     offsetY = frame.origin.y + frame.size.height;
 
     // status line
-    UIView *messageStatusView = [self messageStatusViewWithFrame:CGRectMake(offsetX, offsetY + 5, width, 0)];
+    messageStatusView.frame = CGRectMake(offsetX, offsetY + 5, width, 0);
+    [self refreshStatusViewContent];
 
     frame = messageStatusView.frame;
     offsetY = frame.origin.y + frame.size.height;
 
     // adjust bubble and cell dimentions based on content
-    [self.messageBubbleView setFrame:CGRectMake(self.messageBubbleView.frame.origin.x, self.messageBubbleView.frame.origin.y, self.messageBubbleView.frame.size.width, offsetY + 10)];
-    [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.messageBubbleView.frame.size.height + self.messageBubbleView.frame.origin.y)];
+    messageBubbleView.frame = CGRectMake(
+                                         messageBubbleView.frame.origin.x, // x
+                                         messageBubbleView.frame.origin.y, // y
+                                         messageBubbleView.frame.size.width, // width
+                                         offsetY + 10 // height
+                                         );
 
-    self.messageBubbleNibView = [[BubbleNibView alloc] initWithFrame:[self getBubbleNibFrameForFrame:self.messageBubbleView.frame] fillColor:[self getBubbleBackgroundColor] alignment:[self getBubbleNibAlignment]];
-    self.messageBubbleNibView.backgroundColor = self.backgroundColor;
-    [self addSubview:self.messageBubbleNibView];
+    self.frame = CGRectMake(
+                            self.frame.origin.x, // x
+                            self.frame.origin.y, // y
+                            self.frame.size.width, // width
+                            messageBubbleView.frame.size.height + messageBubbleView.frame.origin.y // height
+                            );
 
-    [self.messageBubbleView addSubview:nameView];
-    [self.messageBubbleView addSubview:messageBodyView];
-    [self.messageBubbleView addSubview:messageStatusView];
-    [self addSubview:self.messageBubbleView];
+    [messageBubbleNibView
+        setFrame:[self getBubbleNibFrameForFrame:messageBubbleView.frame]
+        fillColor:[self getBubbleBackgroundColor]
+        alignment:[self getBubbleNibAlignment]
+     ];
+
+    messageBubbleNibView.backgroundColor = self.backgroundColor;
+
+    [super layoutSubviews];
+
 }
 
 #pragma mark -
 
-- (UILabel*)nameViewWithFrame:(CGRect)frame {
-    UILabel *nameView = [[UILabel alloc] initWithFrame:frame];
-    nameView.text = self.name;
-    nameView.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
-    [nameView setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:11]];
-    [nameView sizeToFit];
+- (void)setupViews {
+    nameView = [[UILabel alloc] init];
+    messageStatusView = [[UIView alloc] init];
+    messageBodyView = [[UILabel alloc] init];
+    messageBubbleView = [[UIView alloc] init];
+    messageBubbleNibView = [[BubbleNibView alloc] init];
 
-    return nameView;
+    messageBubbleView.userInteractionEnabled = NO;
+    messageBubbleNibView.userInteractionEnabled = NO;
+
+    [messageBubbleView addSubview:nameView];
+    [messageBubbleView addSubview:messageBodyView];
+    [messageBubbleView addSubview:messageStatusView];
+    [self addSubview:messageBubbleNibView];
+    [self addSubview:messageBubbleView];
 }
 
-- (UILabel*)messageBodyViewWithFrame:(CGRect)frame {
-    UILabel *messageBodyView = [[UILabel alloc] initWithFrame:frame];
-    messageBodyView.lineBreakMode = NSLineBreakByWordWrapping;
-    messageBodyView.text = self.messageBody;
-    messageBodyView.numberOfLines = 0;
-    [messageBodyView setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
-    [messageBodyView sizeToFit];
-
-    return messageBodyView;
+- (void)refreshNameViewContent {
+    UILabel *view = nameView;
+    view.text = self.name;
+    view.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
+    [view setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:11]];
+    [view sizeToFit];
 }
 
-- (UIView*)messageStatusViewWithFrame:(CGRect)frame {
-    UIView *statusView = [[UIView alloc] initWithFrame:frame];
-    UILabel *statusTextView = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, statusView.frame.size.width - 10, 0)];
-    statusTextView.text = [self getStringForMessageState];
-    statusTextView.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
-    statusTextView.numberOfLines = 0;
-    [statusTextView setFont:[UIFont fontWithName:@"HelveticaNeue" size:9]];
-    [statusTextView sizeToFit];
-    [statusView setFrame:CGRectMake(statusView.frame.origin.x, statusView.frame.origin.y, statusTextView.frame.size.width, statusTextView.frame.size.height)];
+- (void)refreshBodyViewContent {
+    UILabel *view = messageBodyView;
+    view.lineBreakMode = NSLineBreakByWordWrapping;
+    view.text = self.messageBody;
+    view.numberOfLines = 0;
+    [view setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
+    [view sizeToFit];
+}
 
+- (void)refreshStatusViewContent {
+    UIView *view = messageStatusView;
+
+    // remove all subviews
+    for (UIView *subview in view.subviews) {
+        [subview removeFromSuperview];
+    }
+
+    // text
+    UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, view.frame.size.width - 10, 0)];
+    textView.text = [self getStringForMessageState];
+    textView.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+    textView.numberOfLines = 0;
+    [textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:9]];
+    [textView sizeToFit];
+    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, textView.frame.size.width, textView.frame.size.height)];
+
+    // icon
     UIImage *statusIcon = [self getIconForMessageState];
     UIImageView *statusIconView = [[UIImageView alloc] initWithImage:statusIcon];
     statusIconView.frame = CGRectMake(0, 1, 8, 8);
 
-    [statusView addSubview:statusIconView];
-    [statusView addSubview:statusTextView];
-
-    return statusView;
+    // add subviews
+    [view addSubview:statusIconView];
+    [view addSubview:textView];
 }
 
 - (NSString*)getStringForMessageState {

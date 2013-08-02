@@ -10,14 +10,14 @@
 
 @implementation BubbleNibView
 
-- (id)initWithFrame:(CGRect)aRect fillColor:(UIColor*)color alignment:(BubbleNibAlignment)alignment {
-    self.nibColor = color;
-    self.nibAlignment = alignment;
-    self = [self initWithFrame:aRect];
+{
+    UIColor *nibColor;
+    BubbleNibAlignment nibAlignment;
+}
 
-    self.userInteractionEnabled = NO;
-
-    return self;
+- (void)setFrame:(CGRect)frame fillColor:(UIColor *)color alignment:(BubbleNibAlignment)alignment {
+    nibColor = color;
+    nibAlignment = alignment;
 }
 
 -(void)drawRect:(CGRect)rect {
@@ -28,7 +28,7 @@
 
     UIBezierPath *aPath = [UIBezierPath bezierPath];
 
-    if (self.nibAlignment == BubbleNibAlignmentLeft) {
+    if (nibAlignment == BubbleNibAlignmentLeft) {
         [aPath moveToPoint:CGPointMake(width, 0)];
         [aPath addLineToPoint:CGPointMake(0, height / 2)];
         [aPath addLineToPoint:CGPointMake(width, height)];
@@ -39,7 +39,7 @@
     }
 
     // Set the render colors.
-    [self.nibColor setFill];
+    [nibColor setFill];
 
     // Adjust the drawing options as needed.
     aPath.lineWidth = 0;

@@ -14,8 +14,6 @@ typedef NS_ENUM(NSUInteger, BubbleNibAlignment) {
 };
 
 @interface BubbleNibView : UIView
-@property (nonatomic) UIColor *nibColor;
-@property (nonatomic) BubbleNibAlignment nibAlignment;
 
-- (id)initWithFrame:(CGRect)aRect fillColor:(UIColor*)color alignment:(BubbleNibAlignment)alignment;
+- (void)setFrame:(CGRect)frame fillColor:(UIColor *)color alignment:(BubbleNibAlignment)alignment;
 @end

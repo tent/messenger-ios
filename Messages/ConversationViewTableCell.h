@@ -16,15 +16,14 @@
 @property (nonatomic) ConversationMessageState messageState;
 @property (nonatomic) ConversationMessageAlignment messageAlignment;
 
-@property (nonatomic) UIView *messageBubbleView;
-@property (nonatomic) BubbleNibView *messageBubbleNibView;
-
-- (UILabel*)nameViewWithFrame:(CGRect)frame;
-- (UILabel*)messageBodyViewWithFrame:(CGRect)frame;
-- (UIView*)messageStatusViewWithFrame:(CGRect)frame;
 - (NSString*)getStringForMessageState;
 - (UIImage*)getIconForMessageState;
 - (CGRect)getBubbleFrameForSide;
 - (UIColor*) getBubbleBackgroundColor;
 - (CGRect)getBubbleNibFrameForFrame:(CGRect)frame;
+
+- (void)setupViews;
+- (void)refreshNameViewContent;
+- (void)refreshBodyViewContent;
+- (void)refreshStatusViewContent;
 @end
