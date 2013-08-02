@@ -68,7 +68,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self scrollToBottom];
+    // Remove ContactsViewController from navigation stack
+    NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
+    for (UIViewController *c in self.navigationController.viewControllers) {
+        if (![[NSString stringWithFormat:@"%@", c.class] isEqual:@"ContactsViewController"]) {
+            [viewControllers addObject:c];
+        }
+    }
+    [self.navigationController setViewControllers:(NSArray *)(viewControllers)];
 }
 
 // The callback for frame-changing of keyboard
