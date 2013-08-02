@@ -45,6 +45,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
+    [self enableDisableContinueButton];
+
     [self setupFetchedResultsController];
 }
 
@@ -172,11 +174,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Contact *contact = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [selectedContacts addObject:contact];
+
+    [self enableDisableContinueButton];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     Contact *contact = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [selectedContacts removeObject:contact];
+
+    [self enableDisableContinueButton];
 }
 
 #pragma mark - Navigation
@@ -192,6 +198,16 @@
         [conversation addContacts:selectedContacts];
 
         conversationViewController.conversation = conversation;
+    }
+}
+
+#pragma mark -
+
+- (void)enableDisableContinueButton {
+    if (selectedContacts.count > 0) {
+        self.continueButton.enabled = YES;
+    } else {
+        self.continueButton.enabled = NO;
     }
 }
 

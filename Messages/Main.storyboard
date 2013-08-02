@@ -92,6 +92,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="continueButton" destination="qec-AX-QlI" id="ZPx-Qe-nrw"/>
                         <outlet property="searchDisplayController" destination="POe-Fv-Zqm" id="Vm0-yz-t6p"/>
                     </connections>
                 </tableViewController>
@@ -253,6 +254,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nTP-18-0rI"/>
+        <segue reference="P4Y-2v-GD0"/>
     </inferredMetricsTieBreakers>
 </document>

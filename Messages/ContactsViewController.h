@@ -16,9 +16,11 @@
     NSManagedObjectContext *managedObjectContext;
 }
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *continueButton;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;
+- (void)enableDisableContinueButton;
 
 @end
