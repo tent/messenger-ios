@@ -837,6 +837,14 @@
 				GCC_PREFIX_HEADER = "Messages/Messages-Prefix.pch";
 				INFOPLIST_FILE = "Messages/Messages-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"WARNING_CFLAGS[arch=*]" = (
+					"-Wno-unused-macros",
+					"-Wno-arc-repeated-use-of-weak",
+					"-Wno-direct-ivar-access",
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-pedantic",
+					"-Weverything",
+				);
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
