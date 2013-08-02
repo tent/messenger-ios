@@ -151,6 +151,28 @@
     return cell.frame.size.height;
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (action == @selector(copy:)) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (action == @selector(copy:)) {
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+
+        Message *message = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+        pasteboard.string = message.body;
+    }
+}
+
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {

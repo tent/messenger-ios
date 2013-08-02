@@ -14,6 +14,9 @@
     self.nibColor = color;
     self.nibAlignment = alignment;
     self = [self initWithFrame:aRect];
+
+    self.userInteractionEnabled = NO;
+
     return self;
 }
 

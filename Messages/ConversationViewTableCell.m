@@ -22,6 +22,8 @@
     CGRect bubbleViewFrame = [self getBubbleFrameForSide];
     self.messageBubbleView = [[UIView alloc] initWithFrame:bubbleViewFrame];
 
+    self.messageBubbleView.userInteractionEnabled = NO;
+
     [self.messageBubbleView.layer setCornerRadius:3];
     self.messageBubbleView.backgroundColor = [self getBubbleBackgroundColor];
 
