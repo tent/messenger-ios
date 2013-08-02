@@ -10,7 +10,7 @@
 #import "ConversationsCell.h"
 #import "Conversation.h"
 
-@interface ConversationsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface ConversationsViewController : UITableViewController <NSFetchedResultsControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (nonatomic) IBOutlet UIBarButtonItem *actionButton;
@@ -20,6 +20,7 @@
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;
 - (void)handleConversationTap:(id)sender;
+- (void)deleteSelectedConversations;
 - (IBAction)editButtonPressed:(id)sender;
 - (IBAction)actionButtonPressed:(id)sender;
 @end

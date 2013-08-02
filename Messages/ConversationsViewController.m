@@ -186,19 +186,40 @@
 
 - (IBAction)actionButtonPressed:(id)sender {
     if (self.tableView.editing) {
-        ConversationsCell *cell;
-        for (NSIndexPath *indexPath in self.selectedIndexPaths) {
-            cell = (ConversationsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            [[self managedObjectContext] deleteObject:cell.conversation];
-        }
-
-        NSError *error;
-        [[self managedObjectContext] save:&error];
-
-        [self editButtonPressed:self];
+        NSString *alertMessage = @"This will delete the selected conversations";
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                    initWithTitle:@"Delete Conversations"
+                                    message:alertMessage
+                                    delegate:self
+                                    cancelButtonTitle:@"Cancel"
+                                    otherButtonTitles:@"Delete", nil];
+        [alertView show];
     } else {
         [self performSegueWithIdentifier:@"newMessage" sender:self];
     }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) { // delete
+        [self deleteSelectedConversations];
+    }
+}
+
+#pragma mark -
+
+- (void)deleteSelectedConversations {
+    ConversationsCell *cell;
+    for (NSIndexPath *indexPath in self.selectedIndexPaths) {
+        cell = (ConversationsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [[self managedObjectContext] deleteObject:cell.conversation];
+    }
+
+    NSError *error;
+    [[self managedObjectContext] save:&error];
+
+    [self editButtonPressed:self];
 }
 
 @end
