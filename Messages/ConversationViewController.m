@@ -226,7 +226,9 @@
 }
 
 - (void)scrollToBottom {
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:YES];
+    if (self.tableView.contentSize.height > self.tableView.bounds.size.height) {
+        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:YES];
+    }
 }
 
 @end
