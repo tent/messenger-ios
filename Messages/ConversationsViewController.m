@@ -161,7 +161,7 @@
     self.selectedIndexPaths = [[NSMutableSet alloc] init];
 
     if (self.tableView.editing) {
-        [self.tableView setEditing:NO animated:NO];
+        [self.tableView setEditing:NO animated:YES];
 
         // Change edit button style
         self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self.editButton.target action:self.editButton.action];
@@ -171,7 +171,7 @@
         self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self.actionButton.target action:self.actionButton.action];
         self.navigationItem.rightBarButtonItem = self.actionButton;
     } else {
-        [self.tableView setEditing:YES animated:NO];
+        [self.tableView setEditing:YES animated:YES];
 
         // Change edit button style
         UIBarButtonItem *newItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.editButton.target action:self.editButton.action];

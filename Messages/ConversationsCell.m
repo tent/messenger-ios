@@ -16,17 +16,90 @@
 
 {
     NSArray *contacts;
+    NSTimer *refreshTimer;
+
     UIView *imageView;
     UIView *contentView;
     UILabel *timeView;
-    NSTimer *refreshTimer;
+    UILabel *bodyView;
+    UILabel *nameView;
 }
 
-- (void)initConversation:(Conversation *)conversation {
-    self.conversation = conversation;
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    id ret = [super initWithCoder:aDecoder];
 
-    contacts = [self.conversation.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+    imageView = [[UIView alloc] init];
+    contentView = [[UIView alloc] init];
+    timeView = [[UILabel alloc] init];
+    bodyView = [[UILabel alloc] init];
+    nameView = [[UILabel alloc] init];
+
+    [contentView addSubview:nameView];
+    [contentView addSubview:timeView];
+    [contentView addSubview:bodyView];
+
+    [self addSubview:imageView];
+    [self addSubview:contentView];
+
+    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshTimeViewContent) userInfo:nil repeats:YES];
+
+    return ret;
 }
+
+#pragma mark - UIView
+
+- (void)layoutSubviews {
+    // Setup image frame
+    CGRect imageFrame = CGRectMake(10, 10, 60, 60);
+
+    // image frame is offset when in edit mode
+    if (self.editing) {
+        imageFrame = CGRectOffset(imageFrame, 40, 0);
+
+        ConversationsViewController *c = (ConversationsViewController *)self.tableViewController;
+        if ([c.selectedIndexPaths containsObject:self.indexPath]) {
+            self.selected = true;
+        }
+    }
+
+    // Assign image frame
+    imageView.frame = imageFrame;
+
+    // Assign image content
+    [self refreshImageViewContent];
+
+    CGRect contentFrame = CGRectMake(
+                                     imageFrame.origin.x + imageFrame.size.width + 5, // x
+                                     imageFrame.origin.y, // y
+                                     self.frame.size.width - imageFrame.origin.x - imageFrame.size.width - 13, // width
+                                     imageFrame.size.height // height
+                                     );
+
+    // Assign content frame
+    contentView.frame = contentFrame;
+
+    // time view frame
+    timeView.frame = CGRectMake(contentFrame.size.width - 60, 0, 60, 20);
+
+    // time view content
+    [self refreshTimeViewContent];
+
+    // name view frame
+    nameView.frame = CGRectMake(0, 0, contentFrame.size.width - timeView.frame.size.width - 5, 20);
+
+    // name view content
+    [self refreshNameViewContent];
+
+    // body view frame
+    bodyView.frame = CGRectMake(0, nameView.frame.origin.y + nameView.frame.size.height, contentFrame.size.width, contentFrame.size.height - nameView.frame.origin.y - nameView.frame.size.height - 5);
+
+    // body view content
+    [self refreshBodyViewContent];
+
+    [super layoutSubviews];
+}
+
+#pragma mark - UITableViewCell
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     if (!editing) {
@@ -38,9 +111,16 @@
     [super setEditing:editing animated:animated];
 }
 
-- (UILabel *)timeViewWithFrame:(CGRect)frame {
-    UILabel *view = [[UILabel alloc] initWithFrame:frame];
+#pragma mark -
 
+- (void)initConversation:(Conversation *)conversation {
+    self.conversation = conversation;
+
+    contacts = [self.conversation.contacts sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+}
+
+- (void)refreshTimeViewContent {
+    UILabel *view = timeView;
 
     if (self.conversation.latestMessage) {
         view.text = [self.conversation.latestMessage.timestamp dateTimeAgo]; // TODO: update in view every n seconds
@@ -53,12 +133,10 @@
 
     [view setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
     view.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
-
-    return view;
 }
 
-- (UILabel *)nameViewWithFrame:(CGRect)frame {
-    UILabel *view = [[UILabel alloc] initWithFrame:frame];
+- (void)refreshNameViewContent {
+    UILabel *view = nameView;
 
     NSMutableArray *contactNames = [[NSMutableArray alloc] init];
     for (Contact *contact in contacts) {
@@ -68,12 +146,10 @@
 
     [view setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:15]];
     view.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
-
-    return view;
 }
 
-- (UILabel *)bodyViewWithFrame:(CGRect)frame {
-    UILabel *view = [[UILabel alloc] initWithFrame:frame];
+- (void)refreshBodyViewContent {
+    UILabel *view = bodyView;
 
     if (self.conversation.latestMessage) {
         view.text = self.conversation.latestMessage.body;
@@ -84,12 +160,16 @@
     [view setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
     view.textColor = [[UIColor alloc] initWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
     view.numberOfLines = 2;
-
-    return view;
 }
 
-- (UIView *)imageViewWithFrame:(CGRect)frame {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
+- (void)refreshImageViewContent {
+    CGRect frame = imageView.frame;
+    UIView *view = imageView;
+
+    // Remove all subviews
+    for (UIView *subview in view.subviews) {
+        [subview removeFromSuperview];
+    }
 
     int avatarMargin;
     int nPerRow;
@@ -181,59 +261,6 @@
 
         [view addSubview:nMoreView];
     }
-
-    return view;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-
-    if (imageView) {
-        [imageView removeFromSuperview];
-    }
-
-    if (contentView) {
-        [contentView removeFromSuperview];
-    }
-
-    [refreshTimer invalidate];
-
-    CGRect imageFrame = CGRectMake(10, 10, 60, 60);
-
-    if (self.editing) {
-        imageFrame = CGRectOffset(imageFrame, 40, 0);
-
-        ConversationsViewController *c = (ConversationsViewController *)self.tableViewController;
-        if ([c.selectedIndexPaths containsObject:self.indexPath]) {
-            self.selected = true;
-        }
-    }
-
-    imageView = [self imageViewWithFrame:imageFrame];
-
-    CGRect contentFrame = CGRectMake(imageFrame.origin.x + imageFrame.size.width + 5, imageFrame.origin.y, self.frame.size.width - imageFrame.origin.x - imageFrame.size.width - 13, imageFrame.size.height);
-    contentView = [[UIView alloc] initWithFrame:contentFrame];
-
-    timeView = [self timeViewWithFrame:CGRectMake(contentFrame.size.width - 60, 0, 60, 20)];
-
-    UILabel *nameView = [self nameViewWithFrame:CGRectMake(0, 0, contentFrame.size.width - timeView.frame.size.width - 5, 20)];
-    UILabel *bodyView = [self bodyViewWithFrame:CGRectMake(0, nameView.frame.origin.y + nameView.frame.size.height, contentFrame.size.width, contentFrame.size.height - nameView.frame.origin.y - nameView.frame.size.height - 5)];
-
-    [contentView addSubview:nameView];
-    [contentView addSubview:timeView];
-    [contentView addSubview:bodyView];
-
-    [self addSubview:imageView];
-    [self addSubview:contentView];
-
-    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTimeView) userInfo:nil repeats:YES];
-}
-
-- (void)updateTimeView {
-    UILabel *newTimeView = [self timeViewWithFrame:timeView.frame];
-    [timeView removeFromSuperview];
-    timeView = newTimeView;
-    [contentView addSubview:timeView];
 }
 
 @end

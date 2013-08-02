@@ -17,5 +17,9 @@
 @property (nonatomic) NSIndexPath *indexPath;
 
 - (void)initConversation:(Conversation *)conversation;
-- (void)updateTimeView;
+
+- (void)refreshTimeViewContent;
+- (void)refreshImageViewContent;
+- (void)refreshNameViewContent;
+- (void)refreshBodyViewContent;
 @end
