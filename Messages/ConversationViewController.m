@@ -25,6 +25,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+    [self scrollToBottom];
+
     [super viewWillAppear:animated];
 }
 
@@ -65,8 +68,6 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
     [self scrollToBottom];
 }
 
