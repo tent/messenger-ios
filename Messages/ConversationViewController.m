@@ -86,6 +86,7 @@
     
     [UIView animateWithDuration:animationDuration animations:^{
         [self.view layoutIfNeeded];
+        [self scrollToBottom];
     }];
 }
 
@@ -228,7 +229,7 @@
 
 - (void)scrollToBottom {
     if (self.tableView.contentSize.height > self.tableView.bounds.size.height) {
-        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:YES];
+        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + 60) animated:NO];
     }
 }
 
