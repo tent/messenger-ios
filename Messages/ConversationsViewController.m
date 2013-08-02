@@ -17,6 +17,12 @@
 
 @implementation ConversationsViewController
 
+{
+    NSArray *conversations;
+    NSManagedObjectContext *managedObjectContext;
+    Conversation *selectedConversation;
+}
+
 - (NSManagedObjectContext *)managedObjectContext {
     if (!managedObjectContext) {
         managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
@@ -45,8 +51,9 @@
     [self.fetchedResultsController performFetch:&error];
 }
 
-- (void)handleConversationTap:(UITapGestureRecognizer *)sender {
-    ConversationsCell *cell = (ConversationsCell *)sender.view;
+- (void)handleConversationTap:(id)sender {
+    UITapGestureRecognizer *tapGestureRecognizer = sender;
+    ConversationsCell *cell = (ConversationsCell *)tapGestureRecognizer.view;
     selectedConversation = cell.conversation;
 
 

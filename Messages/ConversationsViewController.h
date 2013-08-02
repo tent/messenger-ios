@@ -6,16 +6,11 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "ConversationsCell.h"
 #import "Conversation.h"
 
 @interface ConversationsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
-{
-    NSArray *conversations;
-    NSManagedObjectContext *managedObjectContext;
-    Conversation *selectedConversation;
-}
 
 @property (nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (nonatomic) IBOutlet UIBarButtonItem *actionButton;

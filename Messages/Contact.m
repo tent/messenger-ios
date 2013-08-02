@@ -17,5 +17,6 @@
 @dynamic name;
 @dynamic conversations;
 @dynamic messages;
+@dynamic sectionName;
 
 @end

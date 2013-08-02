@@ -6,16 +6,11 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "ConversationViewTableCell.h"
 #import "Conversation.h"
 
 @interface ConversationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
-
-{
-    NSManagedObjectContext *managedObjectContext;
-    NSFetchedResultsController *fetchedResultsController;
-}
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

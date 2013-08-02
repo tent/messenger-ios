@@ -6,15 +6,9 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface ContactsViewController : UITableViewController
-
-{
-    UIView *blankView;
-    NSMutableSet *selectedContacts;
-    NSManagedObjectContext *managedObjectContext;
-}
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *continueButton;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;

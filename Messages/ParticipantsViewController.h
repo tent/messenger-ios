@@ -6,14 +6,10 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "Conversation.h"
 
 @interface ParticipantsViewController : UITableViewController
-
-{
-    NSArray *participants;
-}
 
 @property (nonatomic) Conversation *conversationManagedObject;
 @end

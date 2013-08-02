@@ -18,6 +18,11 @@
 
 @implementation ConversationViewController
 
+{
+    NSManagedObjectContext *managedObjectContext;
+    NSFetchedResultsController *fetchedResultsController;
+}
+
 - (id)initWithCoder:(NSCoder *)decoder {
     id ret = [super initWithCoder:decoder];
 

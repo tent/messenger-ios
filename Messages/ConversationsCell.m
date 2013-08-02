@@ -14,6 +14,14 @@
 
 @implementation ConversationsCell
 
+{
+    NSArray *contacts;
+    UIView *imageView;
+    UIView *contentView;
+    UILabel *timeView;
+    NSTimer *refreshTimer;
+}
+
 - (void)initConversation:(Conversation *)conversation {
     self.conversation = conversation;
 
@@ -101,7 +109,7 @@
 
     int displayCount;
 
-    if (contacts.count > (nPerRow * nPerRow)) {
+    if ((int)contacts.count > (nPerRow * nPerRow)) {
         displayCount = (nPerRow * nPerRow) - 1;
     } else {
         displayCount = contacts.count;

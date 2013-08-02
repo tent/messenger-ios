@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+@import Foundation;
+@import CoreData;
 
 typedef NS_ENUM(NSUInteger, ConversationMessageState) {
     ConversationMessageDelivering,

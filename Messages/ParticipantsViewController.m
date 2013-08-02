@@ -17,6 +17,10 @@
 
 @implementation ParticipantsViewController
 
+{
+    NSArray *participants;
+}
+
 - (id)initWithCoder:(NSCoder *)decoder
 {
     id ret = [super initWithCoder:decoder];

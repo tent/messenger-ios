@@ -12,6 +12,10 @@
 
 @implementation ConversationTitleView
 
+{
+    ConversationViewController *dataSource;
+}
+
 - (id)initWithFrame:(CGRect)frame withDataSource:(ConversationViewController *)source {
     dataSource = source;
     self = [self initWithFrame:frame];

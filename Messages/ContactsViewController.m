@@ -17,6 +17,12 @@
 
 @implementation ContactsViewController
 
+{
+    UIView *blankView;
+    NSMutableSet *selectedContacts;
+    NSManagedObjectContext *managedObjectContext;
+}
+
 - (NSManagedObjectContext *)managedObjectContext {
     if (!managedObjectContext) {
         managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];

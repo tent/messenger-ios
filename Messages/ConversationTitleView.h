@@ -6,13 +6,10 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "ConversationViewController.h"
 
 @interface ConversationTitleView : UIView
-{
-    ConversationViewController *dataSource;
-}
 
 - (id)initWithFrame:(CGRect)frame withDataSource:(ConversationViewController *)source;
 @end

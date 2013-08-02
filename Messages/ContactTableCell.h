@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Cupcake. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface ContactTableCell : UITableViewCell
 
