@@ -836,6 +836,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages/Messages-Prefix.pch";
 				INFOPLIST_FILE = "Messages/Messages-Info.plist";
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"WARNING_CFLAGS[arch=*]" = (
 					"-Wno-unused-macros",
@@ -858,6 +859,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages/Messages-Prefix.pch";
 				INFOPLIST_FILE = "Messages/Messages-Info.plist";
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
