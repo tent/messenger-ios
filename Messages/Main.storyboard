@@ -180,7 +180,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="2Pe-mf-njI">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="NbK-q0-9ld"/>
                     </navigationItem>
                     <connections>
                         <outlet property="keyboardHeight" destination="I8O-Xk-byv" id="GQy-Jw-JAA"/>
@@ -221,9 +220,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Participants" id="rA6-aw-Ckm">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="Vhi-fJ-sjW"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Participants" id="rA6-aw-Ckm"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQF-lp-Ao4" userLabel="First Responder" sceneMemberID="firstResponder"/>
