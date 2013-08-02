@@ -49,6 +49,10 @@
     // Begin observing the keyboard notifications when the view is loaded.
     [self observeKeyboard];
 
+    // Dismiss keyboard when tap outside
+    UIGestureRecognizer *tapParent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTableTap:)];
+    [self.tableView addGestureRecognizer:tapParent];
+
     [self performFetch];
 
     [self.tableView setDataSource:self];
@@ -216,6 +220,12 @@
         self.messageTextField.text = @"";
     } else {
         NSLog(@"failed to save message: %@ error: %@", message, error);
+    }
+}
+
+- (void)handleTableTap:(id)sender {
+    if ([self.messageTextField isFirstResponder]) {
+        [self.messageTextField resignFirstResponder];
     }
 }
 

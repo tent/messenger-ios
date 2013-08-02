@@ -30,4 +30,5 @@
 - (void)performFetch;
 - (void)configureCell:(ConversationViewTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)scrollToBottom;
+- (void)handleTableTap:(id)sender;
 @end
