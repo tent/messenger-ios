@@ -131,7 +131,7 @@
 
     view.textAlignment = NSTextAlignmentRight;
 
-    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeMedium withWeight:MessagesAestheticsFontWeightRegular];
+    [MessagesAesthetics setFontForLabel:view withStyle:UIFontTextStyleFootnote];
     view.textColor = [MessagesAesthetics greyColor];
 }
 
@@ -144,7 +144,7 @@
     }
     view.text = [contactNames componentsJoinedByString:@", "];
 
-    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeLarge withWeight:MessagesAestheticsFontWeightMedium];
+    [MessagesAesthetics setFontForLabel:view withStyle:UIFontTextStyleSubheadline];
     view.textColor = [MessagesAesthetics blueColor];
 }
 
@@ -157,7 +157,7 @@
         view.text = nil;
     }
 
-    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeMedium withWeight:MessagesAestheticsFontWeightRegular];
+    [MessagesAesthetics setFontForLabel:view withStyle:UIFontTextStyleFootnote];
     view.textColor = [MessagesAesthetics blackColor];
     view.numberOfLines = 2;
 }
@@ -243,14 +243,14 @@
 
         int baseFontSize;
         if (nPerRow > 2) {
-            baseFontSize = MessagesAestheticsFontSizeSmallTiny;
+            baseFontSize = 8;
         } else {
-            baseFontSize = MessagesAestheticsFontSizeMedium;
+            baseFontSize = 13;
         }
 
         int nMoreFontSize;
         if ([nMoreText.text length] > 3) {
-            nMoreFontSize = MessagesAestheticsFontSizeTinyTiny;
+            nMoreFontSize = 5;
         } else {
             nMoreFontSize = baseFontSize;
         }

@@ -24,7 +24,7 @@
     
     self.textLabel.textColor = [MessagesAesthetics blueColor];
 
-    [MessagesAesthetics setFontForLabel:self.textLabel withSize:MessagesAestheticsFontSizeLarge withWeight:MessagesAestheticsFontWeightMedium];
+    [MessagesAesthetics setFontForLabel:self.textLabel withStyle:UIFontTextStyleBody];
     
     CGRect detailTextFrame = self.detailTextLabel.frame;
     detailTextFrame.origin.x += 10;

@@ -111,7 +111,7 @@
     UILabel *view = nameView;
     view.text = self.name;
     view.textColor = [MessagesAesthetics blueColor];
-    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeSmall withWeight:MessagesAestheticsFontWeightMedium];
+    [MessagesAesthetics setFontForLabel:view withStyle:UIFontTextStyleSubheadline];
     [view sizeToFit];
 }
 
@@ -120,7 +120,7 @@
     view.lineBreakMode = NSLineBreakByWordWrapping;
     view.text = self.messageBody;
     view.numberOfLines = 0;
-    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeMedium withWeight:MessagesAestheticsFontWeightRegular];
+    [MessagesAesthetics setFontForLabel:view withStyle:UIFontTextStyleFootnote];
     [view sizeToFit];
 }
 
@@ -133,18 +133,23 @@
     }
 
     // text
-    UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, view.frame.size.width - 10, 0)];
+    UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.frame.size.width - 10, 0)];
     textView.text = [self getStringForMessageState];
     textView.textColor = [MessagesAesthetics greyColor];
     textView.numberOfLines = 0;
-    [MessagesAesthetics setFontForLabel:textView withSize:MessagesAestheticsFontSizeTiny withWeight:MessagesAestheticsFontWeightRegular];
+    [MessagesAesthetics setFontForLabel:textView withStyle:UIFontTextStyleCaption2];
     [textView sizeToFit];
     [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, textView.frame.size.width, textView.frame.size.height)];
 
     // icon
     UIImage *statusIcon = [self getIconForMessageState];
     UIImageView *statusIconView = [[UIImageView alloc] initWithImage:statusIcon];
-    statusIconView.frame = CGRectMake(0, 1, 8, 8);
+    int iconSize = textView.frame.size.height - 6;
+    float iconOffsetY = (textView.frame.size.height - iconSize) / 2;
+    statusIconView.frame = CGRectMake(0, iconOffsetY, iconSize, iconSize);
+
+    // text frame clears icon
+    textView.frame = CGRectOffset(textView.frame, iconSize + 2, 0);
 
     // add subviews
     [view addSubview:statusIconView];

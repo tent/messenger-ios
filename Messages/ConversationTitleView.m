@@ -77,9 +77,9 @@
             [nMoreText setTextColor:[MessagesAesthetics whiteColor]];
             int nMoreFontSize;
             if ([nMoreText.text length] > 3) {
-                nMoreFontSize = MessagesAestheticsFontSizeBigTiny;
+                nMoreFontSize = 10;
             } else {
-                nMoreFontSize = MessagesAestheticsFontSizeMedium;
+                nMoreFontSize = 13;
             }
             [MessagesAesthetics setFontForLabel:nMoreText withSize:nMoreFontSize withWeight:MessagesAestheticsFontWeightLight];
             nMoreText.textAlignment = NSTextAlignmentCenter;

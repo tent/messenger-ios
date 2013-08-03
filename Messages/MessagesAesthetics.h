@@ -14,16 +14,6 @@ typedef NS_ENUM(NSUInteger, MessagesAestheticsFontWeights) {
     MessagesAestheticsFontWeightRegular
 };
 
-typedef NS_ENUM(NSUInteger, MessagesAestheticsFontSizes) {
-    MessagesAestheticsFontSizeTinyTiny, // 5
-    MessagesAestheticsFontSizeSmallTiny, // 8
-    MessagesAestheticsFontSizeTiny, // 9
-    MessagesAestheticsFontSizeBigTiny, // 10
-    MessagesAestheticsFontSizeSmall, // 11
-    MessagesAestheticsFontSizeMedium, // 13
-    MessagesAestheticsFontSizeLarge // 15
-};
-
 @interface MessagesAesthetics : NSObject
 
 #pragma mark - Colors
@@ -39,7 +29,10 @@ typedef NS_ENUM(NSUInteger, MessagesAestheticsFontSizes) {
 
 #pragma mark - Fonts
 
-+ (UIFont *)fontWithSize:(MessagesAestheticsFontSizes)size weight:(MessagesAestheticsFontWeights)weight;
-+ (void)setFontForLabel:(UILabel *)label withSize:(MessagesAestheticsFontSizes)size withWeight:(MessagesAestheticsFontWeights)weight;
++ (UIFont *)fontWithStyle:(NSString *)style;
++ (UIFont *)fontWithSize:(CGFloat)size withWeight:(MessagesAestheticsFontWeights)weight;
++ (void)setFontForLabel:(UILabel *)label withStyle:(NSString *)style;
++ (void)setFontForLabel:(UILabel *)label withSize:(CGFloat)size withWeight:(MessagesAestheticsFontWeights)weight;
++ (NSString *)fontName:(MessagesAestheticsFontWeights)weight;
 
 @end

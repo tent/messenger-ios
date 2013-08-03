@@ -87,7 +87,25 @@
 
 #pragma mark - Fonts
 
-+ (UIFont *)fontWithSize:(MessagesAestheticsFontSizes)size weight:(MessagesAestheticsFontWeights)weight {
++ (UIFont *)fontWithStyle:(NSString *)style {
+    UIFontDescriptor *fontDescriptor = [UIFontDescriptor preferredFontDescriptorWithTextStyle:style];
+
+    return [UIFont fontWithDescriptor:fontDescriptor size:fontDescriptor.pointSize];
+}
+
++ (UIFont *)fontWithSize:(CGFloat)size withWeight:(MessagesAestheticsFontWeights)weight {
+    return [UIFont fontWithName:[self fontName:weight] size:size];
+}
+
++ (void)setFontForLabel:(UILabel *)label withStyle:(NSString *)style {
+    [label setFont:[self fontWithStyle:style]];
+}
+
++ (void)setFontForLabel:(UILabel *)label withSize:(CGFloat)size withWeight:(MessagesAestheticsFontWeights)weight {
+    [label setFont:[self fontWithSize:size withWeight:weight]];
+}
+
++ (NSString *)fontName:(MessagesAestheticsFontWeights)weight {
     NSString *fontName;
     switch (weight) {
         case MessagesAestheticsFontWeightLight:
@@ -103,41 +121,7 @@
             break;
     }
 
-    int fontSize;
-    switch (size) {
-        case MessagesAestheticsFontSizeTinyTiny:
-            fontSize = 5;
-            break;
-        case MessagesAestheticsFontSizeSmallTiny:
-            fontSize = 8;
-            break;
-        case MessagesAestheticsFontSizeTiny:
-            fontSize = 9;
-            break;
-
-        case MessagesAestheticsFontSizeBigTiny:
-            fontSize = 10;
-            break;
-
-        case MessagesAestheticsFontSizeSmall:
-            fontSize = 11;
-            break;
-
-        case MessagesAestheticsFontSizeMedium:
-            fontSize = 13;
-            break;
-
-        case MessagesAestheticsFontSizeLarge:
-            fontSize = 15;
-            break;
-    }
-
-    return [UIFont fontWithName:fontName size:fontSize];
-}
-
-+ (void)setFontForLabel:(UILabel *)label withSize:(MessagesAestheticsFontSizes)size withWeight:(MessagesAestheticsFontWeights)weight {
-    UIFont *font = [self fontWithSize:size weight:weight];
-    [label setFont:font];
+    return fontName;
 }
 
 @end
