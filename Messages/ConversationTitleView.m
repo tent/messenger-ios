@@ -9,6 +9,7 @@
 #import "ConversationTitleView.h"
 #import "UIImage+Resize.h"
 #import "Contact.h"
+#import "MessagesAesthetics.h"
 
 @implementation ConversationTitleView
 
@@ -68,19 +69,19 @@
             // +n view
             UIView *nMore = [[UIView alloc] initWithFrame:CGRectMake(offset, 0, avatarSize, avatarSize)];
             [nMore.layer setCornerRadius:3];
-            [nMore.layer setBorderColor:[UIColor whiteColor].CGColor];
+            [nMore.layer setBorderColor:[MessagesAesthetics whiteColor].CGColor];
             [nMore.layer setBorderWidth:1];
             UILabel *nMoreText = [[UILabel alloc] initWithFrame:CGRectMake(1.5f, 1.5f, avatarSize - 3, avatarSize - 3)];
             nMoreText.text = [[NSString alloc] initWithFormat:@"+%d", avatarCount - displayAvatarCount];
-            [nMoreText setBackgroundColor:[[UIColor alloc] initWithWhite:1 alpha:0]];
-            [nMoreText setTextColor:[[UIColor alloc] initWithWhite:1 alpha:1]];
+            [nMoreText setBackgroundColor:[MessagesAesthetics transparentColor]];
+            [nMoreText setTextColor:[MessagesAesthetics whiteColor]];
             int nMoreFontSize;
             if ([nMoreText.text length] > 3) {
-                nMoreFontSize = 10;
+                nMoreFontSize = MessagesAestheticsFontSizeBigTiny;
             } else {
-                nMoreFontSize = 13;
+                nMoreFontSize = MessagesAestheticsFontSizeMedium;
             }
-            [nMoreText setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:nMoreFontSize]];
+            [MessagesAesthetics setFontForLabel:nMoreText withSize:nMoreFontSize withWeight:MessagesAestheticsFontWeightLight];
             nMoreText.textAlignment = NSTextAlignmentCenter;
             [nMore addSubview:nMoreText];
             [self addSubview:nMore];

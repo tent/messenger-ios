@@ -7,6 +7,7 @@
 //
 
 #import "ConversationViewTableCell.h"
+#import "MessagesAesthetics.h"
 
 @implementation ConversationViewTableCell
 
@@ -109,8 +110,8 @@
 - (void)refreshNameViewContent {
     UILabel *view = nameView;
     view.text = self.name;
-    view.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
-    [view setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:11]];
+    view.textColor = [MessagesAesthetics blueColor];
+    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeSmall withWeight:MessagesAestheticsFontWeightMedium];
     [view sizeToFit];
 }
 
@@ -119,7 +120,7 @@
     view.lineBreakMode = NSLineBreakByWordWrapping;
     view.text = self.messageBody;
     view.numberOfLines = 0;
-    [view setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
+    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeMedium withWeight:MessagesAestheticsFontWeightRegular];
     [view sizeToFit];
 }
 
@@ -134,9 +135,9 @@
     // text
     UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, view.frame.size.width - 10, 0)];
     textView.text = [self getStringForMessageState];
-    textView.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+    textView.textColor = [MessagesAesthetics greyColor];
     textView.numberOfLines = 0;
-    [textView setFont:[UIFont fontWithName:@"HelveticaNeue" size:9]];
+    [MessagesAesthetics setFontForLabel:textView withSize:MessagesAestheticsFontSizeTiny withWeight:MessagesAestheticsFontWeightRegular];
     [textView sizeToFit];
     [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, textView.frame.size.width, textView.frame.size.height)];
 
@@ -202,9 +203,9 @@
 - (UIColor*)getBubbleBackgroundColor {
     ConversationMessageAlignment alignment = self.messageAlignment;
     if (alignment == ConversationMessageRight) {
-        return [[UIColor alloc] initWithRed:214/255.0 green:233/255.0 blue:248/255.0 alpha:1];
+        return [MessagesAesthetics whiteBlueColor];
     } else {
-        return [[UIColor alloc] initWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1];
+        return [MessagesAesthetics lightGreyColor];
     }
 }
 

@@ -39,6 +39,7 @@
 		88DD55D717A583E300954C01 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DD55D617A583E300954C01 /* Contact.m */; };
 		88DD55DA17A583E300954C01 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 88DD55D917A583E300954C01 /* Conversation.m */; };
 		88DD55DC17A5927300954C01 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DD55DB17A5927300954C01 /* CoreData.framework */; };
+		88E56E7E17AD6C1900860AE4 /* MessagesAesthetics.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E56E7D17AD6C1900860AE4 /* MessagesAesthetics.m */; };
 		88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,8 @@
 		88DD55D817A583E300954C01 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		88DD55D917A583E300954C01 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		88DD55DB17A5927300954C01 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		88E56E7C17AD6C1900860AE4 /* MessagesAesthetics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesAesthetics.h; sourceTree = "<group>"; };
+		88E56E7D17AD6C1900860AE4 /* MessagesAesthetics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesAesthetics.m; sourceTree = "<group>"; };
 		88FFA67A179C3D4400B1F3BB /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
 		88FFA67B179C3D4400B1F3BB /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		F71820E194564976ABA14608 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +195,8 @@
 		88DA4ADE179B82C9006ECD0A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				88E56E7C17AD6C1900860AE4 /* MessagesAesthetics.h */,
+				88E56E7D17AD6C1900860AE4 /* MessagesAesthetics.m */,
 				88DA4AE7179B82C9006ECD0A /* AppDelegate.h */,
 				88DA4AE8179B82C9006ECD0A /* AppDelegate.m */,
 				88DA4B0F179B860A006ECD0A /* RootNavigationController.h */,
@@ -433,6 +438,7 @@
 				88DD55D717A583E300954C01 /* Contact.m in Sources */,
 				8858477317A1E5D500DD4979 /* ParticipantsViewController.m in Sources */,
 				88DA4B0E179B84A2006ECD0A /* ConversationsViewController.m in Sources */,
+				88E56E7E17AD6C1900860AE4 /* MessagesAesthetics.m in Sources */,
 				8858476C17A05F0B00DD4979 /* BubbleNibView.m in Sources */,
 				88DA4B11179B860A006ECD0A /* RootNavigationController.m in Sources */,
 				88DD55DA17A583E300954C01 /* Conversation.m in Sources */,

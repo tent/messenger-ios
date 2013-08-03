@@ -7,6 +7,7 @@
 //
 
 #import "RootNavigationController.h"
+#import "MessagesAesthetics.h"
 
 @interface RootNavigationController ()
 
@@ -25,7 +26,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationBar.barTintColor = [UIColor colorWithRed:30/255.0 green:132/255.0 blue:217/255.0 alpha:1];
+    self.navigationBar.barTintColor = [MessagesAesthetics lightBlueColor];
 }
 
 - (void)viewDidLoad

@@ -11,6 +11,7 @@
 #import "NSDate+TimeAgo.h"
 #import "Contact.h"
 #import "Message.h"
+#import "MessagesAesthetics.h"
 
 @implementation ConversationsCell
 
@@ -130,9 +131,8 @@
 
     view.textAlignment = NSTextAlignmentRight;
 
-
-    [view setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
-    view.textColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeMedium withWeight:MessagesAestheticsFontWeightRegular];
+    view.textColor = [MessagesAesthetics greyColor];
 }
 
 - (void)refreshNameViewContent {
@@ -144,8 +144,8 @@
     }
     view.text = [contactNames componentsJoinedByString:@", "];
 
-    [view setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:15]];
-    view.textColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
+    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeLarge withWeight:MessagesAestheticsFontWeightMedium];
+    view.textColor = [MessagesAesthetics blueColor];
 }
 
 - (void)refreshBodyViewContent {
@@ -157,8 +157,8 @@
         view.text = nil;
     }
 
-    [view setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
-    view.textColor = [[UIColor alloc] initWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
+    [MessagesAesthetics setFontForLabel:view withSize:MessagesAestheticsFontSizeMedium withWeight:MessagesAestheticsFontWeightRegular];
+    view.textColor = [MessagesAesthetics blackColor];
     view.numberOfLines = 2;
 }
 
@@ -233,29 +233,29 @@
 
         UIView *nMoreView = [[UIView alloc] initWithFrame:CGRectMake(offsetX, offsetY, avatarSize, avatarSize)];
         [nMoreView.layer setCornerRadius:3];
-        [nMoreView.layer setBorderColor:[UIColor blackColor].CGColor];
+        [nMoreView.layer setBorderColor:[MessagesAesthetics blackColor].CGColor];
         [nMoreView.layer setBorderWidth:1];
 
         UILabel *nMoreText = [[UILabel alloc] initWithFrame:CGRectMake(1.5f, 1.5f, avatarSize - 3, avatarSize - 3)];
         nMoreText.text = [[NSString alloc] initWithFormat:@"+%d", nMore];
-        [nMoreText setBackgroundColor:[[UIColor alloc] initWithWhite:1 alpha:0]];
-        [nMoreText setTextColor:[[UIColor alloc] initWithWhite:0 alpha:1]];
+        [nMoreText setBackgroundColor:[MessagesAesthetics transparentColor]];
+        [nMoreText setTextColor:[MessagesAesthetics blackColor]];
 
         int baseFontSize;
         if (nPerRow > 2) {
-            baseFontSize = 8;
+            baseFontSize = MessagesAestheticsFontSizeSmallTiny;
         } else {
-            baseFontSize = 13;
+            baseFontSize = MessagesAestheticsFontSizeMedium;
         }
 
         int nMoreFontSize;
         if ([nMoreText.text length] > 3) {
-            nMoreFontSize = baseFontSize - 3;
+            nMoreFontSize = MessagesAestheticsFontSizeTinyTiny;
         } else {
             nMoreFontSize = baseFontSize;
         }
 
-        [nMoreText setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:nMoreFontSize]];
+        [MessagesAesthetics setFontForLabel:nMoreText withSize:nMoreFontSize withWeight:MessagesAestheticsFontWeightLight];
         nMoreText.textAlignment = NSTextAlignmentCenter;
         [nMoreView addSubview:nMoreText];
 
