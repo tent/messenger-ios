@@ -349,6 +349,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Cupcake;
 				TargetAttributes = {
+					88DA4AD4179B82C9006ECD0A = {
+						DevelopmentTeam = 3D6TH57376;
+					};
 					88DA4AEF179B82C9006ECD0A = {
 						TestTargetID = 88DA4AD4179B82C9006ECD0A;
 					};
@@ -567,11 +570,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages/Messages-Prefix.pch";
 				INFOPLIST_FILE = "Messages/Messages-Info.plist";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				"WARNING_CFLAGS[arch=*]" = (
 					"-Wno-unused-macros",
 					"-Wno-arc-repeated-use-of-weak",
@@ -590,11 +596,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Messages/Messages-Prefix.pch";
 				INFOPLIST_FILE = "Messages/Messages-Info.plist";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
