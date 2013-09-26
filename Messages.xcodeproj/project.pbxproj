@@ -20,6 +20,7 @@
 		8858477317A1E5D500DD4979 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477217A1E5D500DD4979 /* ParticipantsViewController.m */; };
 		8858477617A1EC3100DD4979 /* ParticipantTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477517A1EC3100DD4979 /* ParticipantTableCell.m */; };
 		8858477917A20ACB00DD4979 /* ConversationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477817A20ACB00DD4979 /* ConversationsCell.m */; };
+		88C8131D17F4934B0042CDD9 /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8131C17F4934B0042CDD9 /* AuthenticationViewController.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
 		88DA4ADD179B82C9006ECD0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADC179B82C9006ECD0A /* UIKit.framework */; };
@@ -75,6 +76,8 @@
 		8858477517A1EC3100DD4979 /* ParticipantTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantTableCell.m; sourceTree = "<group>"; };
 		8858477717A20ACB00DD4979 /* ConversationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsCell.h; sourceTree = "<group>"; };
 		8858477817A20ACB00DD4979 /* ConversationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsCell.m; sourceTree = "<group>"; };
+		88C8131B17F4934B0042CDD9 /* AuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationViewController.h; sourceTree = "<group>"; };
+		88C8131C17F4934B0042CDD9 /* AuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationViewController.m; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DA4AD8179B82C9006ECD0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -159,6 +162,16 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		88C8131A17F492F00042CDD9 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				88C8131B17F4934B0042CDD9 /* AuthenticationViewController.h */,
+				88C8131C17F4934B0042CDD9 /* AuthenticationViewController.m */,
+			);
+			name = Authentication;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		88DA4ACC179B82C9006ECD0A = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +214,7 @@
 				88DA4AE8179B82C9006ECD0A /* AppDelegate.m */,
 				88DA4B0F179B860A006ECD0A /* RootNavigationController.h */,
 				88DA4B10179B860A006ECD0A /* RootNavigationController.m */,
+				88C8131A17F492F00042CDD9 /* Authentication */,
 				88E56E7B17AB42F700860AE4 /* Participants View */,
 				88E56E7A17AB42DB00860AE4 /* Contacts View */,
 				88E56E7917AB42B700860AE4 /* Conversation View */,
@@ -451,6 +465,7 @@
 				885429CB179DA471009F8F78 /* ConversationViewController.m in Sources */,
 				88DD55D417A583E200954C01 /* Message.m in Sources */,
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
+				88C8131D17F4934B0042CDD9 /* AuthenticationViewController.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
 				88542A5E179EFF88009F8F78 /* ConversationViewTableCell.m in Sources */,
