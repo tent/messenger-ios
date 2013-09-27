@@ -60,7 +60,15 @@
 }
 
 - (void)signinButtonPressed:(id)sender {
-    NSLog(@"signin button pressed");
+    NSURL *entityURI = [NSURL URLWithString:self.entityTextField.text];
+    TentClient *client = [TentClient clientWithEntity:entityURI];
+    self.client = client;
+
+    [client performDiscoveryWithSuccessBlock:^{
+        // success
+    } failureBlock:^{
+        // failure
+    }];
 }
 
 - (void)entityTextFieldChanged:(id)sender {

@@ -1,19 +1,44 @@
 PODS:
+  - AFNetworking (2.0.0-RC3):
+    - AFNetworking/Core
+  - AFNetworking/Core (2.0.0-RC3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLConnection (2.0.0-RC3)
+  - AFNetworking/Reachability (2.0.0-RC3)
+  - AFNetworking/Security (2.0.0-RC3)
+  - AFNetworking/Serialization (2.0.0-RC3)
+  - Hawk (0.1.4)
   - NSDate+TimeAgo (1.0.2)
+  - TentClient (0.0.1):
+    - AFNetworking (= 2.0.0-RC3)
+    - Hawk
   - UIImage-Categories (0.1.0)
 
 DEPENDENCIES:
+  - AFNetworking (from `~/repos/AFNetworking`)
+  - Hawk (from `https://raw.github.com/tent/hawk-objc/master/Hawk.podspec`)
   - NSDate+TimeAgo (from `https://github.com/jvatic/NSDate-TimeAgo.git`)
+  - TentClient (from `~/repos/tent-client-objc`)
   - UIImage-Categories (from `https://github.com/titanous/UIImage-Categories.git`)
 
 EXTERNAL SOURCES:
+  AFNetworking:
+  Hawk:
+    :podspec: https://raw.github.com/tent/hawk-objc/master/Hawk.podspec
   NSDate+TimeAgo:
     :git: https://github.com/jvatic/NSDate-TimeAgo.git
+  TentClient:
   UIImage-Categories:
     :git: https://github.com/titanous/UIImage-Categories.git
 
 SPEC CHECKSUMS:
+  AFNetworking: cd9fc75b044a08d28e7e1641ed68aa661b330772
+  Hawk: 7f7a879fd088aa79ea3bbde8137d38182a9cc0d7
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
+  TentClient: 16b3e2af9310f478dd863a7dd276f0cc2fd3a0be
   UIImage-Categories: 70daa534555dbe4af0551dcc4e0d45c7486d145c
 
 COCOAPODS: 0.22.2

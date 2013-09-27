@@ -8,9 +8,13 @@
 
 @import UIKit;
 
+#import "TentClient.h"
+
 @interface AuthenticationViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *entityTextField;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
+
+@property (nonatomic) TentClient *client;
 
 @end
