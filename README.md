@@ -21,7 +21,7 @@ We really want to all the apps in this space to play well with each other. We'll
 
 ## Post Scheme
 
-Every conversation is composed of one `conversation` post and many `message` posts. Each `message` post _mentions_ and _refs_ the conversation post and all the conversation participants.
+Every conversation is composed of one `conversation` post and many `message` posts. Each `message` post _mentions_ and _refs_ the `conversation` post and all the conversation participants.
 
 Apps may (but are not required to) limit permissions on both `conversation` and `message` posts to conversation participants.
 
