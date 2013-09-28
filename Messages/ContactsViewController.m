@@ -3,7 +3,7 @@
 //  Messages
 //
 //  Created by Jesse on 7/21/13.
-//  Copyright (c) 2013 Cupcake. All rights reserved.
+//  Copyright (c) 2013 Boolean Cupcake, LLC. All rights reserved.
 //
 
 #import "ContactsViewController.h"

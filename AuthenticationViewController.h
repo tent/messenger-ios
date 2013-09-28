@@ -3,7 +3,7 @@
 //  Messages
 //
 //  Created by Jesse Stuart on 9/26/13.
-//  Copyright (c) 2013 Cupcake. All rights reserved.
+//  Copyright (c) 2013 Boolean Cupcake, LLC. All rights reserved.
 //
 
 @import UIKit;
