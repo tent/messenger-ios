@@ -18,3 +18,31 @@ Because this will be the first set of applications to focus on group collaborati
 
 
 We really want to all the apps in this space to play well with each other. We'll publish a post scheme soon and posssibly a test suite to further that goal
+
+## Post Scheme
+
+Every conversation is composed of one `conversation` post and many `message` posts. Each `message` post _mentions_ and _refs_ the conversation post and all the conversation participants.
+
+Apps may (but are not required to) limit permissions on both `conversation` and `message` posts to conversation participants.
+
+Media will be addressed in the future.
+
+### Conversation Post
+
+To create a converation, an entity creates a `conversation` post which _mentions_ all intended participants.
+
+The participants of a conversation are the entity who created the `conversation` post plus all those _mentioned_ in the `conversation` post.
+
+| Field | Required | Type | Description |
+| ----- | -------- | ---- | ----------- |
+| | | |
+
+(post contains no fields)
+
+### Message Post
+
+Each message post must _mention_ and _ref_ both the `conversation` post and _mention_ each participant in the conversation.
+
+| Field | Required | Type | Description |
+| ----- | -------- | ---- | ----------- |
+| `text` | Optional | 	String | The message in UTF-8 encoding, max 2,000 unicode code points. |
