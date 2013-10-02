@@ -64,11 +64,23 @@
     TentClient *client = [TentClient clientWithEntity:entityURI];
     self.client = client;
 
-    [client performDiscoveryWithSuccessBlock:^{
-        // success
-    } failureBlock:^{
-        // failure
-    }];
+    TCAppPost *appPost = [[TCAppPost alloc] init];
+
+    appPost.typeURI = @"https://tent.io/types/app/v0#";
+    appPost.name = @"Messenger iOS";
+    appPost.appDescription = @"Private messenger app for iOS 7+";
+    appPost.URL = [NSURL URLWithString:@"https://github.com/cupcake/messenger-ios"];
+    appPost.redirectURI = [NSURL URLWithString:@"tentmessengerapp://oauth/callback"];
+    appPost.writeTypes = @[
+                           @"https://tent.io/types/conversation/v0",
+                           @"https://tent.io/types/message/v0"
+                           ];
+
+    [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCAuthPost *authPost) {
+        NSLog(@"auth: %@, credentials: %@", appPost, [appPost.credentialsPost serializeJSONObject]);
+    } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"auth error: %@, response: %@", error, operation ? [[NSString alloc] initWithData: operation.responseData encoding:NSUTF8StringEncoding] : nil);
+    } viewController:self];
 }
 
 - (void)entityTextFieldChanged:(id)sender {
