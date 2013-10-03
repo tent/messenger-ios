@@ -1,31 +1,42 @@
 PODS:
-  - AFNetworking (2.0.0-RC3):
-    - AFNetworking/Core
-  - AFNetworking/Core (2.0.0-RC3):
+  - AFNetworking (2.0.0):
     - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLConnection (2.0.0-RC3)
-  - AFNetworking/Reachability (2.0.0-RC3)
-  - AFNetworking/Security (2.0.0-RC3)
-  - AFNetworking/Serialization (2.0.0-RC3)
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.0.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.0.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.0.0)
+  - AFNetworking/Security (2.0.0)
+  - AFNetworking/Serialization (2.0.0)
+  - AFNetworking/UIKit (2.0.0):
+    - AFNetworking/NSURLConnection
   - Hawk (0.1.4)
+  - Mantle (1.3):
+    - Mantle/extobjc
+  - Mantle/extobjc (1.3)
   - NSDate+TimeAgo (1.0.2)
   - TentClient (0.0.1):
-    - AFNetworking (= 2.0.0-RC3)
+    - AFNetworking (= 2.0.0)
     - Hawk
+    - Mantle (= 1.3)
   - UIImage-Categories (0.1.0)
 
 DEPENDENCIES:
-  - AFNetworking (from `~/repos/AFNetworking`)
   - Hawk (from `https://raw.github.com/tent/hawk-objc/master/Hawk.podspec`)
   - NSDate+TimeAgo (from `https://github.com/jvatic/NSDate-TimeAgo.git`)
   - TentClient (from `~/repos/tent-client-objc`)
   - UIImage-Categories (from `https://github.com/titanous/UIImage-Categories.git`)
 
 EXTERNAL SOURCES:
-  AFNetworking:
   Hawk:
     :podspec: https://raw.github.com/tent/hawk-objc/master/Hawk.podspec
   NSDate+TimeAgo:
@@ -35,10 +46,11 @@ EXTERNAL SOURCES:
     :git: https://github.com/titanous/UIImage-Categories.git
 
 SPEC CHECKSUMS:
-  AFNetworking: cd9fc75b044a08d28e7e1641ed68aa661b330772
+  AFNetworking: 3fa983b1beaba69566a3374612511e2a6e3fe845
   Hawk: 7f7a879fd088aa79ea3bbde8137d38182a9cc0d7
+  Mantle: c3e963daaad6f1418feacce974d789b2d0465539
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
-  TentClient: 16b3e2af9310f478dd863a7dd276f0cc2fd3a0be
+  TentClient: 4f6fd04749c17fe215f4c59cf40c594b91f1df8a
   UIImage-Categories: 70daa534555dbe4af0551dcc4e0d45c7486d145c
 
 COCOAPODS: 0.22.2
