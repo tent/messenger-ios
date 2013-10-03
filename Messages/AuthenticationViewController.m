@@ -7,12 +7,20 @@
 //
 
 #import "AuthenticationViewController.h"
+#import "AppDelegate.h"
+#import "TCPost+CoreData.h"
+
+@import CoreData;
 
 @interface AuthenticationViewController ()
 
 @end
 
 @implementation AuthenticationViewController
+
+{
+    NSManagedObjectContext *managedObjectContext;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,27 +67,73 @@
     }
 }
 
+- (TCAppPost *)appPostWithError:(NSError **)error {
+    TCAppPost *appPost;
+
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TCAppPost"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientReceivedAt" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    TCAppPostManagedObject *appPostManagedObject;
+
+    if ([fetchedResultsController.fetchedObjects count] > 0) {
+        appPostManagedObject = [fetchedResultsController.fetchedObjects objectAtIndex:0];
+    }
+
+    if ([appPostManagedObject isKindOfClass:TCAppPostManagedObject.class]) {
+        appPost = [MTLManagedObjectAdapter modelOfClass:TCAppPost.class fromManagedObject:appPostManagedObject error:error];
+    } else {
+        appPost = [[TCAppPost alloc] init];
+
+        appPost.typeURI = @"https://tent.io/types/app/v0#";
+        appPost.name = @"Messenger iOS";
+        appPost.appDescription = @"Private messenger app for iOS 7+";
+        appPost.URL = [NSURL URLWithString:@"https://github.com/cupcake/messenger-ios"];
+        appPost.redirectURI = [NSURL URLWithString:@"tentmessengerapp://oauth/callback"];
+        appPost.writeTypes = @[
+                               @"https://tent.io/types/conversation/v0",
+                               @"https://tent.io/types/message/v0"
+                               ];
+    }
+
+    return appPost;
+}
+
+- (void)persistAppPost:(TCAppPost *)appPost error:(NSError **)error {
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    TCAppPostManagedObject *appManagedObject = (TCAppPostManagedObject *)[MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:context error:error];
+
+    [context save:error];
+}
+
 - (void)signinButtonPressed:(id)sender {
     NSURL *entityURI = [NSURL URLWithString:self.entityTextField.text];
     TentClient *client = [TentClient clientWithEntity:entityURI];
     self.client = client;
 
-    TCAppPost *appPost = [[TCAppPost alloc] init];
+    __block NSError *error;
+    TCAppPost *appPost = [self appPostWithError:&error];
 
-    appPost.typeURI = @"https://tent.io/types/app/v0#";
-    appPost.name = @"Messenger iOS";
-    appPost.appDescription = @"Private messenger app for iOS 7+";
-    appPost.URL = [NSURL URLWithString:@"https://github.com/cupcake/messenger-ios"];
-    appPost.redirectURI = [NSURL URLWithString:@"tentmessengerapp://oauth/callback"];
-    appPost.writeTypes = @[
-                           @"https://tent.io/types/conversation/v0",
-                           @"https://tent.io/types/message/v0"
-                           ];
+    if (error) {
+        // TODO: Inform user of error
+        return;
+    }
 
-    [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCAuthPost *authPost) {
-        NSLog(@"auth: %@, credentials: %@", appPost, [appPost.credentialsPost serializeJSONObject]);
+    [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
+        [self persistAppPost:appPost error:&error];
+
+        // TODO: Open ConversationsViewController
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"auth error: %@, response: %@", error, operation ? [[NSString alloc] initWithData: operation.responseData encoding:NSUTF8StringEncoding] : nil);
+        // TODO: Inform user of error
     } viewController:self];
 }
 
@@ -99,6 +153,14 @@
     }
 
     return NO;
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+    if (!managedObjectContext) {
+        managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
+    }
+
+    return managedObjectContext;
 }
 
 #pragma mark - UITextFieldDelegate
