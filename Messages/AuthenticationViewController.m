@@ -67,7 +67,7 @@
     }
 }
 
-- (TCAppPost *)appPostWithError:(NSError **)error {
+- (TCAppPost *)appPostForEntity:(NSString *)entity error:(NSError **)error {
     TCAppPost *appPost;
 
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -77,6 +77,9 @@
     // Configure sort order
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientReceivedAt" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entity];
+    [fetchRequest setPredicate:predicate];
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
 
@@ -121,7 +124,7 @@
     self.client = client;
 
     __block NSError *error;
-    TCAppPost *appPost = [self appPostWithError:&error];
+    TCAppPost *appPost = [self appPostForEntity:[entityURI absoluteString] error:&error];
 
     if (error) {
         // TODO: Inform user of error
