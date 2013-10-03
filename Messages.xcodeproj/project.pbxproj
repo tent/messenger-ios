@@ -219,8 +219,8 @@
 				88E56E7A17AB42DB00860AE4 /* Contacts View */,
 				88E56E7917AB42B700860AE4 /* Conversation View */,
 				88E56E7817AB429D00860AE4 /* Conversations View */,
-				88E56E7317AB41AC00860AE4 /* Resources */,
 				880221DC17A45A73004B3ED8 /* Model Classes */,
+				88E56E7317AB41AC00860AE4 /* Resources */,
 				88DA4AEA179B82C9006ECD0A /* Images.xcassets */,
 				88DA4ADF179B82C9006ECD0A /* Supporting Files */,
 			);
