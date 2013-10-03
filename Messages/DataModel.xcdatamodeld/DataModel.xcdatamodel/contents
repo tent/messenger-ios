@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3383" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F37" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Contact" representedClassName="Contact" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,9 +18,49 @@
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="messages" inverseEntity="Contact" syncable="YES"/>
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
     </entity>
+    <entity name="TCAppPost" representedClassName="TCAppPostManagedObject" parentEntity="TCPost" syncable="YES">
+        <attribute name="appDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationTypes" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="notificationURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="readTypes" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="redirectURI" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scopes" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="writeTypes" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="authCredentialsPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCCredentialsPost" syncable="YES"/>
+        <relationship name="credentialsPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCCredentialsPost" inverseName="appPost" inverseEntity="TCCredentialsPost" syncable="YES"/>
+    </entity>
+    <entity name="TCCredentialsPost" representedClassName="TCCredentialsPostManagedObject" parentEntity="TCPost" syncable="YES">
+        <attribute name="algorithm" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="appPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCAppPost" inverseName="credentialsPost" inverseEntity="TCAppPost" syncable="YES"/>
+    </entity>
+    <entity name="TCPost" representedClassName="TCPostManagedObject" syncable="YES">
+        <attribute name="attachments" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="clientReceivedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="content" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="entityURI" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mentions" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="permissionsEntities" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="permissionsGroups" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="permissionsPublic" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="publishedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="receivedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="refs" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="typeURI" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="versionID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="versionParents" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="versionPublishedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="versionReceivedAt" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Contact" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Conversation" positionX="243" positionY="27" width="128" height="90"/>
-        <element name="Message" positionX="333" positionY="327" width="128" height="105"/>
+        <element name="Contact" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Message" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TCAppPost" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TCCredentialsPost" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TCPost" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
