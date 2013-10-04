@@ -191,7 +191,15 @@
 - (void)authenticateWithApp:(TCAppPost *)appPost {
     self.signinButton.enabled = NO;
 
-    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
+    NSURL *entityURI;
+
+    if (appPost.entityURI) {
+        entityURI = appPost.entityURI;
+    } else {
+        entityURI = [NSURL URLWithString:self.entityTextField.text];
+    }
+
+    TentClient *client = [TentClient clientWithEntity:entityURI];
     self.client = client;
 
     __block NSError *error;
