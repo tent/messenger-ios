@@ -8,6 +8,7 @@
 
 #import "ConversationsViewController.h"
 #import "ConversationViewController.h"
+#import "AuthenticationViewController.h"
 #import "AppDelegate.h"
 #import "Conversation.h"
 
@@ -157,69 +158,14 @@
 
 #pragma mark - IBAction
 
-- (IBAction)editButtonPressed:(id)sender {
-    self.selectedIndexPaths = [[NSMutableSet alloc] init];
-
-    if (self.tableView.editing) {
-        [self.tableView setEditing:NO animated:YES];
-
-        // Change edit button style
-        self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self.editButton.target action:self.editButton.action];
-        self.navigationItem.leftBarButtonItem = self.editButton;
-
-        // Change action button style
-        self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self.actionButton.target action:self.actionButton.action];
-        self.navigationItem.rightBarButtonItem = self.actionButton;
-    } else {
-        [self.tableView setEditing:YES animated:YES];
-
-        // Change edit button style
-        UIBarButtonItem *newItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.editButton.target action:self.editButton.action];
-        self.editButton = newItem;
-        self.navigationItem.leftBarButtonItem = newItem;
-
-        // Change action button style
-        self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self.actionButton.target action:self.actionButton.action];
-        self.navigationItem.rightBarButtonItem = self.actionButton;
-    }
+- (IBAction)accountsButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"accountsSegue" sender:self];
 }
 
 - (IBAction)actionButtonPressed:(id)sender {
-    if (self.tableView.editing) {
-        NSString *alertMessage = @"This will delete the selected conversations";
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                    initWithTitle:@"Delete Conversations"
-                                    message:alertMessage
-                                    delegate:self
-                                    cancelButtonTitle:@"Cancel"
-                                    otherButtonTitles:@"Delete", nil];
-        [alertView show];
-    } else {
-        [self performSegueWithIdentifier:@"newMessage" sender:self];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) { // delete
-        [self deleteSelectedConversations];
-    }
+    [self performSegueWithIdentifier:@"newMessage" sender:self];
 }
 
 #pragma mark -
-
-- (void)deleteSelectedConversations {
-    ConversationsCell *cell;
-    for (NSIndexPath *indexPath in self.selectedIndexPaths) {
-        cell = (ConversationsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        [[self managedObjectContext] deleteObject:cell.conversation];
-    }
-
-    NSError *error;
-    [[self managedObjectContext] save:&error];
-
-    [self editButtonPressed:self];
-}
 
 @end

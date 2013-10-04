@@ -20,6 +20,8 @@
 
 {
     NSManagedObjectContext *managedObjectContext;
+
+    NSString *currentEntity;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -35,7 +37,7 @@
 {
     [super viewDidLoad];
 
-    [self setTitle:@"Sign in with Tent™"];
+    [self setTitle:@"Accounts"];
 
     // Dismiss keyboard when tap outside
     UIGestureRecognizer *tapParent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard:)];
@@ -53,16 +55,29 @@
     // Get notified when text field content changes
     [self.entityTextField addTarget:self action:@selector(entityTextFieldChanged:) forControlEvents:UIControlEventEditingChanged];
 
-    NSError *error;
-    TCAppPost *appPost = [self firstAppPostWithError:&error];
+    TCAppPost *currentAppPost = ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost;
 
-    if (!error) {
-        self.entityTextField.text = [appPost.entityURI absoluteString];
+    if (currentAppPost) {
+        currentEntity = [currentAppPost.entityURI absoluteString];
 
-        [self authenticateWithApp:appPost];
-    } else {
-        // Disable sign in button initially
+        self.entityTextField.text = currentEntity;
+
         self.signinButton.enabled = NO;
+
+        UIBarButtonItem *signoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign out" style:UIBarButtonItemStylePlain target:self action:@selector(signoutButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = signoutButton;
+    } else {
+        NSError *error;
+        TCAppPost *appPost = [self firstAppPostWithError:&error];
+
+        if (!error) {
+            self.entityTextField.text = [appPost.entityURI absoluteString];
+
+            [self authenticateWithApp:appPost];
+        } else {
+            // Disable sign in button initially
+            self.signinButton.enabled = NO;
+        }
     }
 }
 
@@ -197,7 +212,12 @@
 
 - (void)entityTextFieldChanged:(id)sender {
     if ([self validateEntityTextField]) {
-        self.signinButton.enabled = YES;
+        if ([self.entityTextField.text isEqualToString:currentEntity]) {
+            // Already authenticated
+            self.signinButton.enabled = NO;
+        } else {
+            self.signinButton.enabled = YES;
+        }
     } else {
         self.signinButton.enabled = NO;
     }
@@ -211,6 +231,38 @@
     }
 
     return NO;
+}
+
+- (void)signoutButtonPressed:(id)sender {
+    NSError *error;
+
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    TCAppPost *appPost = ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost;
+
+    TCAppPostManagedObject *appPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:context error:&error];
+
+    if (error) {
+        NSLog(@"error with signout action: %@", error);
+        return;
+    }
+
+    [context deleteObject:appPostManagedObject];
+
+    [context save:&error];
+
+    if (error) {
+        NSLog(@"error saving: %@", error);
+    }
+
+    self.navigationItem.rightBarButtonItem = nil;
+
+    currentEntity = nil;
+
+    [self entityTextFieldChanged:self];
+
+    // Empty Navigation stack
+    [self.navigationController setViewControllers:@[self]];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {

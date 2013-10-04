@@ -25,10 +25,9 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Conversations" id="8uo-Po-95D">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="k9M-W7-tep"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="MTd-bG-Vgb">
+                        <barButtonItem key="leftBarButtonItem" title="Accounts" id="k9M-W7-tep">
                             <connections>
-                                <action selector="editButtonPressed:" destination="cQd-cW-6uA" id="jpq-ta-1PL"/>
+                                <action selector="accountsButtonPressed:" destination="cQd-cW-6uA" id="XAm-GI-3S6"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="jTr-iU-4mP">
@@ -40,9 +39,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="actionButton" destination="jTr-iU-4mP" id="vr9-hw-iCf"/>
-                        <outlet property="editButton" destination="MTd-bG-Vgb" id="hbD-2t-ihc"/>
                         <segue destination="PqS-ba-pNX" kind="push" identifier="loadConversation" id="nTP-18-0rI"/>
                         <segue destination="RZD-Mn-sHN" kind="push" identifier="newMessage" id="UZw-Bg-fBA"/>
+                        <segue destination="ho3-7d-UzI" kind="push" identifier="accountsSegue" id="IgJ-y9-PBG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="laA-Rn-G9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -157,11 +156,11 @@
                         <viewControllerLayoutGuide type="bottom" id="r4A-KL-iRG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="b6w-Od-VKQ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bzD-Cb-0lU">
-                                <rect key="frame" x="0.0" y="-5" width="320" height="509"/>
+                                <rect key="frame" x="0.0" y="-5" width="320" height="573"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -176,7 +175,7 @@
                                 </prototypes>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="RLE-c3-YII">
-                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
@@ -235,7 +234,7 @@
             <objects>
                 <tableViewController title="Participants" id="xyF-DL-Arq" customClass="ParticipantsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="afO-SS-wzb">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -291,5 +290,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="nTP-18-0rI"/>
+        <segue reference="IgJ-y9-PBG"/>
     </inferredMetricsTieBreakers>
 </document>
