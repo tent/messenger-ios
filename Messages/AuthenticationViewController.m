@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
 
+    [self setTitle:@"Sign in with Tent™"];
+
     // Dismiss keyboard when tap outside
     UIGestureRecognizer *tapParent = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard:)];
     [self.view addGestureRecognizer:tapParent];
@@ -48,11 +50,20 @@
     // Set sign in button action
     [self.signinButton addTarget:self action:@selector(signinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-    // Disable sign in button initially
-    self.signinButton.enabled = NO;
-
     // Get notified when text field content changes
     [self.entityTextField addTarget:self action:@selector(entityTextFieldChanged:) forControlEvents:UIControlEventEditingChanged];
+
+    NSError *error;
+    TCAppPost *appPost = [self firstAppPostWithError:&error];
+
+    if (!error) {
+        self.entityTextField.text = [appPost.entityURI absoluteString];
+
+        [self authenticateWithApp:appPost];
+    } else {
+        // Disable sign in button initially
+        self.signinButton.enabled = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,6 +76,36 @@
     if ([self.entityTextField isFirstResponder]) {
         [self.entityTextField resignFirstResponder];
     }
+}
+
+- (TCAppPost *)firstAppPostWithError:(NSError **)error {
+    TCAppPost *appPost;
+
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TCAppPost"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientReceivedAt" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    TCAppPostManagedObject *appPostManagedObject;
+
+    if ([fetchedResultsController.fetchedObjects count] > 0) {
+        appPostManagedObject = [fetchedResultsController.fetchedObjects objectAtIndex:0];
+    }
+
+    if ([appPostManagedObject isKindOfClass:TCAppPostManagedObject.class]) {
+        appPost = [MTLManagedObjectAdapter modelOfClass:TCAppPost.class fromManagedObject:appPostManagedObject error:error];
+    } else {
+        *error = [[NSError alloc] initWithDomain:@"App not found" code:1 userInfo:nil];
+    }
+
+    return appPost;
 }
 
 - (TCAppPost *)appPostForEntity:(NSString *)entity error:(NSError **)error {
@@ -120,10 +161,8 @@
 
 - (void)signinButtonPressed:(id)sender {
     NSURL *entityURI = [NSURL URLWithString:self.entityTextField.text];
-    TentClient *client = [TentClient clientWithEntity:entityURI];
-    self.client = client;
 
-    __block NSError *error;
+    NSError *error;
     TCAppPost *appPost = [self appPostForEntity:[entityURI absoluteString] error:&error];
 
     if (error) {
@@ -131,12 +170,28 @@
         return;
     }
 
+    [self authenticateWithApp:appPost];
+}
+
+- (void)authenticateWithApp:(TCAppPost *)appPost {
+    self.signinButton.enabled = NO;
+
+    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
+    self.client = client;
+
+    __block NSError *error;
+
     [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
         [self persistAppPost:appPost error:&error];
 
-        // TODO: Open ConversationsViewController
+        ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost = appPost;
+
+        [self performSegueWithIdentifier:@"authenticatedSegue" sender:self];
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
         // TODO: Inform user of error
+        NSLog(@"An error occurred: %@", error);
+
+        self.signinButton.enabled = YES;
     } viewController:self];
 }
 

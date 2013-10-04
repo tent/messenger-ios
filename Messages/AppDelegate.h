@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Boolean Cupcake, LLC. All rights reserved.
 //
 
+#import "TentClient.h"
+
 @import UIKit;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -15,6 +17,7 @@
 @property (readonly, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic) TCAppPost *currentAppPost;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
