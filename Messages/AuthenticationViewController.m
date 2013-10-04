@@ -185,6 +185,10 @@
         return;
     }
 
+    if (currentEntity) {
+        [self performSignOut];
+    }
+
     [self authenticateWithApp:appPost];
 }
 
@@ -242,6 +246,10 @@
 }
 
 - (void)signoutButtonPressed:(id)sender {
+    [self performSignOut];
+}
+
+- (void)performSignOut {
     NSError *error;
 
     NSManagedObjectContext *context = [self managedObjectContext];
