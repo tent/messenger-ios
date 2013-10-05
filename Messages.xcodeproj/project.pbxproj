@@ -20,6 +20,9 @@
 		8858477317A1E5D500DD4979 /* ParticipantsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477217A1E5D500DD4979 /* ParticipantsViewController.m */; };
 		8858477617A1EC3100DD4979 /* ParticipantTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477517A1EC3100DD4979 /* ParticipantTableCell.m */; };
 		8858477917A20ACB00DD4979 /* ConversationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858477817A20ACB00DD4979 /* ConversationsCell.m */; };
+		8879A26218006BDB00957A90 /* Cursors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8879A26118006BDB00957A90 /* Cursors.plist */; };
+		8879A26518006D0C00957A90 /* Cursors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8879A26418006D0C00957A90 /* Cursors.m */; };
+		8879A26618006D0C00957A90 /* Cursors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8879A26418006D0C00957A90 /* Cursors.m */; };
 		88C8137417F74DCA0042CDD9 /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C8137317F74DCA0042CDD9 /* AuthenticationViewController.m */; };
 		88DA4AD9179B82C9006ECD0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4AD8179B82C9006ECD0A /* Foundation.framework */; };
 		88DA4ADB179B82C9006ECD0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DA4ADA179B82C9006ECD0A /* CoreGraphics.framework */; };
@@ -76,6 +79,9 @@
 		8858477517A1EC3100DD4979 /* ParticipantTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantTableCell.m; sourceTree = "<group>"; };
 		8858477717A20ACB00DD4979 /* ConversationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationsCell.h; sourceTree = "<group>"; };
 		8858477817A20ACB00DD4979 /* ConversationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationsCell.m; sourceTree = "<group>"; };
+		8879A26118006BDB00957A90 /* Cursors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Cursors.plist; sourceTree = "<group>"; };
+		8879A26318006D0C00957A90 /* Cursors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cursors.h; sourceTree = "<group>"; };
+		8879A26418006D0C00957A90 /* Cursors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cursors.m; sourceTree = "<group>"; };
 		88C8137217F74DCA0042CDD9 /* AuthenticationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationViewController.h; path = Messages/AuthenticationViewController.h; sourceTree = "<group>"; };
 		88C8137317F74DCA0042CDD9 /* AuthenticationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticationViewController.m; path = Messages/AuthenticationViewController.m; sourceTree = "<group>"; };
 		88DA4AD5179B82C9006ECD0A /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +154,8 @@
 				88DD55D617A583E300954C01 /* Contact.m */,
 				88DD55D217A583E200954C01 /* Message.h */,
 				88DD55D317A583E200954C01 /* Message.m */,
+				8879A26318006D0C00957A90 /* Cursors.h */,
+				8879A26418006D0C00957A90 /* Cursors.m */,
 			);
 			name = "Model Classes";
 			sourceTree = "<group>";
@@ -262,6 +270,7 @@
 				8858475D17A0344C00DD4979 /* Icons */,
 				88DA4B07179B82EF006ECD0A /* Main.storyboard */,
 				880221D017A4576B004B3ED8 /* DataModel.xcdatamodeld */,
+				8879A26118006BDB00957A90 /* Cursors.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -396,6 +405,7 @@
 			files = (
 				88DA4B08179B82EF006ECD0A /* Main.storyboard in Resources */,
 				8858477017A08F6B00DD4979 /* failed.png in Resources */,
+				8879A26218006BDB00957A90 /* Cursors.plist in Resources */,
 				8858476917A038AF00DD4979 /* timer.png in Resources */,
 				8858476F17A08F6B00DD4979 /* checkmark.png in Resources */,
 				88DA4AE3179B82C9006ECD0A /* InfoPlist.strings in Resources */,
@@ -468,6 +478,7 @@
 				88FFA67C179C3D4400B1F3BB /* ContactsViewController.m in Sources */,
 				88DA4AE9179B82C9006ECD0A /* AppDelegate.m in Sources */,
 				88DA4AE5179B82C9006ECD0A /* main.m in Sources */,
+				8879A26518006D0C00957A90 /* Cursors.m in Sources */,
 				88542A5E179EFF88009F8F78 /* ConversationViewTableCell.m in Sources */,
 				885429C4179CAB12009F8F78 /* ContactTableCell.m in Sources */,
 			);
@@ -478,6 +489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88DA4AFE179B82C9006ECD0A /* MessagesTests.m in Sources */,
+				8879A26618006D0C00957A90 /* Cursors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

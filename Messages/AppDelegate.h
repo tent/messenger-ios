@@ -7,6 +7,7 @@
 //
 
 #import "TentClient.h"
+#import "Cursors.h"
 
 @import UIKit;
 
@@ -18,6 +19,8 @@
 @property (readonly, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic) TCAppPost *currentAppPost;
+
+@property (nonatomic) Cursors *cursors;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
