@@ -36,6 +36,30 @@
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="appPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCAppPost" inverseName="credentialsPost" inverseEntity="TCAppPost" syncable="YES"/>
     </entity>
+    <entity name="TCMetaPost" representedClassName="TCMetaPostManagedObject" parentEntity="TCPost" syncable="YES">
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="metaEntity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="previousEntities" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="servers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TCMetaPostServer" inverseName="metaPost" inverseEntity="TCMetaPostServer" syncable="YES"/>
+    </entity>
+    <entity name="TCMetaPostServer" representedClassName="TCMetaPostServerManagedObject" syncable="YES">
+        <attribute name="preferenceIndex" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="protocolVersion" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateAttachment" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateBatch" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateDiscover" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateNewPost" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateOAuthAuth" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateOAuthToken" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplatePost" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplatePostAttachment" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplatePostsFeed" attributeType="String" syncable="YES"/>
+        <attribute name="urlTemplateServerInfo" attributeType="String" syncable="YES"/>
+        <relationship name="metaPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCMetaPost" inverseName="servers" inverseEntity="TCMetaPost" syncable="YES"/>
+    </entity>
     <entity name="TCPost" representedClassName="TCPostManagedObject" syncable="YES">
         <attribute name="attachments" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="clientReceivedAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -61,6 +85,8 @@
         <element name="Message" positionX="0" positionY="0" width="0" height="0"/>
         <element name="TCAppPost" positionX="0" positionY="0" width="0" height="0"/>
         <element name="TCCredentialsPost" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TCMetaPost" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TCMetaPostServer" positionX="0" positionY="0" width="0" height="0"/>
         <element name="TCPost" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
