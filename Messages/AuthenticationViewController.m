@@ -93,7 +93,43 @@
     }
 }
 
-- (TCAppPost *)firstAppPostWithError:(NSError **)error {
+- (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error {
+    TCMetaPost *metaPost;
+
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TCAppPost"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientReceivedAt" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entity];
+    [fetchRequest setPredicate:predicate];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    TCAppPostManagedObject *appPostManagedObject;
+
+    if ([fetchedResultsController.fetchedObjects count] > 0) {
+        appPostManagedObject = [fetchedResultsController.fetchedObjects objectAtIndex:0];
+    }
+
+    if ([appPostManagedObject isKindOfClass:TCAppPostManagedObject.class]) {
+        metaPost = [MTLManagedObjectAdapter modelOfClass:TCMetaPost.class fromManagedObject:appPostManagedObject error:error];
+    } else {
+        if (error) {
+            *error = [[NSError alloc] initWithDomain:@"Meta post not found" code:1 userInfo:nil];
+        }
+    }
+
+    return metaPost;
+}
+
+- (TCAppPost *)firstAppPostWithError:(NSError *__autoreleasing *)error {
     TCAppPost *appPost;
 
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -123,7 +159,7 @@
     return appPost;
 }
 
-- (TCAppPost *)appPostForEntity:(NSString *)entity error:(NSError **)error {
+- (TCAppPost *)appPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error {
     TCAppPost *appPost;
 
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -166,10 +202,18 @@
     return appPost;
 }
 
-- (void)persistAppPost:(TCAppPost *)appPost error:(NSError **)error {
+- (void)persistAppPost:(TCAppPost *)appPost error:(NSError *__autoreleasing *)error {
     NSManagedObjectContext *context = [self managedObjectContext];
 
-    TCAppPostManagedObject *appManagedObject = (TCAppPostManagedObject *)[MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:context error:error];
+    [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:context error:error];
+
+    [context save:error];
+}
+
+- (void)persistMetaPost:(TCMetaPost *)metaPost error:(NSError *__autoreleasing *)error {
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    [MTLManagedObjectAdapter managedObjectFromModel:metaPost insertingIntoContext:context error:error];
 
     [context save:error];
 }
@@ -206,10 +250,22 @@
     TentClient *client = [TentClient clientWithEntity:entityURI];
     self.client = client;
 
-    __block NSError *error;
+    client.metaPost = [self fetchMetaPostForEntity:[entityURI absoluteString] error:nil];
 
     [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
+        NSError *error;
+
         [self persistAppPost:appPost error:&error];
+
+        if (error) {
+            NSLog(@"error persisting app post: %@", error);
+        }
+
+        [self persistMetaPost:client.metaPost error:&error];
+
+        if (error) {
+            NSLog(@"error persisting meta post: %@", error);
+        }
 
         ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost = appPost;
 
