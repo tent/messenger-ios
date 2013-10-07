@@ -193,6 +193,7 @@
         appPost.appDescription = @"Private messenger app for iOS 7+";
         appPost.URL = [NSURL URLWithString:@"https://github.com/cupcake/messenger-ios"];
         appPost.redirectURI = [NSURL URLWithString:@"tentmessengerapp://oauth/callback"];
+        appPost.readTypes = @[@"https://tent.io/types/relationship/v0"];
         appPost.writeTypes = @[
                                @"https://tent.io/types/conversation/v0",
                                @"https://tent.io/types/message/v0"
