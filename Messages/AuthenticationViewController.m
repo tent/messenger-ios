@@ -234,6 +234,8 @@
 
         [((AppDelegate *)([UIApplication sharedApplication].delegate)) setCurrentAppPost:appPost];
 
+        [(AppDelegate *)([UIApplication sharedApplication].delegate) applicationAuthenticated];
+
         [self performSegueWithIdentifier:@"authenticatedSegue" sender:self];
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
         // TODO: Inform user of error
@@ -300,6 +302,8 @@
 
     // Empty Navigation stack
     [self.navigationController setViewControllers:@[self]];
+
+    [(AppDelegate *)([UIApplication sharedApplication].delegate) applicationDeauthenticated];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {

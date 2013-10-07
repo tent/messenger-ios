@@ -215,6 +215,14 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+#pragma mark -
+
+- (void)applicationAuthenticated {
+}
+
+- (void)applicationDeauthenticated {
+    // TODO: destroy all personal data
+}
 
 - (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error {
     TCMetaPost *metaPost;

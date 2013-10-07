@@ -27,6 +27,9 @@
 
 - (NSURL *)applicationDocumentsDirectory;
 
+- (void)applicationAuthenticated;
+
+- (void)applicationDeauthenticated;
 
 - (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error;
 
