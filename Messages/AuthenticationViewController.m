@@ -55,7 +55,7 @@
     // Get notified when text field content changes
     [self.entityTextField addTarget:self action:@selector(entityTextFieldChanged:) forControlEvents:UIControlEventEditingChanged];
 
-    TCAppPost *currentAppPost = ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost;
+    TCAppPost *currentAppPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
 
     if (currentAppPost) {
         currentEntity = [currentAppPost.entityURI absoluteString];
@@ -268,7 +268,7 @@
             NSLog(@"error persisting meta post: %@", error);
         }
 
-        ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost = appPost;
+        [((AppDelegate *)([UIApplication sharedApplication].delegate)) setCurrentAppPost:appPost];
 
         [self performSegueWithIdentifier:@"authenticatedSegue" sender:self];
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -311,7 +311,7 @@
 
     NSManagedObjectContext *context = [self managedObjectContext];
 
-    TCAppPost *appPost = ((AppDelegate *)([UIApplication sharedApplication].delegate)).currentAppPost;
+    TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
 
     TCAppPostManagedObject *appPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:context error:&error];
 

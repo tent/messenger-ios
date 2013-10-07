@@ -18,7 +18,6 @@
 @property (readonly, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic) TCAppPost *currentAppPost;
 
 @property (nonatomic) Cursors *cursors;
 
@@ -27,5 +26,10 @@
 - (BOOL)saveContext:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error;
 
 - (NSURL *)applicationDocumentsDirectory;
+
+
+- (TCAppPost *)currentAppPost;
+
+- (void)setCurrentAppPost:(TCAppPost *)appPost;
 
 @end

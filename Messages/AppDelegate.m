@@ -7,8 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "TCPost+CoreData.h"
 
 @implementation AppDelegate
+
+{
+    NSManagedObjectID *currentAppPostObjectID;
+}
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -208,6 +213,23 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+
+- (TCAppPost *)currentAppPost {
+    if (!currentAppPostObjectID) return nil;
+
+    NSManagedObject *appPostManagedObject = [[self mainManagedObjectContext] objectWithID:currentAppPostObjectID];
+
+    if (!appPostManagedObject) return nil;
+
+    return (TCAppPost *)[MTLManagedObjectAdapter modelOfClass:TCAppPost.class fromManagedObject:appPostManagedObject error:nil];
+}
+
+- (void)setCurrentAppPost:(TCAppPost *)appPost {
+    NSManagedObject *appPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:[self managedObjectContext] error:nil];
+
+    currentAppPostObjectID = appPostManagedObject.objectID;
 }
 
 @end
