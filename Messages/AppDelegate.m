@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Contact.h"
 #import "TCPost+CoreData.h"
 
 @implementation AppDelegate
@@ -218,6 +219,13 @@
 #pragma mark -
 
 - (void)applicationAuthenticated {
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+
+    [operationQueue addOperationWithBlock:^{
+        [Contact syncRelationships];
+
+        NSLog(@"syncRelationshipsInvocation complete");
+    }];
 }
 
 - (void)applicationDeauthenticated {

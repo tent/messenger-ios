@@ -9,7 +9,7 @@
 @import Foundation;
 @import CoreData;
 
-@class Conversation, Message;
+@class Conversation, Message, TCPostManagedObject;
 
 @interface Contact : NSManagedObject
 
@@ -18,6 +18,9 @@
 @property (nonatomic, retain) NSString * sectionName;
 @property (nonatomic, retain) NSSet *conversations;
 @property (nonatomic, retain) NSSet *messages;
+
++ (void)syncRelationships;
+
 @end
 
 @interface Contact (CoreDataGeneratedAccessors)
@@ -31,5 +34,7 @@
 - (void)removeMessagesObject:(Message *)value;
 - (void)addMessages:(NSSet *)values;
 - (void)removeMessages:(NSSet *)values;
+
+- (void)addRelationshipPostObject:(TCPostManagedObject *)value;
 
 @end
