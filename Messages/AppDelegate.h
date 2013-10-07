@@ -22,7 +22,10 @@
 
 @property (nonatomic) Cursors *cursors;
 
-- (void)saveContext;
+- (NSManagedObjectContext *)mainManagedObjectContext;
+
+- (BOOL)saveContext:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error;
+
 - (NSURL *)applicationDocumentsDirectory;
 
 @end

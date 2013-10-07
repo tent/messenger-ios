@@ -80,20 +80,62 @@
 
 #pragma mark - Core Data stack
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
-{
+- (NSManagedObjectContext *)mainManagedObjectContext {
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
 
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
+
     return _managedObjectContext;
+}
+
+// Returns the managed object context for the application.
+// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+- (NSManagedObjectContext *)managedObjectContext
+{
+    NSManagedObjectContext *mainContext = [self mainManagedObjectContext];
+
+    if ([NSThread isMainThread]) {
+        NSLog(@"NSMainQueueConcurrencyType");
+
+        return mainContext;
+    } else {
+        NSManagedObjectContext *context = [[[NSThread currentThread] threadDictionary] objectForKey:@"managedObjectContext"];
+
+        if (!context) {
+            context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+            context.parentContext = mainContext;
+        }
+
+        NSLog(@"NSConfinementConcurrencyType");
+
+        return context;
+    }
+}
+
+- (BOOL)saveContext:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error {
+    __block BOOL didSave = YES;
+
+    if ([context save:error]) {
+        NSManagedObjectContext *mainContext = [self mainManagedObjectContext];
+
+        if (context != mainContext) {
+            [mainContext performBlockAndWait:^{
+                if (![mainContext save:error]) {
+                    didSave = NO;
+                }
+            }];
+        }
+    } else {
+        didSave = NO;
+    }
+
+    return didSave;
 }
 
 // Returns the managed object model for the application.
