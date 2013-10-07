@@ -216,6 +216,41 @@
 }
 
 
+- (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error {
+    TCMetaPost *metaPost;
+
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TCMetaPost"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientReceivedAt" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entity];
+    [fetchRequest setPredicate:predicate];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    TCAppPostManagedObject *appPostManagedObject;
+
+    if ([fetchedResultsController.fetchedObjects count] > 0) {
+        appPostManagedObject = [fetchedResultsController.fetchedObjects objectAtIndex:0];
+    }
+
+    if ([appPostManagedObject isKindOfClass:TCAppPostManagedObject.class]) {
+        metaPost = [MTLManagedObjectAdapter modelOfClass:TCMetaPost.class fromManagedObject:appPostManagedObject error:error];
+    } else {
+        if (error) {
+            *error = [[NSError alloc] initWithDomain:@"Meta post not found" code:1 userInfo:nil];
+        }
+    }
+
+    return metaPost;
+}
+
 - (TCAppPost *)currentAppPost {
     if (!currentAppPostObjectID) return nil;
 

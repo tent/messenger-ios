@@ -93,42 +93,6 @@
     }
 }
 
-- (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error {
-    TCMetaPost *metaPost;
-
-    NSManagedObjectContext *context = [self managedObjectContext];
-
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"TCAppPost"];
-
-    // Configure sort order
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientReceivedAt" ascending:NO];
-    [fetchRequest setSortDescriptors:@[sortDescriptor]];
-
-
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entity];
-    [fetchRequest setPredicate:predicate];
-
-    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-
-    [fetchedResultsController performFetch:error];
-
-    TCAppPostManagedObject *appPostManagedObject;
-
-    if ([fetchedResultsController.fetchedObjects count] > 0) {
-        appPostManagedObject = [fetchedResultsController.fetchedObjects objectAtIndex:0];
-    }
-
-    if ([appPostManagedObject isKindOfClass:TCAppPostManagedObject.class]) {
-        metaPost = [MTLManagedObjectAdapter modelOfClass:TCMetaPost.class fromManagedObject:appPostManagedObject error:error];
-    } else {
-        if (error) {
-            *error = [[NSError alloc] initWithDomain:@"Meta post not found" code:1 userInfo:nil];
-        }
-    }
-
-    return metaPost;
-}
-
 - (TCAppPost *)firstAppPostWithError:(NSError *__autoreleasing *)error {
     TCAppPost *appPost;
 
@@ -251,7 +215,7 @@
     TentClient *client = [TentClient clientWithEntity:entityURI];
     self.client = client;
 
-    client.metaPost = [self fetchMetaPostForEntity:[entityURI absoluteString] error:nil];
+    client.metaPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) fetchMetaPostForEntity:[entityURI absoluteString] error:nil];
 
     [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
         NSError *error;

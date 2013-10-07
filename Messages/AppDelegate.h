@@ -28,6 +28,8 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 
+- (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error;
+
 - (TCAppPost *)currentAppPost;
 
 - (void)setCurrentAppPost:(TCAppPost *)appPost;
