@@ -14,6 +14,9 @@
 
 {
     NSManagedObjectID *currentAppPostObjectID;
+
+    int numNetworkActivityRequests;
+    NSLock *numNetworkActivityRequestsLock;
 }
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -277,6 +280,48 @@
     NSManagedObject *appPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:[self managedObjectContext] error:nil];
 
     currentAppPostObjectID = appPostManagedObject.objectID;
+}
+
+#pragma mark - Network Activity Indicator
+
+- (NSLock *)numNetworkActivityRequestsLock {
+    if (!numNetworkActivityRequestsLock) {
+        numNetworkActivityRequestsLock = [[NSLock alloc] init];
+    }
+
+    return numNetworkActivityRequestsLock;
+}
+
+- (void)showNetworkActivityIndicator {
+    [[self numNetworkActivityRequestsLock] lock];
+
+    if (!numNetworkActivityRequests) {
+        numNetworkActivityRequests = 1;
+    } else {
+        numNetworkActivityRequests += 1;
+    }
+
+    if (numNetworkActivityRequests > 0) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    }
+
+    [[self numNetworkActivityRequestsLock] unlock];
+}
+
+- (void)hideNetworkActivityIndicator {
+    [[self numNetworkActivityRequestsLock] lock];
+
+    if (!numNetworkActivityRequests) {
+        numNetworkActivityRequests = 0;
+    } else {
+        numNetworkActivityRequests -= 1;
+    }
+
+    if (numNetworkActivityRequests <= 0) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    }
+
+    [[self numNetworkActivityRequestsLock] unlock];
 }
 
 @end

@@ -37,4 +37,10 @@
 
 - (void)setCurrentAppPost:(TCAppPost *)appPost;
 
+#pragma mark - Network Activity Indicator
+
+- (void)showNetworkActivityIndicator;
+
+- (void)hideNetworkActivityIndicator;
+
 @end

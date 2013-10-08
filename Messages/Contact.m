@@ -23,6 +23,8 @@
 @dynamic sectionName;
 
 + (void)syncRelationships {
+    [[self applicationDelegate] showNetworkActivityIndicator];
+
     Cursors *cursors = ((AppDelegate *)([UIApplication sharedApplication].delegate)).cursors;
     TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
 
@@ -138,6 +140,8 @@
     }];
 
     [client.operationQueue waitUntilAllOperationsAreFinished];
+
+    [[self applicationDelegate] hideNetworkActivityIndicator];
 }
 
 + (void)fetchRelationshipsWithClient:(TentClient *)client feedParams:(TCParams *)feedParams successBlock:(void (^)(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope))success completionBlock:(void (^)())completion {
