@@ -54,7 +54,6 @@
 
         if ([[responseEnvelope posts] count] == 0) return;
 
-        NSLog(@"response size: %d", [[responseEnvelope posts] count]);
 
         __block NSError *error;
 
@@ -85,8 +84,6 @@
             TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&error];
 
             [contact addRelationshipPostObject:postManagedObject];
-
-            NSLog(@"contact: <%@ name=%@>", contact.class, contact.name);
         }];
 
         if (![context hasChanges]) return;

@@ -107,8 +107,6 @@
     NSManagedObjectContext *mainContext = [self mainManagedObjectContext];
 
     if ([NSThread isMainThread]) {
-        NSLog(@"NSMainQueueConcurrencyType");
-
         return mainContext;
     } else {
         NSManagedObjectContext *context = [[[NSThread currentThread] threadDictionary] objectForKey:@"managedObjectContext"];
@@ -117,8 +115,6 @@
             context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
             context.parentContext = mainContext;
         }
-
-        NSLog(@"NSConfinementConcurrencyType");
 
         return context;
     }
