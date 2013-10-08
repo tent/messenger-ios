@@ -47,12 +47,15 @@
     client.metaPost = [[self applicationDelegate] fetchMetaPostForEntity:[appPost.entityURI absoluteString] error:&error];
     client.credentialsPost = appPost.authCredentialsPost;
 
-    __block BOOL syncComplete = NO;
+    NSOperationQueue *fetchAvatarsQueue = [[NSOperationQueue alloc] init];
+    [fetchAvatarsQueue setSuspended:YES];
+
+    __block BOOL relastionshipsSyncComplete = NO;
+    __block int avatarsSyncRemaining = 0;
+
+    NSLock *avatarsSyncRemainingLock = [[NSLock alloc] init];
 
     [self fetchRelationshipsWithClient:client feedParams:feedParams successBlock:^(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
-
-        NSOperationQueue *fetchAvatarsQueue = [[NSOperationQueue alloc] init];
-        [fetchAvatarsQueue setSuspended:YES];
 
         if ([[responseEnvelope posts] count] == 0) return;
 
@@ -85,7 +88,12 @@
 
             if (contactObjectID && avatarDigest) {
                 [fetchAvatarsQueue addOperationWithBlock:^{
-                    [self fetchAvatarWithContactObjectID:contactObjectID entity:entity avatarDigest:avatarDigest];
+                    [self fetchAvatarWithContactObjectID:contactObjectID entity:entity avatarDigest:avatarDigest client:client completionBlock:^{
+                        // Decrement number of avatar requests remaining
+                        [avatarsSyncRemainingLock lock];
+                        avatarsSyncRemaining--;
+                        [avatarsSyncRemainingLock unlock];
+                    }];
                 }];
             }
 
@@ -102,15 +110,29 @@
 
             [cursors saveToPlistWithError:&error];
         }
-
-        [fetchAvatarsQueue setSuspended:NO];
     } completionBlock:^{
-        syncComplete = YES;
+        relastionshipsSyncComplete = YES;
     }];
 
     // Wait for all requests to finish
     [client.operationQueue addOperationWithBlock:^{
-        while (!syncComplete) {
+        while (!relastionshipsSyncComplete) {
+            [NSThread sleepForTimeInterval:1];
+        }
+
+        // Set number of avatar requests remaining
+        [avatarsSyncRemainingLock lock];
+        avatarsSyncRemaining = [fetchAvatarsQueue operationCount];
+        [avatarsSyncRemainingLock unlock];
+
+        // Wait until all relationships are synced before fetching avatars
+        [fetchAvatarsQueue setSuspended:NO];
+
+        // Wait until all avatar requests are queued
+        [fetchAvatarsQueue waitUntilAllOperationsAreFinished];
+
+        // Wait until all avatar requests/callbacks have completed
+        while (avatarsSyncRemaining > 0) {
             [NSThread sleepForTimeInterval:1];
         }
     }];
@@ -135,16 +157,7 @@
     }];
 }
 
-+ (void)fetchAvatarWithContactObjectID:(NSManagedObjectID *)contactObjectID entity:(NSString *)entity avatarDigest:(NSString *)avatarDigest {
-    TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
-
-    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
-
-    NSError *error;
-
-    client.metaPost = [[self applicationDelegate] fetchMetaPostForEntity:[appPost.entityURI absoluteString] error:&error];
-    client.credentialsPost = appPost.authCredentialsPost;
-
++ (void)fetchAvatarWithContactObjectID:(NSManagedObjectID *)contactObjectID entity:(NSString *)entity avatarDigest:(NSString *)avatarDigest client:(TentClient *)client completionBlock:(void (^)())completion {
     [client getAttachmentWithEntity:entity digest:avatarDigest successBlock:^(AFHTTPRequestOperation *operation, NSData *attachmentBinary) {
         NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
 
@@ -152,12 +165,20 @@
 
         contact.avatar = attachmentBinary;
 
-        [[self applicationDelegate] saveContext:context error:nil];
+        NSError *error;
+
+        [[self applicationDelegate] saveContext:context error:&error];
+
+        if (error) {
+            NSLog(@"error saving contact avatar: %@", error);
+        }
+
+        completion();
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"fetch avatar failure: %@", error);
-    }];
 
-    [client.operationQueue waitUntilAllOperationsAreFinished];
+        completion();
+    }];
 }
 
 + (AppDelegate *)applicationDelegate {
