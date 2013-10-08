@@ -14,7 +14,6 @@
 #import "TentClient.h"
 #import "TCPost+CoreData.h"
 
-
 @implementation Contact
 
 @dynamic avatar;
@@ -52,8 +51,10 @@
 
     [self fetchRelationshipsWithClient:client feedParams:feedParams successBlock:^(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
 
-        if ([[responseEnvelope posts] count] == 0) return;
+        NSOperationQueue *fetchAvatarsQueue = [[NSOperationQueue alloc] init];
+        [fetchAvatarsQueue setSuspended:YES];
 
+        if ([[responseEnvelope posts] count] == 0) return;
 
         __block NSError *error;
 
@@ -79,7 +80,14 @@
                 contact.name = entity;
             }
 
-            // TODO: fetch avatar in another thread after saving the context
+            __block NSManagedObjectID *contactObjectID = contact.objectID;
+            __block NSString *avatarDigest = [profile objectForKey:@"avatar_digest"];
+
+            if (contactObjectID && avatarDigest) {
+                [fetchAvatarsQueue addOperationWithBlock:^{
+                    [self fetchAvatarWithContactObjectID:contactObjectID entity:entity avatarDigest:avatarDigest];
+                }];
+            }
 
             TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&error];
 
@@ -94,6 +102,8 @@
 
             [cursors saveToPlistWithError:&error];
         }
+
+        [fetchAvatarsQueue setSuspended:NO];
     } completionBlock:^{
         syncComplete = YES;
     }];
@@ -123,6 +133,31 @@
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"postsFeedWithParams failure: %@", error);
     }];
+}
+
++ (void)fetchAvatarWithContactObjectID:(NSManagedObjectID *)contactObjectID entity:(NSString *)entity avatarDigest:(NSString *)avatarDigest {
+    TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
+
+    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
+
+    NSError *error;
+
+    client.metaPost = [[self applicationDelegate] fetchMetaPostForEntity:[appPost.entityURI absoluteString] error:&error];
+    client.credentialsPost = appPost.authCredentialsPost;
+
+    [client getAttachmentWithEntity:entity digest:avatarDigest successBlock:^(AFHTTPRequestOperation *operation, NSData *attachmentBinary) {
+        NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
+
+        Contact *contact = (Contact *)[context objectWithID:contactObjectID];
+
+        contact.avatar = attachmentBinary;
+
+        [[self applicationDelegate] saveContext:context error:nil];
+    } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"fetch avatar failure: %@", error);
+    }];
+
+    [client.operationQueue waitUntilAllOperationsAreFinished];
 }
 
 + (AppDelegate *)applicationDelegate {
