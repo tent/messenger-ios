@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface ContactsViewController : UITableViewController
+@interface ContactsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *continueButton;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
