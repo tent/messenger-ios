@@ -3,7 +3,7 @@
     <entity name="Contact" representedClassName="Contact" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sectionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionName" attributeType="String" syncable="YES"/>
         <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="contacts" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="contact" inverseEntity="Message" syncable="YES"/>
         <relationship name="relationshipPost" maxCount="1" deletionRule="Nullify" destinationEntity="TCPost" syncable="YES"/>

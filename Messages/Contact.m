@@ -88,6 +88,8 @@
                 contact.name = entity;
             }
 
+            contact.sectionName = [contact.name substringToIndex:1];
+
             __block NSManagedObjectID *contactObjectID = contact.objectID;
             __block NSString *avatarDigest = [profile objectForKey:@"avatar_digest"];
 
