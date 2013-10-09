@@ -287,8 +287,6 @@
 #pragma mark - UISearchDisplayController Delegate Methods
 
 - (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
-    NSLog(@"willHideSearchResultsTableView");
-
     [selectedContacts enumerateObjectsUsingBlock:^(Contact *obj, BOOL *stop) {
         NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:obj];
 
