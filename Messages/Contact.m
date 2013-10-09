@@ -78,6 +78,8 @@
 
             if (!profile) return;
 
+            // TODO: Prevent contact from being imported more than once
+
             Contact *contact = [[Contact alloc] initWithEntity:[NSEntityDescription entityForName:@"Contact" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
 
             contact.name = [profile objectForKey:@"name"];
@@ -139,6 +141,8 @@
             [NSThread sleepForTimeInterval:1];
         }
     }];
+
+    // TODO: fetch any missing avatars
 
     [client.operationQueue waitUntilAllOperationsAreFinished];
 
