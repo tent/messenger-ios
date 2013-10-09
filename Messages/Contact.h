@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString * sectionName;
 @property (nonatomic, retain) NSSet *conversations;
 @property (nonatomic, retain) NSSet *messages;
+@property (nonatomic, retain) TCPostManagedObject *relationshipPost;
 
 + (void)syncRelationships;
 
@@ -34,7 +35,5 @@
 - (void)removeMessagesObject:(Message *)value;
 - (void)addMessages:(NSSet *)values;
 - (void)removeMessages:(NSSet *)values;
-
-- (void)addRelationshipPostObject:(TCPostManagedObject *)value;
 
 @end

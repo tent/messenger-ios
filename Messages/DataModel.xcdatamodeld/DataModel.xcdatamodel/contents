@@ -6,7 +6,7 @@
         <attribute name="sectionName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Conversation" inverseName="contacts" inverseEntity="Conversation" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="contact" inverseEntity="Message" syncable="YES"/>
-        <relationship name="relationshipPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCPost" syncable="YES"/>
+        <relationship name="relationshipPost" maxCount="1" deletionRule="Nullify" destinationEntity="TCPost" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="conversations" inverseEntity="Contact" syncable="YES"/>

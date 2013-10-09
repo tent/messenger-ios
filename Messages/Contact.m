@@ -21,6 +21,7 @@
 @dynamic conversations;
 @dynamic messages;
 @dynamic sectionName;
+@dynamic relationshipPost;
 
 + (void)syncRelationships {
     [[self applicationDelegate] showNetworkActivityIndicator];
@@ -101,7 +102,7 @@
 
             TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&error];
 
-            [contact addRelationshipPostObject:postManagedObject];
+            contact.relationshipPost = postManagedObject;
         }];
 
         if (![context hasChanges]) return;
