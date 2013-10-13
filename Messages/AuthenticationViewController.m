@@ -156,7 +156,7 @@
         appPost.name = @"Messenger iOS";
         appPost.appDescription = @"Private messenger app for iOS 7+";
         appPost.URL = [NSURL URLWithString:@"https://github.com/cupcake/messenger-ios"];
-        appPost.redirectURI = [NSURL URLWithString:@"tentmessengerapp://oauth/callback"];
+        appPost.redirectURI = [NSURL URLWithString:@"cupcakemessenger://oauth/callback"];
         appPost.readTypes = @[@"https://tent.io/types/relationship/v0"];
         appPost.writeTypes = @[
                                @"https://tent.io/types/conversation/v0",
@@ -217,7 +217,14 @@
 
     client.metaPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) fetchMetaPostForEntity:[entityURI absoluteString] error:nil];
 
-    [client authenticateWithApp:appPost successBlock:^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
+    void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        // TODO: Inform user of error
+        NSLog(@"An error occurred: %@", error);
+
+        self.signinButton.enabled = YES;
+    };
+
+    void (^tokenExchangeSuccessBlock)(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) = ^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
         NSError *error;
 
         [self persistAppPost:appPost error:&error];
@@ -237,12 +244,17 @@
         [(AppDelegate *)([UIApplication sharedApplication].delegate) applicationAuthenticated];
 
         [self performSegueWithIdentifier:@"authenticatedSegue" sender:self];
-    } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // TODO: Inform user of error
-        NSLog(@"An error occurred: %@", error);
+    };
 
-        self.signinButton.enabled = YES;
-    } viewController:self];
+    [client authenticateWithApp:appPost successBlock:^(TCAppPost *post, NSURL *authURI, NSString *state) {
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+
+        appDelegate.authCallbackBlock = ^(NSURL *callbackURI) {
+            [client exchangeTokenForApp:post callbackURI:callbackURI state:state successBlock:tokenExchangeSuccessBlock failureBlock:failureBlock];
+        };
+
+        [[UIApplication sharedApplication] openURL:authURI];
+    } failureBlock:failureBlock];
 }
 
 - (void)entityTextFieldChanged:(id)sender {

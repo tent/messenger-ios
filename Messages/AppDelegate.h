@@ -19,6 +19,8 @@
 @property (readonly, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+@property (copy) void (^authCallbackBlock)(NSURL *);
+
 @property (nonatomic) Cursors *cursors;
 
 - (NSManagedObjectContext *)mainManagedObjectContext;
