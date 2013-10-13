@@ -104,6 +104,13 @@
                 }];
             }
 
+            NSError *existingContactFetchError;
+            [self deleteContactsForPostID:post.ID error:&existingContactFetchError];
+
+            if (existingContactFetchError) {
+                NSLog(@"error deleting duplicate contacts: %@", existingContactFetchError);
+            }
+
             TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&error];
 
             contact.relationshipPost = postManagedObject;
@@ -149,6 +156,32 @@
     [client.operationQueue waitUntilAllOperationsAreFinished];
 
     [[self applicationDelegate] hideNetworkActivityIndicator];
+}
+
++ (void)deleteContactsForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
+    NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"relationshipPost.id == %@", postID];
+    [fetchRequest setPredicate:predicate];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    if ([fetchedResultsController.fetchedObjects count] == 0) {
+        return;
+    }
+
+    [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *obj, NSUInteger idx, BOOL *stop) {
+        [context deleteObject:obj.relationshipPost];
+        [context deleteObject:obj];
+    }];
 }
 
 + (void)fetchRelationshipsWithClient:(TentClient *)client feedParams:(TCParams *)feedParams successBlock:(void (^)(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope))success completionBlock:(void (^)())completion {
