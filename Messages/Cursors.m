@@ -78,4 +78,16 @@
     }
 }
 
+- (BOOL)deletePlistWithError:(NSError *__autoreleasing *)error {
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"Cursors.plist"];
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        // Nothing to delete
+        return YES;
+    }
+
+    return [[NSFileManager defaultManager] removeItemAtPath:plistPath error:error];
+}
+
 @end

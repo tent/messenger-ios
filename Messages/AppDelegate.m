@@ -223,7 +223,41 @@
 }
 
 - (void)applicationDeauthenticated {
-    // TODO: destroy all personal data
+    NSError *error;
+
+    // Delete Contacts
+    NSManagedObjectContext *context = [self managedObjectContext];
+
+    NSFetchRequest *contactsFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
+
+    NSSortDescriptor *contactsSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+
+    [contactsFetchRequest setSortDescriptors:@[contactsSortDescriptor]];
+
+    NSFetchedResultsController *contactsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:contactsFetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [contactsFetchedResultsController performFetch:&error];
+
+    if (error) {
+        NSLog(@"error fetching contacts: %@", error);
+    }
+
+    if ([contactsFetchedResultsController.fetchedObjects count] > 0) {
+        [contactsFetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *contact, NSUInteger idx, BOOL *stop) {
+            [context deleteObject:contact.relationshipPost];
+            [context deleteObject:contact];
+        }];
+    }
+
+    // Delete Cursors
+    [self.cursors deletePlistWithError:&error];
+
+    if (error) {
+        NSLog(@"error deleting cursor: %@", error);
+    }
+
+    // Set new cursors object
+    self.cursors = [[Cursors alloc] init];
 }
 
 - (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error {

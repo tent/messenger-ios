@@ -15,4 +15,6 @@
 
 - (void)saveToPlistWithError:(NSError **)error;
 
+- (BOOL)deletePlistWithError:(NSError **)error;
+
 @end
