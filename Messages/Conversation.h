@@ -17,6 +17,9 @@
 @property (nonatomic, retain) NSSet *messages;
 @property (nonatomic, retain) Message *latestMessage;
 @property (nonatomic, retain) TCPostManagedObject *conversationPost;
+
++ (void)syncObjectID:(NSManagedObjectID *)objectID;
+
 @end
 
 @interface Conversation (CoreDataGeneratedAccessors)
