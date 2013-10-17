@@ -17,6 +17,7 @@
 @dynamic timestamp;
 @dynamic contact;
 @dynamic conversation;
+@dynamic messagePost;
 
 - (ConversationMessageAlignment)getAlignment {
     // TODO: calculate alignment based on who authored the message (us or them)

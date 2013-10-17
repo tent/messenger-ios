@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F37" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Contact" representedClassName="Contact" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,6 +10,7 @@
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="conversations" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="conversationPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCPost" syncable="YES"/>
         <relationship name="latestMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
     </entity>
@@ -18,6 +19,7 @@
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="messages" inverseEntity="Contact" syncable="YES"/>
         <relationship name="conversation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="messagePost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCPost" syncable="YES"/>
     </entity>
     <entity name="TCAppPost" representedClassName="TCAppPostManagedObject" parentEntity="TCPost" syncable="YES">
         <attribute name="appDescription" optional="YES" attributeType="String" syncable="YES"/>

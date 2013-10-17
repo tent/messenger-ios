@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
     ConversationMessageRight
 };
 
-@class Contact, Conversation;
+@class Contact, Conversation, TCPostManagedObject;
 
 @interface Message : NSManagedObject
 
@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) Contact *contact;
 @property (nonatomic, retain) Conversation *conversation;
+@property (nonatomic, retain) TCPostManagedObject *messagePost;
 
 - (ConversationMessageAlignment)getAlignment;
 

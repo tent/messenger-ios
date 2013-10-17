@@ -10,11 +10,11 @@
 #import "Contact.h"
 #import "Message.h"
 
-
 @implementation Conversation
 
 @dynamic contacts;
 @dynamic messages;
 @dynamic latestMessage;
+@dynamic conversationPost;
 
 @end

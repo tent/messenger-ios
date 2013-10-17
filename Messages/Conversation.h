@@ -9,13 +9,14 @@
 @import Foundation;
 @import CoreData;
 
-@class Contact, Message;
+@class Contact, Message, TCPostManagedObject;
 
 @interface Conversation : NSManagedObject
 
 @property (nonatomic, retain) NSSet *contacts;
 @property (nonatomic, retain) NSSet *messages;
 @property (nonatomic, retain) Message *latestMessage;
+@property (nonatomic, retain) TCPostManagedObject *conversationPost;
 @end
 
 @interface Conversation (CoreDataGeneratedAccessors)
