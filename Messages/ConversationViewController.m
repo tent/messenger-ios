@@ -225,7 +225,7 @@
     if (success) {
         self.messageTextField.text = @"";
 
-        [Conversation syncObjectID:self.conversation.objectID];
+        [Conversation persistObjectID:self.conversation.objectID];
     } else {
         NSLog(@"failed to save message: %@ error: %@", message, error);
     }

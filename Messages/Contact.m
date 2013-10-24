@@ -36,14 +36,7 @@
                                                             }];
 
     // since cursor
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    NSString *sinceParameter = [formatter stringFromNumber:[NSNumber numberWithDouble:[cursors.relationshipCursorTimestamp timeIntervalSince1970] * 1000]];
-
-    if (![cursors.relationshipCursorVersionID isEqualToString:@""]) {
-        [feedParams addValue:[sinceParameter stringByAppendingString:[NSString stringWithFormat:@" %@", cursors.relationshipCursorVersionID]] forKey:@"since"];
-    } else {
-        [feedParams addValue:sinceParameter forKey:@"since"];
-    }
+    [feedParams addValue:[cursors stringFromTimestamp:cursors.relationshipCursorTimestamp version:cursors.relationshipCursorVersionID] forKey:@"since"];
 
     TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
     NSError *error;
@@ -117,10 +110,17 @@
         if (![context hasChanges]) return;
 
         if ([[self applicationDelegate] saveContext:context error:&error]) {
+           
+            NSLock *saveCursorsLock = [[self applicationDelegate] saveCursorsLock];
+
+            [saveCursorsLock lock];
+
             cursors.relationshipCursorTimestamp = firstTimestamp;
             cursors.relationshipCursorVersionID = firstVersionID;
 
             [cursors saveToPlistWithError:&error];
+
+            [saveCursorsLock unlock];
         }
     } completionBlock:^{
         relastionshipsSyncComplete = YES;
@@ -196,6 +196,8 @@
         }
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"postsFeedWithParams failure: %@", error);
+
+        completion();
     }];
 }
 

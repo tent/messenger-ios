@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>MessageCursor</key>
+	<dict>
+		<key>timestamp</key>
+		<integer>0</integer>
+		<key>version</key>
+		<string></string>
+	</dict>
 	<key>RelationshipCursor</key>
 	<dict>
 		<key>timestamp</key>

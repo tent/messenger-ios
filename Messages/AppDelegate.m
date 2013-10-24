@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Contact.h"
+#import "Conversation.h"
 #import "TCPost+CoreData.h"
 
 @implementation AppDelegate
@@ -17,6 +18,7 @@
 
     int numNetworkActivityRequests;
     NSLock *numNetworkActivityRequestsLock;
+    NSLock *saveCursorsLock;
 }
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -231,6 +233,15 @@
         [Contact syncRelationships];
 
         NSLog(@"syncRelationshipsInvocation complete");
+
+        // Fetch messages after relationship sync is finished
+        [operationQueue addOperationWithBlock:^{
+            NSLog(@"fetchNewMessagesInvocation start");
+
+            [Conversation fetchNewMessages];
+
+            NSLog(@"fetchNewMessagesInvocation complete");
+        }];
     }];
 }
 
@@ -321,6 +332,14 @@
     NSManagedObject *appPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:[self managedObjectContext] error:nil];
 
     currentAppPostObjectID = appPostManagedObject.objectID;
+}
+
+- (NSLock *)saveCursorsLock {
+    if (!saveCursorsLock) {
+        saveCursorsLock = [[NSLock alloc] init];
+    }
+
+    return saveCursorsLock;
 }
 
 #pragma mark - Network Activity Indicator

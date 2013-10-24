@@ -9,7 +9,7 @@
 @import Foundation;
 @import CoreData;
 
-@class Contact, Message, TCPostManagedObject;
+@class Contact, Message, TCPostManagedObject, TCParams, TentClient, AFHTTPRequestOperation, TCResponseEnvelope;
 
 @interface Conversation : NSManagedObject
 
@@ -18,7 +18,19 @@
 @property (nonatomic, retain) Message *latestMessage;
 @property (nonatomic, retain) TCPostManagedObject *conversationPost;
 
-+ (void)syncObjectID:(NSManagedObjectID *)objectID;
++ (void)persistObjectID:(NSManagedObjectID *)objectID;
+
++ (void)syncAllConversations;
+
++ (void)fetchNewMessages;
+
++ (void)fetchNewMessagesWithClient:(TentClient *)client
+                            params:(TCParams *)feedParams
+                      successBlock:(void (^)(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope))success
+                      failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+                   completionBlock:(void (^)())completion;
+
++ (Contact *)contactForEntity:(NSString *)entity error:(NSError **)error;
 
 @end
 

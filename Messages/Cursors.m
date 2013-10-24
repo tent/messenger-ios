@@ -40,6 +40,8 @@
         NSLog(@"Error reading plist: %@, format: %d", error, format);
     }
 
+    // Relationship Cursor
+
     NSDictionary *relationshipCursor = [tmp objectForKey:@"RelationshipCursor"];
 
     if (!relationshipCursor) {
@@ -49,9 +51,24 @@
                                };
     }
 
-    self.relationshipCursorTimestamp = [NSDate dateWithTimeIntervalSince1970:[[NSNumber numberWithDouble:([((NSNumber *)[relationshipCursor objectForKey:@"timestamp"]) floatValue] / 1000)] integerValue]];
+    self.relationshipCursorTimestamp = [self deserializeTimestamp:(NSNumber *)[relationshipCursor objectForKey:@"timestamp"]];
 
     self.relationshipCursorVersionID = (NSString *)[relationshipCursor objectForKey:@"version"];
+
+    // Message Cursor
+
+    NSDictionary *messageCursor = [tmp objectForKey:@"MessageCursor"];
+
+    if (!messageCursor) {
+        messageCursor = @{
+                          @"version": @"",
+                          @"timestamp": [NSNumber numberWithInteger:0]
+                          };
+    }
+
+    self.messageCursorTimestamp = [self deserializeTimestamp:(NSNumber *)[messageCursor objectForKey:@"timestamp"]];
+
+    self.messageCursorVersionID = (NSString *)[messageCursor objectForKey:@"version"];
 
     return self;
 }
@@ -61,15 +78,26 @@
 }
 
 - (void)saveToPlistWithError:(NSError *__autoreleasing *)error {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"Cursors.plist"];
+    // Relationship Cursor
 
     NSDictionary *relationshipCursor = @{
                                          @"version": self.relationshipCursorVersionID,
-                                         @"timestamp": [NSNumber numberWithDouble:([self.relationshipCursorTimestamp timeIntervalSince1970] * 1000)]
+                                         @"timestamp": [self serializeTimestamp:self.relationshipCursorTimestamp]
                                          };
 
-    NSDictionary *plistDictionary = [NSDictionary dictionaryWithObjects:@[relationshipCursor] forKeys:@[@"RelationshipCursor"]];
+    // Message Cursor
+   
+    NSDictionary *messageCursor = @{
+                                    @"version": self.messageCursorVersionID,
+                                    @"timestamp": [self serializeTimestamp:self.messageCursorTimestamp]
+                                    };
+
+    // Save plist
+
+    NSDictionary *plistDictionary = [NSDictionary dictionaryWithObjects:@[relationshipCursor, messageCursor] forKeys:@[@"RelationshipCursor", @"MessageCursor"]];
+
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"Cursors.plist"];
 
     NSData *plistXML = [NSPropertyListSerialization dataFromPropertyList:plistDictionary format:NSPropertyListXMLFormat_v1_0 errorDescription:error];
 
@@ -88,6 +116,25 @@
     }
 
     return [[NSFileManager defaultManager] removeItemAtPath:plistPath error:error];
+}
+
+- (NSString *)stringFromTimestamp:(NSDate *)timestamp version:(NSString *)version {
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSString *res = [formatter stringFromNumber:[self serializeTimestamp:timestamp]];
+
+    if (![version isEqualToString:@""]) {
+        return [res stringByAppendingString:[NSString stringWithFormat:@" %@", version]];
+    } else {
+        return res;
+    }
+}
+
+- (NSDate *)deserializeTimestamp:(NSNumber *)timestamp {
+    return [NSDate dateWithTimeIntervalSince1970:[[NSNumber numberWithDouble:([timestamp floatValue] / 1000)] integerValue]];
+}
+
+- (NSNumber *)serializeTimestamp:(NSDate *)timestamp {
+    return [NSNumber numberWithDouble:([timestamp timeIntervalSince1970] * 1000)];
 }
 
 @end

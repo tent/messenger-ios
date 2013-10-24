@@ -247,6 +247,12 @@
     };
 
     [client authenticateWithApp:appPost successBlock:^(TCAppPost *post, NSURL *authURI, NSString *state) {
+        // Don't open browser if app is already authenticated
+        if (post.authCredentialsPost) {
+            tokenExchangeSuccessBlock(post, post.authCredentialsPost);
+            return;
+        }
+
         AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
         appDelegate.authCallbackBlock = ^(NSURL *callbackURI) {

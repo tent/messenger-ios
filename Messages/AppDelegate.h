@@ -39,6 +39,8 @@
 
 - (void)setCurrentAppPost:(TCAppPost *)appPost;
 
+- (NSLock *)saveCursorsLock;
+
 #pragma mark - Network Activity Indicator
 
 - (void)showNetworkActivityIndicator;
