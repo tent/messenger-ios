@@ -612,6 +612,19 @@
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-pedantic",
 					"-Wall",
+					"-Wextra",
+					"-Werror",
+					"-Wcast-align",
+					"-Wconversion",
+					"-Wfloat-equal",
+					"-Wformat=2",
+					"-Wmissing-declarations",
+					"-Wmissing-prototypes",
+					"-Woverlength-strings",
+					"-Wshadow",
+					"-Wstrict-selector-match",
+					"-Wundeclared-selector",
+					"-Wunreachable-code",
 				);
 				WRAPPER_EXTENSION = app;
 			};
