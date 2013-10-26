@@ -41,7 +41,7 @@
     client.credentialsPost = appPost.authCredentialsPost;
 
     NSArray *conversationEntities = [[conversation.contacts allObjects] transposedArrayUsingBlock:^id(Contact *contact) {
-            return [[contact.relationshipPost.mentions objectAtIndex:0] objectForKey:@"entity"];
+            return [[contact.relationshipPost.mentions objectAtIndex:0] valueForKey:@"entity"];
     }];
 
     // Create conversation post if it doesn't exist already
@@ -234,8 +234,8 @@
         [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *postModel, __unused NSUInteger idx, __unused BOOL *stop) {
             // TODO: check if message is already in db (MTL may already do this, verify)
 
-            NSString *conversationPostID = [[postModel.refs objectAtIndex:0] objectForKey:@"post"]; // TODO: find conversation ref as it's not garenteed to be the first
-            Conversation *conversationManagedObject = [conversationManagedObjects objectForKey:conversationPostID];
+            NSString *conversationPostID = [[postModel.refs objectAtIndex:0] valueForKey:@"post"]; // TODO: find conversation ref as it's not garenteed to be the first
+            Conversation *conversationManagedObject = [conversationManagedObjects valueForKey:conversationPostID];
 
             NSError *error;
 
