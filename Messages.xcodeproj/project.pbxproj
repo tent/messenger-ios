@@ -611,7 +611,7 @@
 					"-Wno-direct-ivar-access",
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-pedantic",
-					"-Weverything",
+					"-Wall",
 				);
 				WRAPPER_EXTENSION = app;
 			};
