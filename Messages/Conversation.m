@@ -55,7 +55,7 @@
         conversationPost.permissionsPublic = NO;
         conversationPost.permissionsEntities = conversationEntities;
 
-        [client newPost:conversationPost successBlock:^(AFHTTPRequestOperation *operation, TCPost *post) {
+        [client newPost:conversationPost successBlock:^(__unused AFHTTPRequestOperation *operation, TCPost *post) {
 
             NSError *error;
 
@@ -72,7 +72,7 @@
             }
 
             [self persistObjectID:conversation.objectID];
-        } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"failed to create conversation: %@", error);
         }];
 
@@ -80,7 +80,7 @@
     }
 
     // Create missing message posts
-    [conversation.messages enumerateObjectsUsingBlock:^(Message *message, BOOL *stop) {
+    [conversation.messages enumerateObjectsUsingBlock:^(Message *message, __unused BOOL *stop) {
         if (message.messagePost) return;
 
         TCPost *messagePost = [[TCPost alloc] init];
@@ -109,7 +109,7 @@
         messagePost.permissionsPublic = NO;
         messagePost.permissionsEntities = conversationEntities;
 
-        [client newPost:messagePost successBlock:^(AFHTTPRequestOperation *operation, TCPost *post) {
+        [client newPost:messagePost successBlock:^(__unused AFHTTPRequestOperation *operation, TCPost *post) {
 
             NSError *error;
             message.messagePost = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&error];
@@ -123,7 +123,7 @@
                 NSLog(@"error saving context: %@", context);
             }
 
-        } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"failed to create message: %@", error);
         }];
     }];
@@ -148,7 +148,7 @@
 
     [fetchedResultsController performFetch:&error];
 
-    [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Conversation *obj, NSUInteger idx, BOOL *stop) {
+    [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Conversation *obj, __unused NSUInteger idx, __unused BOOL *stop) {
         // TODO: push this onto an NSOperationQueue
         [self persistObjectID:obj.objectID];
     }];
@@ -183,7 +183,7 @@
         fetchMessagesComplete = YES;
     };
 
-    [self fetchNewMessagesWithClient:client params:feedParams successBlock:^(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
+    [self fetchNewMessagesWithClient:client params:feedParams successBlock:^(__unused AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
 
         if ([[responseEnvelope posts] count] == 0) return;
 
@@ -194,7 +194,7 @@
 
         NSMutableDictionary *conversationManagedObjects = [[NSMutableDictionary alloc] init];
 
-        [[responseEnvelope refs] enumerateObjectsUsingBlock:^(TCPost *postModel, NSUInteger idx, BOOL *stop) {
+        [[responseEnvelope refs] enumerateObjectsUsingBlock:^(TCPost *postModel, __unused NSUInteger idx, __unused BOOL *stop) {
             if (![postModel.typeURI hasPrefix:@"https://tent.io/types/conversation/v0"]) return;
 
             // TODO: check if conversation is already in db (MTL may already do this, verify)
@@ -209,7 +209,7 @@
 
             Conversation *conversationManagedObject = [[Conversation alloc] initWithEntity:[NSEntityDescription entityForName:@"Conversation" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
 
-            [postModel.mentions enumerateObjectsUsingBlock:^(NSDictionary *mention, NSUInteger idx, BOOL *stop) {
+            [postModel.mentions enumerateObjectsUsingBlock:^(NSDictionary *mention, __unused NSUInteger _idx, __unused BOOL *_stop) {
                 if ([mention valueForKey:@"post"]) return; // Skip any mentioned posts
                 if (![mention valueForKey:@"entity"]) return; // Skip mentions referencing conversation post entity
 
@@ -231,7 +231,7 @@
 
         // Enumerate all message posts and find/create managed objects for them
 
-        [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *postModel, NSUInteger idx, BOOL *stop) {
+        [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *postModel, __unused NSUInteger idx, __unused BOOL *stop) {
             // TODO: check if message is already in db (MTL may already do this, verify)
 
             NSString *conversationPostID = [[postModel.refs objectAtIndex:0] objectForKey:@"post"]; // TODO: find conversation ref as it's not garenteed to be the first

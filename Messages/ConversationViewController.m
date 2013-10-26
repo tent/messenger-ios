@@ -76,7 +76,7 @@
     [self.sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(__unused BOOL)animated {
     // Remove ContactsViewController from navigation stack
     NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
     for (UIViewController *c in self.navigationController.viewControllers) {
@@ -118,7 +118,7 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender {
     if ([segue.identifier isEqualToString:@"loadParticipants"]) {
         ParticipantsViewController *participantsViewController = (ParticipantsViewController *)([segue destinationViewController]);
 
@@ -128,9 +128,9 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
+- (NSInteger)tableView:(__unused UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -144,7 +144,7 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(__unused UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*
      This is called for every row in the table before any of the cells are rendered
      and is a temperary solution to style the cells
@@ -161,11 +161,11 @@
     return cell.frame.size.height;
 }
 
-- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)tableView:(__unused UITableView *)tableView shouldShowMenuForRowAtIndexPath:(__unused NSIndexPath *)indexPath {
     return YES;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (BOOL)tableView:(__unused UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(__unused NSIndexPath *)indexPath withSender:(__unused id)sender {
     if (action == @selector(copy:)) {
         return YES;
     } else {
@@ -173,7 +173,7 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (void)tableView:(__unused UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(__unused id)sender {
     if (action == @selector(copy:)) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
 
@@ -185,14 +185,14 @@
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+- (void)controllerDidChangeContent:(__unused NSFetchedResultsController *)controller {
     [self.tableView reloadData];
     [self scrollToBottom];
 }
 
 #pragma mark -
 
-- (void)participantsButtonPressed:(id)sender {
+- (void)participantsButtonPressed:(__unused id)sender {
     [self performSegueWithIdentifier:@"loadParticipants" sender:self];
 }
 
@@ -204,7 +204,7 @@
     return managedObjectContext;
 }
 
-- (void)sendButtonPressed:(id)sender {
+- (void)sendButtonPressed:(__unused id)sender {
     NSString *messageText = self.messageTextField.text;
 
     if ([self.messageTextField isFirstResponder]) {
@@ -231,7 +231,7 @@
     }
 }
 
-- (void)handleTableTap:(id)sender {
+- (void)handleTableTap:(__unused id)sender {
     if ([self.messageTextField isFirstResponder]) {
         [self.messageTextField resignFirstResponder];
     }

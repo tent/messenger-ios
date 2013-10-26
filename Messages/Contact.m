@@ -51,7 +51,7 @@
 
     NSLock *avatarsSyncRemainingLock = [[NSLock alloc] init];
 
-    [self fetchRelationshipsWithClient:client feedParams:feedParams successBlock:^(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
+    [self fetchRelationshipsWithClient:client feedParams:feedParams successBlock:^(__unused AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
 
         if ([[responseEnvelope posts] count] == 0) return;
 
@@ -65,7 +65,7 @@
         NSDate *firstTimestamp = firstPost.publishedAt;
         NSString *firstVersionID = firstPost.versionID;
 
-        [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *post, NSUInteger idx, BOOL *stop) {
+        [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *post, __unused NSUInteger idx, __unused BOOL *stop) {
             NSString *entity = [((NSDictionary *)[post.mentions objectAtIndex:0]) objectForKey:@"entity"];
             NSDictionary *profile = [profiles objectForKey:entity];
 
@@ -176,7 +176,7 @@
         return NO;
     }
 
-    [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *obj, NSUInteger idx, BOOL *stop) {
+    [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *obj, __unused NSUInteger idx, __unused BOOL *stop) {
         [context deleteObject:obj.relationshipPost];
         [context deleteObject:obj];
     }];
@@ -201,7 +201,7 @@
 
             [self fetchRelationshipsWithClient:client feedParams:prevPageParams successBlock:success completionBlock:completion];
         }
-    } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"postsFeedWithParams failure: %@", error);
 
         completion();
@@ -209,7 +209,7 @@
 }
 
 + (void)fetchAvatarWithContactObjectID:(NSManagedObjectID *)contactObjectID entity:(NSString *)entity avatarDigest:(NSString *)avatarDigest client:(TentClient *)client completionBlock:(void (^)())completion {
-    [client getAttachmentWithEntity:entity digest:avatarDigest successBlock:^(AFHTTPRequestOperation *operation, NSData *attachmentBinary) {
+    [client getAttachmentWithEntity:entity digest:avatarDigest successBlock:^(__unused AFHTTPRequestOperation *operation, NSData *attachmentBinary) {
         NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
 
         Contact *contact = (Contact *)[context objectWithID:contactObjectID];
@@ -225,7 +225,7 @@
         }
 
         completion();
-    } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"fetch avatar failure: %@", error);
 
         completion();

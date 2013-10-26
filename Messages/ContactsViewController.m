@@ -155,7 +155,7 @@
 }
 
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(__unused id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
     UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 
     switch(type) {
@@ -170,7 +170,7 @@
 }
 
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(__unused id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     UITableView *tableView = [self tableViewForFetchedResultsController:controller];
 
     switch(type) {
@@ -275,7 +275,7 @@
 
     Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
 
-    if ([[selectedContacts objectsPassingTest:^BOOL(Contact *obj, BOOL *stop) {
+    if ([[selectedContacts objectsPassingTest:^BOOL(Contact *obj, __unused BOOL *stop) {
         return [contact.relationshipPost.id isEqualToString:obj.relationshipPost.id];
     }] count] > 0) {
         cell.selected = YES;
@@ -286,8 +286,8 @@
 
 #pragma mark - UISearchDisplayController Delegate Methods
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView {
-    [selectedContacts enumerateObjectsUsingBlock:^(Contact *obj, BOOL *stop) {
+- (void)searchDisplayController:(__unused UISearchDisplayController *)controller willHideSearchResultsTableView:(__unused UITableView *)tableView {
+    [selectedContacts enumerateObjectsUsingBlock:^(Contact *obj, __unused BOOL *stop) {
         NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:obj];
 
         if (!indexPath) return;
@@ -298,7 +298,7 @@
     }];
 }
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+- (BOOL)searchDisplayController:(__unused UISearchDisplayController *)controller shouldReloadTableForSearchString:(__unused NSString *)searchString {
     [self configureSearchFetchedResultsController];
 
     // Return YES to cause the search results tableView to reload
@@ -309,7 +309,7 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender
 {
     if ([segue.identifier isEqualToString:@"newConversationSegue"]) {
         ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);

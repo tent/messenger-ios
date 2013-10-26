@@ -87,7 +87,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dismissKeyboard:(id)sender {
+- (void)dismissKeyboard:(__unused id)sender {
     if ([self.entityTextField isFirstResponder]) {
         [self.entityTextField resignFirstResponder];
     }
@@ -185,7 +185,7 @@
     return [context save:error];
 }
 
-- (void)signinButtonPressed:(id)sender {
+- (void)signinButtonPressed:(__unused id)sender {
     NSURL *entityURI = [NSURL URLWithString:self.entityTextField.text];
 
     NSError *error;
@@ -219,14 +219,14 @@
 
     client.metaPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) fetchMetaPostForEntity:[entityURI absoluteString] error:nil];
 
-    void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error) = ^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         // TODO: Inform user of error
         NSLog(@"An error occurred: %@", error);
 
         self.signinButton.enabled = YES;
     };
 
-    void (^tokenExchangeSuccessBlock)(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) = ^(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) {
+    void (^tokenExchangeSuccessBlock)(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) = ^(TCAppPost *appPost, __unused TCCredentialsPost *authCredentialsPost) {
         NSError *error;
 
         [self persistAppPost:appPost error:&error];
@@ -265,7 +265,7 @@
     } failureBlock:failureBlock];
 }
 
-- (void)entityTextFieldChanged:(id)sender {
+- (void)entityTextFieldChanged:(__unused id)sender {
     if ([self validateEntityTextField]) {
         if ([self.entityTextField.text isEqualToString:currentEntity]) {
             // Already authenticated
@@ -288,7 +288,7 @@
     return NO;
 }
 
-- (void)signoutButtonPressed:(id)sender {
+- (void)signoutButtonPressed:(__unused id)sender {
     [self performSignOut];
 }
 

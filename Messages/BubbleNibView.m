@@ -15,12 +15,12 @@
     BubbleNibAlignment nibAlignment;
 }
 
-- (void)setFrame:(CGRect)frame fillColor:(UIColor *)color alignment:(BubbleNibAlignment)alignment {
+- (void)setFrame:(__unused CGRect)frame fillColor:(UIColor *)color alignment:(BubbleNibAlignment)alignment {
     nibColor = color;
     nibAlignment = alignment;
 }
 
--(void)drawRect:(CGRect)rect {
+-(void)drawRect:(__unused CGRect)rect {
     // Create an oval shape to draw.
 
     int width = self.frame.size.width;

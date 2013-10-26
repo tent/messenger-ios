@@ -98,19 +98,19 @@
 
 #pragma mark - Table view delegate
 
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)tableView:(__unused UITableView *)tableView shouldHighlightRowAtIndexPath:(__unused NSIndexPath *)indexPath {
     return NO;
 }
 
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)tableView:(__unused UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(__unused NSIndexPath *)indexPath {
     return YES;
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
+- (NSInteger)tableView:(__unused UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,7 +130,7 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(__unused UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         ConversationsCell *cell = (ConversationsCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         [[self managedObjectContext] deleteObject:cell.conversation];
@@ -142,13 +142,13 @@
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+- (void)controllerDidChangeContent:(__unused NSFetchedResultsController *)controller {
     [self.tableView reloadData];
 }
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender
 {
     if ([segue.identifier isEqualToString:@"loadConversation"]) {
         ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);
@@ -158,11 +158,11 @@
 
 #pragma mark - IBAction
 
-- (IBAction)accountsButtonPressed:(id)sender {
+- (IBAction)accountsButtonPressed:(__unused id)sender {
     [self performSegueWithIdentifier:@"accountsSegue" sender:self];
 }
 
-- (IBAction)actionButtonPressed:(id)sender {
+- (IBAction)actionButtonPressed:(__unused id)sender {
     [self performSegueWithIdentifier:@"newMessage" sender:self];
 }
 
