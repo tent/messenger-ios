@@ -226,10 +226,10 @@
         self.signinButton.enabled = YES;
     };
 
-    void (^tokenExchangeSuccessBlock)(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) = ^(TCAppPost *appPost, __unused TCCredentialsPost *authCredentialsPost) {
+    void (^tokenExchangeSuccessBlock)(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) = ^(TCAppPost *_appPost, __unused TCCredentialsPost *authCredentialsPost) {
         NSError *error;
 
-        [self persistAppPost:appPost error:&error];
+        [self persistAppPost:_appPost error:&error];
 
         if (error) {
             NSLog(@"error persisting app post: %@", error);
@@ -241,7 +241,7 @@
             NSLog(@"error persisting meta post: %@", error);
         }
 
-        [((AppDelegate *)([UIApplication sharedApplication].delegate)) setCurrentAppPost:appPost];
+        [((AppDelegate *)([UIApplication sharedApplication].delegate)) setCurrentAppPost:_appPost];
 
         [(AppDelegate *)([UIApplication sharedApplication].delegate) applicationAuthenticated];
 

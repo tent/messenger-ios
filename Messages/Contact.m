@@ -55,7 +55,7 @@
 
         if ([[responseEnvelope posts] count] == 0) return;
 
-        __block NSError *error;
+        __block NSError *saveError;
 
         NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
 
@@ -102,14 +102,14 @@
                 NSLog(@"error deleting duplicate contacts: %@", existingContactFetchError);
             }
 
-            TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&error];
+            TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&saveError];
 
             contact.relationshipPost = postManagedObject;
         }];
 
         if (![context hasChanges]) return;
 
-        if ([[self applicationDelegate] saveContext:context error:&error]) {
+        if ([[self applicationDelegate] saveContext:context error:&saveError]) {
            
             NSLock *saveCursorsLock = [[self applicationDelegate] saveCursorsLock];
 
@@ -118,7 +118,7 @@
             cursors.relationshipCursorTimestamp = firstTimestamp;
             cursors.relationshipCursorVersionID = firstVersionID;
 
-            [cursors saveToPlistWithError:&error];
+            [cursors saveToPlistWithError:&saveError];
 
             [saveCursorsLock unlock];
         }
