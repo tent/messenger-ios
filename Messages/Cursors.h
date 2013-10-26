@@ -16,7 +16,7 @@
 @property (copy, nonatomic) NSDate *messageCursorTimestamp;
 @property (copy, nonatomic) NSString *messageCursorVersionID;
 
-- (void)saveToPlistWithError:(NSError **)error;
+- (BOOL)saveToPlistWithError:(NSError **)error;
 
 - (BOOL)deletePlistWithError:(NSError **)error;
 

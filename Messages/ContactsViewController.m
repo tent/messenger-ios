@@ -39,12 +39,12 @@
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-    id ret = [super initWithCoder:decoder];
+    self = [super initWithCoder:decoder];
 
     blankView = [[UIView alloc] init];
     selectedContacts = [[NSMutableSet alloc] init];
 
-    return ret;
+    return self;
 }
 
 - (void)loadView

@@ -156,7 +156,7 @@
     [[self applicationDelegate] hideNetworkActivityIndicator];
 }
 
-+ (void)deleteContactsForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
++ (BOOL)deleteContactsForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
     NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
@@ -173,13 +173,20 @@
     [fetchedResultsController performFetch:error];
 
     if ([fetchedResultsController.fetchedObjects count] == 0) {
-        return;
+        return NO;
     }
 
     [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *obj, NSUInteger idx, BOOL *stop) {
         [context deleteObject:obj.relationshipPost];
         [context deleteObject:obj];
     }];
+
+    if (error) {
+        return NO;
+    } else {
+        return YES;
+
+    }
 }
 
 + (void)fetchRelationshipsWithClient:(TentClient *)client feedParams:(TCParams *)feedParams successBlock:(void (^)(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope))success completionBlock:(void (^)())completion {

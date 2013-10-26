@@ -77,7 +77,7 @@
     return [NSString stringWithFormat:@"<%@ <Relationship timestamp=%f version=%@>>", self.class, [self.relationshipCursorTimestamp timeIntervalSince1970] * 1000, self.relationshipCursorVersionID];
 }
 
-- (void)saveToPlistWithError:(NSError *__autoreleasing *)error {
+- (BOOL)saveToPlistWithError:(NSError *__autoreleasing *)error {
     // Relationship Cursor
 
     NSDictionary *relationshipCursor = @{
@@ -99,10 +99,22 @@
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"Cursors.plist"];
 
-    NSData *plistXML = [NSPropertyListSerialization dataFromPropertyList:plistDictionary format:NSPropertyListXMLFormat_v1_0 errorDescription:error];
+    NSString *errorDescription;
+
+    NSData *plistXML = [NSPropertyListSerialization dataFromPropertyList:plistDictionary format:NSPropertyListXMLFormat_v1_0 errorDescription:&errorDescription];
+
+    if (errorDescription && error != NULL) {
+        *error = [NSError errorWithDomain:errorDescription code:1 userInfo:nil];
+    }
 
     if (plistXML) {
         [plistXML writeToFile:plistPath atomically:YES];
+    }
+
+    if (error) {
+        return NO;
+    } else {
+        return YES;
     }
 }
 

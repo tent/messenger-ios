@@ -117,7 +117,9 @@
     if ([appPostManagedObject isKindOfClass:TCAppPostManagedObject.class]) {
         appPost = [MTLManagedObjectAdapter modelOfClass:TCAppPost.class fromManagedObject:appPostManagedObject error:error];
     } else {
-        *error = [[NSError alloc] initWithDomain:@"App not found" code:1 userInfo:nil];
+        if (error != NULL) {
+            *error = [[NSError alloc] initWithDomain:@"App not found" code:1 userInfo:nil];
+        }
     }
 
     return appPost;
@@ -167,20 +169,20 @@
     return appPost;
 }
 
-- (void)persistAppPost:(TCAppPost *)appPost error:(NSError *__autoreleasing *)error {
+- (BOOL)persistAppPost:(TCAppPost *)appPost error:(NSError *__autoreleasing *)error {
     NSManagedObjectContext *context = [self managedObjectContext];
 
     [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:context error:error];
 
-    [context save:error];
+    return [context save:error];
 }
 
-- (void)persistMetaPost:(TCMetaPost *)metaPost error:(NSError *__autoreleasing *)error {
+- (BOOL)persistMetaPost:(TCMetaPost *)metaPost error:(NSError *__autoreleasing *)error {
     NSManagedObjectContext *context = [self managedObjectContext];
 
     [MTLManagedObjectAdapter managedObjectFromModel:metaPost insertingIntoContext:context error:error];
 
-    [context save:error];
+    return [context save:error];
 }
 
 - (void)signinButtonPressed:(id)sender {

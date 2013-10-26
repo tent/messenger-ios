@@ -27,7 +27,7 @@
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    id ret = [super initWithCoder:aDecoder];
+    self = [super initWithCoder:aDecoder];
 
     imageView = [[UIView alloc] init];
     contentView = [[UIView alloc] init];
@@ -44,7 +44,7 @@
 
     refreshTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshTimeViewContent) userInfo:nil repeats:YES];
 
-    return ret;
+    return self;
 }
 
 #pragma mark - UIView
