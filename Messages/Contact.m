@@ -134,7 +134,7 @@
 
         // Set number of avatar requests remaining
         [avatarsSyncRemainingLock lock];
-        avatarsSyncRemaining = [fetchAvatarsQueue operationCount];
+        avatarsSyncRemaining = (int)[fetchAvatarsQueue operationCount];
         [avatarsSyncRemainingLock unlock];
 
         // Wait until all relationships are synced before fetching avatars

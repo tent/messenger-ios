@@ -38,28 +38,28 @@
 
     int offsetY = 0;
     int offsetX = 10;
-    int width = messageBubbleView.frame.size.width - (offsetX * 2);
+    int width = (int)messageBubbleView.frame.size.width - (offsetX * 2);
 
     // name
     nameView.frame = CGRectMake(offsetX, offsetY + 11, width, 0);
     [self refreshNameViewContent];
 
     CGRect frame = nameView.frame;
-    offsetY = frame.origin.y + frame.size.height;
+    offsetY = (int)(frame.origin.y + frame.size.height);
 
     // message body
     messageBodyView.frame = CGRectMake(offsetX, offsetY + 5, width, 0);
     [self refreshBodyViewContent];
 
     frame = messageBodyView.frame;
-    offsetY = frame.origin.y + frame.size.height;
+    offsetY = (int)(frame.origin.y + frame.size.height);
 
     // status line
     messageStatusView.frame = CGRectMake(offsetX, offsetY + 5, width, 0);
     [self refreshStatusViewContent];
 
     frame = messageStatusView.frame;
-    offsetY = frame.origin.y + frame.size.height;
+    offsetY = (int)(frame.origin.y + frame.size.height);
 
     // adjust bubble and cell dimentions based on content
     messageBubbleView.frame = CGRectMake(
@@ -144,7 +144,7 @@
     // icon
     UIImage *statusIcon = [self getIconForMessageState];
     UIImageView *statusIconView = [[UIImageView alloc] initWithImage:statusIcon];
-    int iconSize = textView.frame.size.height - 6;
+    int iconSize = (int)textView.frame.size.height - 6;
     float iconOffsetY = (textView.frame.size.height - iconSize) / 2;
     statusIconView.frame = CGRectMake(0, iconOffsetY, iconSize, iconSize);
 
@@ -190,8 +190,8 @@
     ConversationMessageAlignment alignment = self.messageAlignment;
     CGRect frame;
 
-    int width = self.frame.size.width - 66;
-    int height = self.frame.size.height;
+    int width = (int)self.frame.size.width - 66;
+    int height = (int)self.frame.size.height;
     int offsetY = 13;
     int offsetX = 13;
 

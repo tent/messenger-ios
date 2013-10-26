@@ -24,7 +24,7 @@
 + (UIColor *)blueColor {
     static UIColor *blueColor;        // #0274d2
     if (!blueColor) {
-        blueColor = [[UIColor alloc] initWithRed:2/255.0 green:116/255.0 blue:210/255.0 alpha:1];
+        blueColor = [[UIColor alloc] initWithRed:(float)(2/255.0) green:(float)(116/255.0) blue:(float)(210/255.0) alpha:1];
     }
 
     return blueColor;
@@ -33,7 +33,7 @@
 + (UIColor *)lightBlueColor {
     static UIColor *lightBlueColor;   // #1e84d9
     if (!lightBlueColor) {
-        lightBlueColor = [[UIColor alloc] initWithRed:30/255.0 green:132/255.0 blue:217/255.0 alpha:1];
+        lightBlueColor = [[UIColor alloc] initWithRed:(float)(30/255.0) green:(float)(132/255.0) blue:(float)(217/255.0) alpha:1];
     }
 
     return lightBlueColor;
@@ -42,7 +42,7 @@
 + (UIColor *)whiteBlueColor {
     static UIColor *whiteBlueColor;   // #d6e9f8
     if (!whiteBlueColor) {
-        whiteBlueColor = [[UIColor alloc] initWithRed:214/255.0 green:233/255.0 blue:248/255.0 alpha:1];
+        whiteBlueColor = [[UIColor alloc] initWithRed:(float)(214/255.0) green:(float)(233/255.0) blue:(float)(248/255.0) alpha:1];
     }
 
     return whiteBlueColor;
@@ -52,7 +52,7 @@
 + (UIColor *)greyColor {
     static UIColor *greyColor;        // #999999
     if (!greyColor) {
-        greyColor = [[UIColor alloc] initWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+        greyColor = [[UIColor alloc] initWithRed:(float)(153/255.0) green:(float)(153/255.0) blue:(float)(153/255.0) alpha:1];
     }
 
     return greyColor;
@@ -61,7 +61,7 @@
 + (UIColor *)lightGreyColor {
     static UIColor *lightGreyColor;   // #f1f1f1
     if (!lightGreyColor) {
-        lightGreyColor = [[UIColor alloc] initWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1];
+        lightGreyColor = [[UIColor alloc] initWithRed:(float)(241/255.0) green:(float)(241/255.0) blue:(float)(241/255.0) alpha:1];
     }
 
     return lightGreyColor;
@@ -70,7 +70,7 @@
 + (UIColor *)blackColor {
     static UIColor *blackColor;       // #333333
     if (!blackColor) {
-        blackColor = [[UIColor alloc] initWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1];
+        blackColor = [[UIColor alloc] initWithRed:(float)(51/255.0) green:(float)(51/255.0) blue:(float)(51/255.0) alpha:1];
     }
 
     return blackColor;

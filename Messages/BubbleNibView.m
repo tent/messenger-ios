@@ -23,8 +23,8 @@
 -(void)drawRect:(__unused CGRect)rect {
     // Create an oval shape to draw.
 
-    int width = self.frame.size.width;
-    int height = self.frame.size.height;
+    int width = (int)self.frame.size.width;
+    int height = (int)self.frame.size.height;
 
     UIBezierPath *aPath = [UIBezierPath bezierPath];
 

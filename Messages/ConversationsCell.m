@@ -192,11 +192,11 @@
     if ((int)contacts.count > (nPerRow * nPerRow)) {
         displayCount = (nPerRow * nPerRow) - 1;
     } else {
-        displayCount = contacts.count;
+        displayCount = (int)contacts.count;
     }
 
-    int nMore = contacts.count - displayCount;
-    int avatarSize = (frame.size.height / nPerRow) - avatarMargin;
+    int nMore = (int)contacts.count - displayCount;
+    int avatarSize = (int)(frame.size.height / nPerRow) - avatarMargin;
 
     UIImageView *imageSubView;
     UIImage *avatar;
@@ -204,7 +204,7 @@
     int nthCol = 0;
     int nthRow = 0;
     for (int i = 0; i < displayCount; i++) {
-        contact = [contacts objectAtIndex:i];
+        contact = [contacts objectAtIndex:(unsigned int)i];
         avatar = [[UIImage imageWithData:contact.avatar] thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
         imageSubView = [[UIImageView alloc] initWithImage:avatar];
 

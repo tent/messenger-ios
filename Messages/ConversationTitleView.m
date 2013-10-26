@@ -35,7 +35,7 @@
     }];
 
     if (self) {
-        int avatarCount = contacts.count;
+        int avatarCount = (int)contacts.count;
         int avatarSize = 29;
         int avatarMarginRight = 5;
         int offset = 0;
@@ -52,7 +52,7 @@
         }
 
         for (int i = 0; i < displayAvatarCount; i++) {
-            Contact *contact = [contacts objectAtIndex:i];
+            Contact *contact = [contacts objectAtIndex:(unsigned int)i];
 
             UIImage *avatar = [UIImage imageWithData:contact.avatar];
             avatar = [avatar thumbnailImage:avatarSize transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
@@ -62,7 +62,7 @@
 
             [self addSubview:avatarView];
 
-            offset = avatarView.frame.origin.x + avatarView.frame.size.width + avatarMarginRight;
+            offset = (int)avatarView.frame.origin.x + (int)avatarView.frame.size.width + avatarMarginRight;
         }
 
         if (avatarCount > 5) {
