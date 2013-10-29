@@ -243,6 +243,9 @@
 
             Message *messageManagedObject = [[Message alloc] initWithEntity:[NSEntityDescription entityForName:@"Message" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
 
+            messageManagedObject.body = [messagePostManagedObject.content valueForKey:@"text"];
+            messageManagedObject.timestamp = messagePostManagedObject.versionPublishedAt;
+
             messageManagedObject.messagePost = messagePostManagedObject;
 
             messageManagedObject.conversation = conversationManagedObject;
