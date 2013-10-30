@@ -253,18 +253,23 @@
 
         NSError *error;
 
-        if (![[self applicationDelegate] saveContext:context error:&error]) {
-            NSLog(@"Error saving context: %@", error);
-        } else {
+        if ([[self applicationDelegate] saveContext:context error:&error]) {
+            // Update cursor
+
+            TCPost *firstPost = [[responseEnvelope posts] firstObject];
+            NSDate *firstTimestamp = firstPost.publishedAt;
+            NSString *firstVersionID = firstPost.versionID;
 
             NSLock *saveCursorsLock = [[self applicationDelegate] saveCursorsLock];
 
             [saveCursorsLock lock];
 
-            // TODO: Update cursor
+            cursors.messageCursorTimestamp = firstTimestamp;
+            cursors.messageCursorVersionID = firstVersionID;
 
             [saveCursorsLock unlock];
-
+        } else {
+            NSLog(@"Error saving context: %@", error);
         }
 
     } failureBlock:^(AFHTTPRequestOperation *operation, NSError *error) {
