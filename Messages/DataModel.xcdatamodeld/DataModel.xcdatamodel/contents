@@ -11,7 +11,7 @@
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="conversations" inverseEntity="Contact" syncable="YES"/>
-        <relationship name="conversationPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TCPost" syncable="YES"/>
+        <relationship name="conversationPost" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TCPost" syncable="YES"/>
         <relationship name="latestMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
     </entity>
