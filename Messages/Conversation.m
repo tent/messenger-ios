@@ -294,8 +294,6 @@
 + (void)fetchNewMessagesWithClient:(TentClient *)client params:(TCParams *)feedParams successBlock:(void (^)(AFHTTPRequestOperation *, TCResponseEnvelope *))success failureBlock:(void (^)(AFHTTPRequestOperation *, NSError *))failure completionBlock:(void (^)())completion {
 
     [client postsFeedWithParams:feedParams successBlock:^(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope) {
-       
-        NSLog(@"fetchNewMessages <%@ %@>: %@", [operation.request HTTPMethod], operation.request.URL, responseEnvelope);
 
         if ([responseEnvelope isEmpty]) {
             completion();
