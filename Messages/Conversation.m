@@ -337,4 +337,24 @@
     return (AppDelegate *)([UIApplication sharedApplication].delegate);
 }
 
+- (void)prepareForDeletion {
+    /*
+     * This conversation is about to be deleted
+     * Sync this action with the Tent server
+     * All messages within this conversation will be deleted via the delete rule in Core Data
+     */
+
+    TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
+
+    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
+
+    TCPostManagedObject *conversationPost = self.conversationPost;
+
+    [client deletePostWithEntity:conversationPost.entityURI postID:conversationPost.id successBlock:^(__unused AFHTTPRequestOperation *operation) {
+        NSLog(@"successfully deleted conversation post");
+    } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error deleting conversation post: %@ via <%@ %@>", error, [operation.request HTTPMethod], operation.request.URL);
+    }];
+}
+
 @end

@@ -9,6 +9,8 @@
 #import "Message.h"
 #import "Contact.h"
 #import "Conversation.h"
+#import "AppDelegate.h"
+#import "TCPost+CoreData.h"
 
 
 @implementation Message
@@ -22,6 +24,25 @@
 - (ConversationMessageAlignment)getAlignment {
     // TODO: calculate alignment based on who authored the message (us or them)
     return ConversationMessageLeft;
+}
+
+- (void)prepareForDeletion {
+    /*
+     * This message is about to be deleted
+     * Perform the delete operation on the Tent server
+     */
+
+    TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
+
+    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
+
+    TCPostManagedObject *messagePost = self.messagePost;
+
+    [client deletePostWithEntity:messagePost.entityURI postID:messagePost.id successBlock:^(__unused AFHTTPRequestOperation *operation) {
+        NSLog(@"successfully deleted message post");
+    } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error deleting message post: %@ via <%@ %@>", error, [operation.request HTTPMethod], operation.request.URL);
+    }];
 }
 
 @end
