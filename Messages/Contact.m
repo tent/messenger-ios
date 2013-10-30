@@ -18,6 +18,7 @@
 
 @dynamic avatar;
 @dynamic name;
+@dynamic entityURI;
 @dynamic conversations;
 @dynamic messages;
 @dynamic sectionName;
@@ -78,6 +79,8 @@
             if (!contact.name) {
                 contact.name = entity;
             }
+
+            contact.entityURI = entity;
 
             contact.sectionName = [contact.name substringToIndex:1];
 

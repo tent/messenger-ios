@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSData * avatar;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * entityURI;
 @property (nonatomic, retain) NSString * sectionName;
 @property (nonatomic, retain) NSSet *conversations;
 @property (nonatomic, retain) NSSet *messages;
