@@ -321,7 +321,7 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"relationshipPost.entityURI == %@", entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entity];
     [fetchRequest setPredicate:predicate];
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
