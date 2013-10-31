@@ -277,16 +277,16 @@
         if ([[self applicationDelegate] saveContext:context error:&error]) {
             // Update cursor
 
-            TCPost *firstPost = [[responseEnvelope posts] firstObject];
-            NSDate *firstTimestamp = firstPost.publishedAt;
-            NSString *firstVersionID = firstPost.versionID;
+            TCPost *referencePost = [[responseEnvelope posts] firstObject];
+            NSDate *referenceTimestamp = referencePost.publishedAt;
+            NSString *referenceVersionID = referencePost.versionID;
 
             NSLock *saveCursorsLock = [[self applicationDelegate] saveCursorsLock];
 
             [saveCursorsLock lock];
 
-            cursors.messageCursorTimestamp = firstTimestamp;
-            cursors.messageCursorVersionID = firstVersionID;
+            cursors.messageCursorTimestamp = referenceTimestamp;
+            cursors.messageCursorVersionID = referenceVersionID;
 
             [saveCursorsLock unlock];
         } else {

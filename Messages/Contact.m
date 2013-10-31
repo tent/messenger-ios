@@ -63,10 +63,6 @@
 
         NSDictionary *profiles = [responseEnvelope profiles];
 
-        TCPost *firstPost = [[responseEnvelope posts] firstObject];
-        NSDate *firstTimestamp = firstPost.publishedAt;
-        NSString *firstVersionID = firstPost.versionID;
-
         [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *post, __unused NSUInteger idx, __unused BOOL *stop) {
             NSString *entity = [((NSDictionary *)[post.mentions objectAtIndex:0]) objectForKey:@"entity"];
             NSDictionary *profile = [profiles objectForKey:entity];
@@ -123,8 +119,12 @@
 
             [saveCursorsLock lock];
 
-            cursors.relationshipCursorTimestamp = firstTimestamp;
-            cursors.relationshipCursorVersionID = firstVersionID;
+            TCPost *referencePost = [[responseEnvelope posts] firstObject];
+            NSDate *referenceTimestamp = referencePost.publishedAt;
+            NSString *referenceVersionID = referencePost.versionID;
+
+            cursors.relationshipCursorTimestamp = referenceTimestamp;
+            cursors.relationshipCursorVersionID = referenceVersionID;
 
             [cursors saveToPlistWithError:&saveError];
 
