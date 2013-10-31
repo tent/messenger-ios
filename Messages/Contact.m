@@ -72,7 +72,22 @@
 
             if (!profile) return;
 
-            Contact *contact = [[Contact alloc] initWithEntity:[NSEntityDescription entityForName:@"Contact" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
+            NSError *existingContactFetchError;
+            Contact *contact = [self contactForPostID:post.ID error:&existingContactFetchError];
+
+            if (!contact) {
+                if (existingContactFetchError) {
+                    NSLog(@"error fetching existing contact: %@", existingContactFetchError);
+                }
+
+                contact = [[Contact alloc] initWithEntity:[NSEntityDescription entityForName:@"Contact" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
+
+               
+                TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&saveError];
+
+                contact.relationshipPost = postManagedObject;
+
+            }
 
             contact.name = [profile objectForKey:@"name"];
 
@@ -97,17 +112,6 @@
                     }];
                 }];
             }
-
-            NSError *existingContactFetchError;
-            [self deleteContactsForPostID:post.ID error:&existingContactFetchError];
-
-            if (existingContactFetchError) {
-                NSLog(@"error deleting duplicate contacts: %@", existingContactFetchError);
-            }
-
-            TCPostManagedObject *postManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:post insertingIntoContext:context error:&saveError];
-
-            contact.relationshipPost = postManagedObject;
         }];
 
         if (![context hasChanges]) return;
@@ -159,7 +163,7 @@
     [[self applicationDelegate] hideNetworkActivityIndicator];
 }
 
-+ (BOOL)deleteContactsForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
++ (Contact *)contactForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
     NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
@@ -176,20 +180,11 @@
     [fetchedResultsController performFetch:error];
 
     if ([fetchedResultsController.fetchedObjects count] == 0) {
-        return NO;
+        return nil;
     }
 
-    [fetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *obj, __unused NSUInteger idx, __unused BOOL *stop) {
-        [context deleteObject:obj.relationshipPost];
-        [context deleteObject:obj];
-    }];
+    return [fetchedResultsController.fetchedObjects objectAtIndex:0];
 
-    if (error) {
-        return NO;
-    } else {
-        return YES;
-
-    }
 }
 
 + (void)fetchRelationshipsWithClient:(TentClient *)client feedParams:(TCParams *)feedParams successBlock:(void (^)(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope))success completionBlock:(void (^)())completion {
