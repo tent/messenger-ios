@@ -159,6 +159,8 @@
 }
 
 + (void)fetchNewMessages {
+    [((AppDelegate *)([UIApplication sharedApplication].delegate)) showNetworkActivityIndicator];
+
     TCParams *feedParams = [[TCParams alloc] init];
 
     [feedParams addValue:@"https://tent.io/types/message/v0" forKey:@"types"];
@@ -307,6 +309,8 @@
     }];
 
     [client.operationQueue waitUntilAllOperationsAreFinished];
+
+    [((AppDelegate *)([UIApplication sharedApplication].delegate)) hideNetworkActivityIndicator];
 }
 
 + (void)fetchNewMessagesWithClient:(TentClient *)client params:(TCParams *)feedParams successBlock:(void (^)(AFHTTPRequestOperation *, TCResponseEnvelope *))success failureBlock:(void (^)(AFHTTPRequestOperation *, NSError *))failure completionBlock:(void (^)())completion {
