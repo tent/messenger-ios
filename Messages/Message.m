@@ -32,16 +32,26 @@
      * Perform the delete operation on the Tent server
      */
 
+    [((AppDelegate *)([UIApplication sharedApplication].delegate)) showNetworkActivityIndicator];
+
     TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
 
     TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
 
     TCPostManagedObject *messagePost = self.messagePost;
 
+    void (^completion)() = ^ {
+        [((AppDelegate *)([UIApplication sharedApplication].delegate)) hideNetworkActivityIndicator];
+    };
+
     [client deletePostWithEntity:messagePost.entityURI postID:messagePost.id successBlock:^(__unused AFHTTPRequestOperation *operation) {
         NSLog(@"successfully deleted message post");
+
+        completion();
     } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error deleting message post: %@ via <%@ %@>", error, [operation.request HTTPMethod], operation.request.URL);
+
+        completion();
     }];
 }
 

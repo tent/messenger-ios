@@ -408,16 +408,26 @@
      * All messages within this conversation will be deleted via the delete rule in Core Data
      */
 
+    [((AppDelegate *)([UIApplication sharedApplication].delegate)) showNetworkActivityIndicator];
+
     TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
 
     TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
 
     TCPostManagedObject *conversationPost = self.conversationPost;
 
+    void (^completion)() = ^ {
+        [((AppDelegate *)([UIApplication sharedApplication].delegate)) hideNetworkActivityIndicator];
+    };
+
     [client deletePostWithEntity:conversationPost.entityURI postID:conversationPost.id successBlock:^(__unused AFHTTPRequestOperation *operation) {
         NSLog(@"successfully deleted conversation post");
+
+        completion();
     } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error deleting conversation post: %@ via <%@ %@>", error, [operation.request HTTPMethod], operation.request.URL);
+
+        completion();
     }];
 }
 
