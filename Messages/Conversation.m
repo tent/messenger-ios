@@ -197,42 +197,59 @@
         [[responseEnvelope refs] enumerateObjectsUsingBlock:^(TCPost *postModel, __unused NSUInteger idx, __unused BOOL *stop) {
             if (![postModel.typeURI hasPrefix:@"https://tent.io/types/conversation/v0"]) return;
 
-            // TODO: check if conversation is already in db (MTL may already do this, verify)
+            // Check if we already have this conversation the in db
+            NSError *fetchConversationError;
+            Conversation *existingConversation = [self conversationForPostID:postModel.ID error:&fetchConversationError];
 
-            NSError *error;
-
-            TCPostManagedObject *conversationPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:postModel insertingIntoContext:context error:&error];
-
-            if (error) {
-                NSLog(@"Error transposing conversation post into manged object: %@", error);
-            }
-
-            Conversation *conversationManagedObject = [[Conversation alloc] initWithEntity:[NSEntityDescription entityForName:@"Conversation" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
-
-            [postModel.mentions enumerateObjectsUsingBlock:^(NSDictionary *mention, __unused NSUInteger _idx, __unused BOOL *_stop) {
-                if ([mention valueForKey:@"post"]) return; // Skip any mentioned posts
-                if (![mention valueForKey:@"entity"]) return; // Skip mentions referencing conversation post entity
-
-                NSError *contactLookupError;
-                Contact *contact = [self contactForEntity:[mention valueForKey:@"entity"] error:&contactLookupError];
-
-                if (contact) {
-                    [conversationManagedObject addContactsObject:contact];
-                } else {
-                    NSLog(@"Error looking up Contact for <Entity %@>: %@", [mention valueForKey:@"entity"], error);
+            if (existingConversation) {
+                [conversationManagedObjects setObject:existingConversation forKey:postModel.ID];
+            } else {
+                if (fetchConversationError) {
+                    NSLog(@"Error fetching existing conversation: %@", fetchConversationError);
                 }
-            }];
 
-            conversationManagedObject.conversationPost = conversationPostManagedObject;
+                NSError *error;
 
+                TCPostManagedObject *conversationPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:postModel insertingIntoContext:context error:&error];
 
-            [conversationManagedObjects setObject:conversationManagedObject forKey:postModel.ID];
+                if (error) {
+                    NSLog(@"Error transposing conversation post into manged object: %@", error);
+                    return;
+                }
+
+                Conversation *conversationManagedObject = [[Conversation alloc] initWithEntity:[NSEntityDescription entityForName:@"Conversation" inManagedObjectContext:context] insertIntoManagedObjectContext:context];
+
+                [postModel.mentions enumerateObjectsUsingBlock:^(NSDictionary *mention, __unused NSUInteger _idx, __unused BOOL *_stop) {
+                    if ([mention valueForKey:@"post"]) return; // Skip any mentioned posts
+                    if (![mention valueForKey:@"entity"]) return; // Skip mentions referencing conversation post entity
+
+                    NSError *contactLookupError;
+                    Contact *contact = [self contactForEntity:[mention valueForKey:@"entity"] error:&contactLookupError];
+
+                    if (contact) {
+                        [conversationManagedObject addContactsObject:contact];
+                    } else {
+                        NSLog(@"Error looking up Contact for <Entity %@>: %@", [mention valueForKey:@"entity"], error);
+                    }
+                }];
+
+                conversationManagedObject.conversationPost = conversationPostManagedObject;
+
+                [conversationManagedObjects setObject:conversationManagedObject forKey:postModel.ID];
+            }
         }];
 
         // Enumerate all message posts and find/create managed objects for them
 
         [[responseEnvelope posts] enumerateObjectsUsingBlock:^(TCPost *postModel, __unused NSUInteger idx, __unused BOOL *stop) {
-            // TODO: check if message is already in db (MTL may already do this, verify)
+            // Check if message is already in db
+            NSError *fetchMessageError;
+            Message *existingMessage = [self messageForPostID:postModel.ID error:&fetchMessageError];
+
+            if (existingMessage) {
+                // Already have the message, moving on...
+                return;
+            }
 
             NSString *conversationPostID = [[postModel.refs objectAtIndex:0] valueForKey:@"post"]; // TODO: find conversation ref as it's not garenteed to be the first
             Conversation *conversationManagedObject = [conversationManagedObjects valueForKey:conversationPostID];
@@ -320,6 +337,52 @@
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entity];
+    [fetchRequest setPredicate:predicate];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    if ([fetchedResultsController.fetchedObjects count] == 0) {
+        return nil;
+    }
+
+    return [fetchedResultsController.fetchedObjects objectAtIndex:0];
+}
+
++ (Conversation *)conversationForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
+    NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Conversation"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"conversationPost.versionPublishedAt" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationPost.id == %@", postID];
+    [fetchRequest setPredicate:predicate];
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+
+    [fetchedResultsController performFetch:error];
+
+    if ([fetchedResultsController.fetchedObjects count] == 0) {
+        return nil;
+    }
+
+    return [fetchedResultsController.fetchedObjects objectAtIndex:0];
+}
+
++ (Message *)messageForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
+    NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Message"];
+
+    // Configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"messagePost.versionPublishedAt" ascending:NO];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messagePost.id == %@", postID];
     [fetchRequest setPredicate:predicate];
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];

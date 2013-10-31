@@ -32,6 +32,12 @@
 
 + (Contact *)contactForEntity:(NSString *)entity error:(NSError **)error;
 
++ (Conversation *)conversationForPostID:(NSString *)postID
+                                     error:(NSError *__autoreleasing *)error;
+
++ (Message *)messageForPostID:(NSString *)postID
+                           error:(NSError *__autoreleasing *)error;
+
 @end
 
 @interface Conversation (CoreDataGeneratedAccessors)
