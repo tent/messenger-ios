@@ -163,6 +163,7 @@
 
     [feedParams addValue:@"https://tent.io/types/message/v0" forKey:@"types"];
     [feedParams addValue:@"1" forKey:@"max_refs"];
+    [feedParams addValue:@"version.received_at" forKey:@"sort_by"];
 
     Cursors *cursors = [self applicationDelegate].cursors;
 
