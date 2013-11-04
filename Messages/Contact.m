@@ -32,7 +32,6 @@
 
     TCParams *feedParams = [TCParams paramsWithDictionary:@{
                                                             @"types": @[@"https://tent.io/types/relationship/v0"],
-                                                            @"entities": [appPost.entityURI absoluteString],
                                                             @"profiles": @"mentions",
                                                             @"sort_by": @"version.received_at"
                                                             }];
