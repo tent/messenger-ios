@@ -222,15 +222,21 @@
 
     client.metaPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) fetchMetaPostForEntity:[entityURI absoluteString] error:nil];
 
+    [(AppDelegate *)([UIApplication sharedApplication].delegate) showNetworkActivityIndicator];
+
     void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error) = ^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         // TODO: Inform user of error
         NSLog(@"An error occurred: %@", error);
 
         self.signinButton.enabled = YES;
+
+        [(AppDelegate *)([UIApplication sharedApplication].delegate) hideNetworkActivityIndicator];
     };
 
     void (^tokenExchangeSuccessBlock)(TCAppPost *appPost, TCCredentialsPost *authCredentialsPost) = ^(TCAppPost *_appPost, __unused TCCredentialsPost *authCredentialsPost) {
         NSError *error;
+
+        [(AppDelegate *)([UIApplication sharedApplication].delegate) hideNetworkActivityIndicator];
 
         [self persistAppPost:_appPost error:&error];
 
@@ -261,8 +267,12 @@
         AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
         appDelegate.authCallbackBlock = ^(NSURL *callbackURI) {
+            [(AppDelegate *)([UIApplication sharedApplication].delegate) showNetworkActivityIndicator];
+
             [client exchangeTokenForApp:post callbackURI:callbackURI state:state successBlock:tokenExchangeSuccessBlock failureBlock:failureBlock];
         };
+
+        [(AppDelegate *)([UIApplication sharedApplication].delegate) hideNetworkActivityIndicator];
 
         [[UIApplication sharedApplication] openURL:authURI];
     } failureBlock:failureBlock];
