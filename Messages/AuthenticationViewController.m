@@ -164,6 +164,9 @@
                                @"https://tent.io/types/conversation/v0",
                                @"https://tent.io/types/message/v0"
                                ];
+        appPost.scopes = @[
+                           @"permissions"
+                           ];
     }
 
     return appPost;
