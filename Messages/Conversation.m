@@ -40,9 +40,14 @@
     TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
     client.credentialsPost = appPost.authCredentialsPost;
 
-    NSArray *conversationEntities = [[conversation.contacts allObjects] transposedArrayUsingBlock:^id(Contact *contact) {
+    NSMutableArray *conversationEntities = [NSMutableArray arrayWithArray:[[conversation.contacts allObjects] transposedArrayUsingBlock:^id(Contact *contact) {
             return [[contact.relationshipPost.mentions objectAtIndex:0] valueForKey:@"entity"];
-    }];
+    }]];
+
+    [conversationEntities addObject:conversation.conversationPost.entityURI];
+
+    // everyone but ourself
+    [conversationEntities removeObject:[appPost.entityURI absoluteString]];
 
     // Create conversation post if it doesn't exist already
     if (!conversation.conversationPost) {
