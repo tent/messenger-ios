@@ -176,12 +176,7 @@
 
     if (contacts.count > 1) {
         avatarMargin = 2;
-
-        if (contacts.count > 4) {
-            nPerRow = 3;
-        } else {
-            nPerRow = 2;
-        }
+        nPerRow = 2;
     } else {
         avatarMargin = 0;
         nPerRow = 1;
