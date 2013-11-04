@@ -32,9 +32,12 @@
      * Perform the delete operation on the Tent server
      */
 
-    [((AppDelegate *)([UIApplication sharedApplication].delegate)) showNetworkActivityIndicator];
-
     TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
+
+    // No authentication, abort
+    if (!appPost) return;
+
+    [((AppDelegate *)([UIApplication sharedApplication].delegate)) showNetworkActivityIndicator];
 
     TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
 

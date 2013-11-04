@@ -246,33 +246,49 @@
 }
 
 - (void)applicationDeauthenticated {
-    NSError *error;
+    __block NSError *error;
 
-    // Delete Contacts
+    // Delete Data from Core Data entities
+
+    NSArray *entityNames = @[
+                          @"Contact",
+                          @"Conversation",
+                          @"Message",
+                          @"TCAppPost",
+                          @"TCCredentialsPost",
+                          @"TCMetaPost",
+                          @"TCMetaPostServer",
+                          @"TCPost"
+                          ];
+
+    // Prevent deletes from propagating to Tent server
+    [self unsetCurrentAppPost];
+
     NSManagedObjectContext *context = [self managedObjectContext];
 
-    NSFetchRequest *contactsFetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
+    [entityNames enumerateObjectsUsingBlock:^(NSString *entityName, __unused NSUInteger idx, __unused BOOL *stop) {
 
-    NSSortDescriptor *contactsSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entityName];
 
-    [contactsFetchRequest setSortDescriptors:@[contactsSortDescriptor]];
+        NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
 
-    NSFetchedResultsController *contactsFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:contactsFetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        if (error) {
+            NSLog(@"error fetching %@: %@", entityName, error);
+        }
 
-    [contactsFetchedResultsController performFetch:&error];
-
-    if (error) {
-        NSLog(@"error fetching contacts: %@", error);
-    }
-
-    if ([contactsFetchedResultsController.fetchedObjects count] > 0) {
-        [contactsFetchedResultsController.fetchedObjects enumerateObjectsUsingBlock:^(Contact *contact, __unused NSUInteger idx, __unused BOOL *stop) {
-            [context deleteObject:contact.relationshipPost];
-            [context deleteObject:contact];
+        [items enumerateObjectsUsingBlock:^(NSManagedObject *managedObject, __unused NSUInteger _idx, __unused BOOL *_stop) {
+            [context deleteObject:managedObject];
         }];
+
+    }];
+
+    // Persist deletes
+    if (![context save:&error]) {
+        NSLog(@"Error deleting records from core data: %@", error);
     }
 
     // Delete Cursors
+
     [self.cursors deletePlistWithError:&error];
 
     if (error) {
@@ -280,6 +296,7 @@
     }
 
     // Set new cursors object
+
     self.cursors = [[Cursors alloc] init];
 }
 
@@ -332,6 +349,10 @@
     NSManagedObject *appPostManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:appPost insertingIntoContext:[self managedObjectContext] error:nil];
 
     currentAppPostObjectID = appPostManagedObject.objectID;
+}
+
+- (void)unsetCurrentAppPost {
+    currentAppPostObjectID = nil;
 }
 
 - (NSLock *)saveCursorsLock {
