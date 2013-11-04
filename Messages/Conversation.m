@@ -236,6 +236,7 @@
                 [postModel.mentions enumerateObjectsUsingBlock:^(NSDictionary *mention, __unused NSUInteger _idx, __unused BOOL *_stop) {
                     if ([mention valueForKey:@"post"]) return; // Skip any mentioned posts
                     if (![mention valueForKey:@"entity"]) return; // Skip mentions referencing conversation post entity
+                    if ([[mention valueForKey:@"entity"] isEqualToString:[appPost.entityURI absoluteString]]) return; // Skip mentions of self
 
                     NSError *contactLookupError;
                     Contact *contact = [self contactForEntity:[mention valueForKey:@"entity"] error:&contactLookupError];
@@ -246,6 +247,10 @@
                         NSLog(@"Error looking up Contact for <Entity %@>: %@", [mention valueForKey:@"entity"], error);
                     }
                 }];
+
+                if (![[postModel.entityURI absoluteString] isEqualToString:[appPost.entityURI absoluteString]]) {
+                    [conversationManagedObject addContactsObject:[self contactForEntity:[postModel.entityURI absoluteString] error:&error]];
+                }
 
                 conversationManagedObject.conversationPost = conversationPostManagedObject;
 
