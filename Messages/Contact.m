@@ -69,7 +69,7 @@
             if (!profile) return;
 
             NSError *existingContactFetchError;
-            Contact *contact = [self contactForPostID:post.ID error:&existingContactFetchError];
+            Contact *contact = [self contactForEntityURI:entity error:&existingContactFetchError];
 
             if (!contact) {
                 if (existingContactFetchError) {
@@ -163,7 +163,7 @@
     [[self applicationDelegate] hideNetworkActivityIndicator];
 }
 
-+ (Contact *)contactForPostID:(NSString *)postID error:(NSError *__autoreleasing *)error {
++ (Contact *)contactForEntityURI:(NSString *)entityURI error:(NSError *__autoreleasing *)error {
     NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
@@ -172,7 +172,7 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"relationshipPost.id == %@", postID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityURI == %@", entityURI];
     [fetchRequest setPredicate:predicate];
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
