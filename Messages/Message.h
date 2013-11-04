@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger, ConversationMessageAlignment) {
 
 @interface Message : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * state;
 @property (nonatomic, retain) NSString * body;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) Contact *contact;

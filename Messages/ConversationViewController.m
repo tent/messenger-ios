@@ -218,6 +218,7 @@
     message.conversation = self.conversation;
     message.conversation.latestMessage = message; // TODO: use an observer for this
     message.timestamp = [[NSDate alloc] init];
+    message.state = [NSNumber numberWithUnsignedInteger:ConversationMessageDelivering];
 
     NSError *error;
     BOOL success = [context save:&error];
@@ -270,7 +271,7 @@
 
     cell.name = message.contact.name;
     cell.messageBody = message.body;
-    // cell.messageState = message.state;
+    cell.messageState = [message.state unsignedIntegerValue];
     cell.messageAlignment = [message getAlignment];
 }
 

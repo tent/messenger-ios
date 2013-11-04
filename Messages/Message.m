@@ -15,6 +15,7 @@
 
 @implementation Message
 
+@dynamic state;
 @dynamic body;
 @dynamic timestamp;
 @dynamic contact;

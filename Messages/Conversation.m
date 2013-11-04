@@ -124,12 +124,18 @@
                 return;
             }
 
+            message.state = [NSNumber numberWithUnsignedInteger:ConversationMessageDelivered];
+
             if (![context save:&error]) {
                 NSLog(@"error saving context: %@", context);
             }
 
         } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"failed to create message: %@", error);
+
+            message.state = [NSNumber numberWithUnsignedInteger:ConversationMessageDeliveryFailed];
+
+            [context save:nil];
         }];
     }];
 }
@@ -271,6 +277,7 @@
             // TODO: Configure entity/managed object for message post
             messageManagedObject.body = [messagePostManagedObject.content valueForKey:@"text"];
             messageManagedObject.timestamp = messagePostManagedObject.versionPublishedAt;
+            messageManagedObject.state = [NSNumber numberWithUnsignedInteger:ConversationMessageDelivered];
 
             conversationManagedObject.latestMessage = messageManagedObject;
 
