@@ -418,6 +418,8 @@
 
     TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
 
+    client.credentialsPost = appPost.authCredentialsPost;
+
     TCPostManagedObject *conversationPost = self.conversationPost;
 
     void (^completion)() = ^ {
