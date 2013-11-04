@@ -279,7 +279,9 @@
             messageManagedObject.timestamp = messagePostManagedObject.versionPublishedAt;
             messageManagedObject.state = [NSNumber numberWithUnsignedInteger:ConversationMessageDelivered];
 
-            conversationManagedObject.latestMessage = messageManagedObject;
+            if (!conversationManagedObject.latestMessage || ([messageManagedObject.timestamp timeIntervalSince1970] > [conversationManagedObject.latestMessage.timestamp timeIntervalSince1970])) {
+                conversationManagedObject.latestMessage = messageManagedObject;
+            }
 
             messageManagedObject.messagePost = messagePostManagedObject;
 
