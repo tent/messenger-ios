@@ -207,6 +207,15 @@
 - (void)sendButtonPressed:(__unused id)sender {
     NSString *messageText = self.messageTextField.text;
 
+    // Prevent sending empty messages
+    NSRegularExpression *emptyStringRegex = [NSRegularExpression regularExpressionWithPattern:@"^\\s*$" options:NSRegularExpressionCaseInsensitive error:nil];
+
+    if ([emptyStringRegex numberOfMatchesInString:messageText options:NSMatchingAnchored range:NSRangeFromString([NSString stringWithFormat:@"0,%d", messageText.length])] > 0) {
+
+        return;
+    }
+
+    // Dismiss keyboard
     if ([self.messageTextField isFirstResponder]) {
         [self.messageTextField resignFirstResponder];
     }
