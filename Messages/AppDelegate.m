@@ -226,8 +226,8 @@
 
 #pragma mark -
 
-- (void)applicationAuthenticated {
-    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+- (void)syncRelationshipsAndMessagesWithCompletionBlock:(void (^)())completionBlock {
+       NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
 
     [operationQueue addOperationWithBlock:^{
         [Contact syncRelationships];
@@ -241,7 +241,16 @@
             [Conversation fetchNewMessages];
 
             NSLog(@"fetchNewMessagesInvocation complete");
+
+            // Let the caller know we're done
+            [operationQueue addOperationWithBlock:completionBlock];
         }];
+    }];
+}
+
+- (void)applicationAuthenticated {
+    [self syncRelationshipsAndMessagesWithCompletionBlock:^{
+        // All Done
     }];
 }
 

@@ -29,6 +29,8 @@
 
 - (NSURL *)applicationDocumentsDirectory;
 
+- (void)syncRelationshipsAndMessagesWithCompletionBlock:(void (^)())completionBlock;
+
 - (void)applicationAuthenticated;
 
 - (void)applicationDeauthenticated;

@@ -19,6 +19,7 @@
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;
 - (void)handleConversationTap:(id)sender;
+- (void)refreshConversations:(UIRefreshControl *)sender;
 - (IBAction)accountsButtonPressed:(id)sender;
 - (IBAction)actionButtonPressed:(id)sender;
 @end

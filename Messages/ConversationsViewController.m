@@ -70,6 +70,16 @@
     }
 }
 
+- (void)refreshConversations:(UIRefreshControl *)refreshControl {
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating..."];
+
+    [(AppDelegate *)([UIApplication sharedApplication].delegate) syncRelationshipsAndMessagesWithCompletionBlock:^{
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh"];
+
+        [refreshControl endRefreshing];
+    }];
+}
+
 - (id)initWithCoder:(NSCoder *)decoder
 {
     id ret = [super initWithCoder:decoder];
@@ -88,6 +98,18 @@
     // self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:<#(SEL)#>];
 
     [self setupFetchedResultsController];
+
+    // Setup Pull to Refresh
+
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to refresh"];
+
+    [refreshControl addTarget:self
+                       action:@selector(refreshConversations:)
+             forControlEvents:UIControlEventValueChanged];
+
+    self.refreshControl = refreshControl;
 }
 
 - (void)didReceiveMemoryWarning
