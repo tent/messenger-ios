@@ -33,7 +33,7 @@ PODS:
 DEPENDENCIES:
   - Hawk (from `https://raw.github.com/tent/hawk-objc/master/Hawk.podspec`)
   - NSDate+TimeAgo (from `https://github.com/jvatic/NSDate-TimeAgo.git`)
-  - TentClient (from `~/repos/tent-client-objc`)
+  - TentClient (from `https://raw.github.com/tent/tent-client-objc/master/TentClient.podspec`)
   - UIImage-Categories (from `https://github.com/titanous/UIImage-Categories.git`)
 
 EXTERNAL SOURCES:
@@ -42,6 +42,7 @@ EXTERNAL SOURCES:
   NSDate+TimeAgo:
     :git: https://github.com/jvatic/NSDate-TimeAgo.git
   TentClient:
+    :podspec: https://raw.github.com/tent/tent-client-objc/master/TentClient.podspec
   UIImage-Categories:
     :git: https://github.com/titanous/UIImage-Categories.git
 
@@ -50,7 +51,7 @@ SPEC CHECKSUMS:
   Hawk: a099bb359881edc92aa324c7fd42fa27564e9d4c
   Mantle: c3e963daaad6f1418feacce974d789b2d0465539
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
-  TentClient: 4f6fd04749c17fe215f4c59cf40c594b91f1df8a
+  TentClient: 6772353cfa65ea5d9adbef728e267076a60076de
   UIImage-Categories: 70daa534555dbe4af0551dcc4e0d45c7486d145c
 
-COCOAPODS: 0.26.0
+COCOAPODS: 0.27.1

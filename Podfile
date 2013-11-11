@@ -6,3 +6,5 @@ pod 'UIImage-Categories', :git => 'https://github.com/titanous/UIImage-Categorie
 pod 'NSDate+TimeAgo', :git => 'https://github.com/jvatic/NSDate-TimeAgo.git'
 
 pod 'Hawk', :podspec => 'https://raw.github.com/tent/hawk-objc/master/Hawk.podspec'
+
+pod 'TentClient', :podspec => 'https://raw.github.com/tent/tent-client-objc/master/TentClient.podspec'
