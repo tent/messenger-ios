@@ -169,8 +169,13 @@ failureBlock:
             return;
           }
 
-          message.state =
-              [NSNumber numberWithUnsignedInteger:ConversationMessageDelivered];
+          if ([message isEntityOurs]) {
+            message.state = [NSNumber
+                numberWithUnsignedInteger:ConversationMessageDelivered];
+          } else {
+            message.state =
+                [NSNumber numberWithUnsignedInteger:ConversationMessageExists];
+          }
 
           if (![[self applicationDelegate] saveContext:context error:&error]) {
             NSLog(@"Conversation +createMessagesWithConversationEntities... "
@@ -392,8 +397,16 @@ failureBlock:
               [messagePostManagedObject.content valueForKey:@"text"];
           messageManagedObject.timestamp =
               messagePostManagedObject.versionPublishedAt;
-          messageManagedObject.state =
-              [NSNumber numberWithUnsignedInteger:ConversationMessageDelivered];
+
+          messageManagedObject.messagePost = messagePostManagedObject;
+
+          if ([messageManagedObject isEntityOurs]) {
+            messageManagedObject.state = [NSNumber
+                numberWithUnsignedInteger:ConversationMessageDelivered];
+          } else {
+            messageManagedObject.state =
+                [NSNumber numberWithUnsignedInteger:ConversationMessageExists];
+          }
 
           if (!conversationManagedObject.latestMessage ||
               ([messageManagedObject.timestamp timeIntervalSince1970] >
@@ -401,8 +414,6 @@ failureBlock:
                        .timestamp timeIntervalSince1970])) {
             conversationManagedObject.latestMessage = messageManagedObject;
           }
-
-          messageManagedObject.messagePost = messagePostManagedObject;
 
           messageManagedObject.conversation = conversationManagedObject;
         }];

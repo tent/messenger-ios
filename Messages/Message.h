@@ -31,5 +31,6 @@ typedef NS_ENUM(NSUInteger,
 @property(nonatomic, retain) TCPostManagedObject *messagePost;
 
 - (ConversationMessageAlignment)getAlignment;
+- (BOOL)isEntityOurs;
 
 @end

@@ -22,14 +22,22 @@
 @dynamic messagePost;
 
 - (ConversationMessageAlignment)getAlignment {
+  if ([self isEntityOurs]) {
+    return ConversationMessageRight;
+  } else {
+    return ConversationMessageLeft;
+  }
+}
+
+- (BOOL)isEntityOurs {
   TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication]
                                              .delegate))currentAppPost];
 
   if ([self.messagePost.entityURI
           isEqualToString:[appPost.entityURI absoluteString]]) {
-    return ConversationMessageRight;
+    return YES;
   } else {
-    return ConversationMessageLeft;
+    return NO;
   }
 }
 
