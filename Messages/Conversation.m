@@ -49,16 +49,35 @@
           valueForKey:@"entity"];
     }]];
 
-    [conversationEntities addObject:conversation.conversationPost.entityURI];
+    // ensure conversation initiator is included
+    if (conversation.conversationPost) {
+      [conversationEntities addObject:conversation.conversationPost.entityURI];
+    }
 
     // everyone but ourself
     [conversationEntities removeObject:[appPost.entityURI absoluteString]];
 
     // Create conversation post if it doesn't exist already
     if (!conversation.conversationPost) {
+      [self createConversationWithEntities:conversationEntities
+                              conversation:conversation
+                      managedObjectContext:context
+                                    client:client];
+    } else {
+      // Create missing message posts
+      [self createMessagesWithConversationEntities:conversationEntities
+                                      conversation:conversation
+                              managedObjectContext:context
+                                            client:client];
+    }
+}
 
-      TCPost *conversationPost = [[TCPost alloc] init];
-      conversationPost.typeURI = @"https://tent.io/types/conversation/v0#";
++ (void)createConversationWithEntities:(NSArray *)conversationEntities
+                          conversation:(Conversation *)conversation
+                  managedObjectContext:(NSManagedObjectContext *)context
+                                client:(TentClient *)client {
+  TCPost *conversationPost = [[TCPost alloc] init];
+  conversationPost.typeURI = @"https://tent.io/types/conversation/v0#";
         conversationPost.mentions = [conversationEntities transposedArrayUsingBlock:^id(NSString *entity) {
           return @{ @"entity" : entity };
         }];
@@ -75,28 +94,41 @@
                                                         error:&error];
 
           if (error) {
-            NSLog(
-                @"error translating conversation post into managed object: %@",
-                error);
+            NSLog(@"Conversation +createConversationWithEntities... error "
+                   "translating conversation post into managed object: %@",
+                  error);
             return;
           }
 
-          if (![context save:&error]) {
-            NSLog(@"error saving context: %@", error);
+          if (![[self applicationDelegate] saveContext:context error:&error]) {
+            NSLog(@"Conversation +createConversationWithEntities... error "
+                   "saving context: %@",
+                  error);
             return;
           }
 
           [self persistObjectID:conversation.objectID];
+
+          // Create missing message posts
+          [self createMessagesWithConversationEntities:conversationEntities
+                                          conversation:conversation
+                                  managedObjectContext:context
+                                                client:client];
         }
-    failureBlock:
-      ^(__unused AFHTTPRequestOperation * operation, NSError * error) {
-        NSLog(@"failed to create conversation: %@", error);
-      }];
+failureBlock:
+  ^(__unused AFHTTPRequestOperation * operation, NSError * error) {
+    NSLog(@"Conversation +createConversationWithEntities... failed to create "
+           "conversation: %@",
+          error);
+  }];
 
-      return;
-    }
+  return;
+}
 
-    // Create missing message posts
++ (void)createMessagesWithConversationEntities:(NSArray *)conversationEntities
+                                  conversation:(Conversation *)conversation
+                          managedObjectContext:(NSManagedObjectContext *)context
+                                        client:(TentClient *)client {
     [conversation.messages enumerateObjectsUsingBlock:^(Message *message, __unused BOOL *stop) {
       if (message.messagePost)
         return;
@@ -137,7 +169,8 @@
                                                         error:&error];
 
           if (error) {
-            NSLog(@"error translating messagePost into a managed object: %@",
+            NSLog(@"Conversation +createMessagesWithConversationEntities... "
+                   "error translating messagePost into a managed object: %@",
                   error);
             return;
           }
@@ -145,13 +178,17 @@
           message.state =
               [NSNumber numberWithUnsignedInteger:ConversationMessageDelivered];
 
-          if (![context save:&error]) {
-            NSLog(@"error saving context: %@", context);
+          if (![[self applicationDelegate] saveContext:context error:&error]) {
+            NSLog(@"Conversation +createMessagesWithConversationEntities... "
+                   "error saving context: %@",
+                  context);
           }
         }
     failureBlock:
       ^(__unused AFHTTPRequestOperation * operation, NSError * error) {
-        NSLog(@"failed to create message: %@", error);
+        NSLog(@"Conversation +createMessagesWithConversationEntities... failed "
+               "to create message: %@",
+              error);
 
         message.state = [NSNumber
             numberWithUnsignedInteger:ConversationMessageDeliveryFailed];
