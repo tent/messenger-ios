@@ -14,6 +14,7 @@
 @interface Contact : NSManagedObject
 
 @property (nonatomic, retain) NSData * avatar;
+@property (nonatomic) BOOL avatarIsSigil;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * entityURI;
 @property (nonatomic, retain) NSString * sectionName;

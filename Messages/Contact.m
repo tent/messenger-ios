@@ -12,11 +12,13 @@
 #import "AppDelegate.h"
 #import "Cursors.h"
 #import "TentClient.h"
+#import "NSString+URLEncode.h"
 #import "TCPost+CoreData.h"
 
 @implementation Contact
 
 @dynamic avatar;
+@dynamic avatarIsSigil;
 @dynamic name;
 @dynamic entityURI;
 @dynamic conversations;
@@ -98,15 +100,26 @@
             __block NSManagedObjectID *contactObjectID = contact.objectID;
             __block NSString *avatarDigest = [profile objectForKey:@"avatar_digest"];
 
-            if (contactObjectID && avatarDigest) {
-                [fetchAvatarsQueue addOperationWithBlock:^{
-                    [self fetchAvatarWithContactObjectID:contactObjectID entity:entity avatarDigest:avatarDigest client:client completionBlock:^{
-                        // Decrement number of avatar requests remaining
-                        [avatarsSyncRemainingLock lock];
-                        avatarsSyncRemaining--;
-                        [avatarsSyncRemainingLock unlock];
+            if (contactObjectID) {
+                if (avatarDigest) {
+                    [fetchAvatarsQueue addOperationWithBlock:^{
+                        [self fetchAvatarWithContactObjectID:contactObjectID entity:entity avatarDigest:avatarDigest client:client completionBlock:^{
+                            // Decrement number of avatar requests remaining
+                            [avatarsSyncRemainingLock lock];
+                            avatarsSyncRemaining--;
+                            [avatarsSyncRemainingLock unlock];
+                        }];
                     }];
-                }];
+                } else {
+                    [fetchAvatarsQueue addOperationWithBlock:^{
+                        [self fetchSigilWithContactObjectID:contactObjectID entity:entity operationQueue:client.operationQueue completionBlock:^{
+                            // Decrement number of avatar requests remaining
+                            [avatarsSyncRemainingLock lock];
+                            avatarsSyncRemaining--;
+                            [avatarsSyncRemainingLock unlock];
+                        }];
+                    }];
+                }
             }
         }];
 
@@ -213,6 +226,7 @@
         Contact *contact = (Contact *)[context objectWithID:contactObjectID];
 
         contact.avatar = attachmentBinary;
+        contact.avatarIsSigil = NO;
 
         NSError *error;
 
@@ -226,8 +240,50 @@
     } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"fetch avatar failure: %@", error);
 
+        [self fetchSigilWithContactObjectID:contactObjectID entity:entity operationQueue:client.operationQueue completionBlock:completion];
+    }];
+}
+
++ (void)fetchSigilWithContactObjectID:(NSManagedObjectID *)contactObjectID entity:(NSString *)entity operationQueue:(NSOperationQueue *)queue completionBlock:(void (^)())completion {
+
+    NSURL *sigilURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://sigil.cupcake.io/%@?w=288&inverted=true", [entity stringByAddingURLPercentEncoding]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:sigilURL];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+
+    // Disable default behaviour to use basic auth
+    operation.shouldUseCredentialStorage = NO;
+
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *op, __unused id responseObject) {
+        NSError *error;
+        if (![[NSNumber numberWithInteger:op.response.statusCode] isEqualToNumber:[NSNumber numberWithInteger:200]]) {
+            error = [NSError errorWithDomain:TCInvalidResponseCodeErrorDomain code:op.response.statusCode userInfo:@{ @"operation": op}];
+            NSLog(@"error fetching sigil: %@", error);
+
+            completion();
+            return;
+        }
+
+        NSManagedObjectContext *context = [[self applicationDelegate] managedObjectContext];
+
+        Contact *contact = (Contact *)[context objectWithID:contactObjectID];
+
+        contact.avatar = op.responseData;
+        contact.avatarIsSigil = YES;
+
+        [[self applicationDelegate] saveContext:context error:&error];
+
+        if (error) {
+            NSLog(@"error saving contact avatar: %@", error);
+        }
+
+        completion();
+    } failure:^(__unused AFHTTPRequestOperation *op, NSError *error) {
+        NSLog(@"error fetching sigil: %@", error);
+
         completion();
     }];
+
+    [queue addOperation:operation];
 }
 
 + (AppDelegate *)applicationDelegate {
