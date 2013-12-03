@@ -22,8 +22,15 @@
 @dynamic messagePost;
 
 - (ConversationMessageAlignment)getAlignment {
-  // TODO: calculate alignment based on who authored the message (us or them)
-  return ConversationMessageLeft;
+  TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication]
+                                             .delegate))currentAppPost];
+
+  if ([self.messagePost.entityURI
+          isEqualToString:[appPost.entityURI absoluteString]]) {
+    return ConversationMessageRight;
+  } else {
+    return ConversationMessageLeft;
+  }
 }
 
 - (void)prepareForDeletion {
