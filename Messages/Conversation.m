@@ -108,12 +108,6 @@
           }
 
           [self persistObjectID:conversation.objectID];
-
-          // Create missing message posts
-          [self createMessagesWithConversationEntities:conversationEntities
-                                          conversation:conversation
-                                  managedObjectContext:context
-                                                client:client];
         }
 failureBlock:
   ^(__unused AFHTTPRequestOperation * operation, NSError * error) {
