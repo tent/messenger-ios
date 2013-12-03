@@ -10,11 +10,12 @@
 #import "ConversationsCell.h"
 #import "Conversation.h"
 
-@interface ConversationsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface ConversationsViewController
+    : UITableViewController<NSFetchedResultsControllerDelegate>
 
-@property (nonatomic) IBOutlet UIBarButtonItem *actionButton;
-@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic) NSMutableSet *selectedIndexPaths;
+@property(nonatomic) IBOutlet UIBarButtonItem *actionButton;
+@property(nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property(nonatomic) NSMutableSet *selectedIndexPaths;
 
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;

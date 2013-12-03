@@ -8,12 +8,12 @@
 
 @import UIKit;
 
-typedef NS_ENUM(NSUInteger, BubbleNibAlignment) {
-    BubbleNibAlignmentLeft,
-    BubbleNibAlignmentRight
-};
+typedef NS_ENUM(NSUInteger, BubbleNibAlignment) { BubbleNibAlignmentLeft,
+                                                  BubbleNibAlignmentRight };
 
 @interface BubbleNibView : UIView
 
-- (void)setFrame:(CGRect)frame fillColor:(UIColor *)color alignment:(BubbleNibAlignment)alignment;
+- (void)setFrame:(CGRect)frame
+       fillColor:(UIColor *)color
+       alignment:(BubbleNibAlignment)alignment;
 @end

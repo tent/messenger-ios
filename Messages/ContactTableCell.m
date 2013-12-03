@@ -12,23 +12,24 @@
 @implementation ContactTableCell
 
 - (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    CGRect imageFrame = self.imageView.frame;
-    imageFrame.origin.x = self.frame.origin.x + 5;
-    self.imageView.frame = imageFrame;
-    
-    CGRect textFrame = self.textLabel.frame;
-    textFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + 10;
-    self.textLabel.frame = textFrame;
-    
-    self.textLabel.textColor = [MessagesAesthetics blueColor];
+  [super layoutSubviews];
 
-    [MessagesAesthetics setFontForLabel:self.textLabel withStyle:UIFontTextStyleBody];
-    
-    CGRect detailTextFrame = self.detailTextLabel.frame;
-    detailTextFrame.origin.x += 10;
-    self.detailTextLabel.frame = detailTextFrame;
+  CGRect imageFrame = self.imageView.frame;
+  imageFrame.origin.x = self.frame.origin.x + 5;
+  self.imageView.frame = imageFrame;
+
+  CGRect textFrame = self.textLabel.frame;
+  textFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + 10;
+  self.textLabel.frame = textFrame;
+
+  self.textLabel.textColor = [MessagesAesthetics blueColor];
+
+  [MessagesAesthetics setFontForLabel:self.textLabel
+                            withStyle:UIFontTextStyleBody];
+
+  CGRect detailTextFrame = self.detailTextLabel.frame;
+  detailTextFrame.origin.x += 10;
+  self.detailTextLabel.frame = detailTextFrame;
 }
 
 @end

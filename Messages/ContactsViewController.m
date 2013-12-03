@@ -17,336 +17,393 @@
 @interface ContactsViewController ()
 @end
 
-@implementation ContactsViewController
+@implementation ContactsViewController {
+  UIView *blankView;
+  NSMutableSet *selectedContacts;
+  NSManagedObjectContext *managedObjectContext;
 
-{
-    UIView *blankView;
-    NSMutableSet *selectedContacts;
-    NSManagedObjectContext *managedObjectContext;
-
-    NSFetchedResultsController *searchFetchedResultsController;
+  NSFetchedResultsController *searchFetchedResultsController;
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
-    if (!managedObjectContext) {
-        managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication].delegate) managedObjectContext];
-    }
+  if (!managedObjectContext) {
+    managedObjectContext = [(AppDelegate *)([UIApplication sharedApplication]
+                                                .delegate)managedObjectContext];
+  }
 
-    return managedObjectContext;
+  return managedObjectContext;
 }
 
 #pragma mark - Lifecycle
 
-- (id)initWithCoder:(NSCoder *)decoder
-{
-    self = [super initWithCoder:decoder];
+- (id)initWithCoder:(NSCoder *)decoder {
+  self = [super initWithCoder:decoder];
 
-    blankView = [[UIView alloc] init];
-    selectedContacts = [[NSMutableSet alloc] init];
+  blankView = [[UIView alloc] init];
+  selectedContacts = [[NSMutableSet alloc] init];
 
-    return self;
+  return self;
 }
 
-- (void)loadView
-{
-    [super loadView];
+- (void)loadView {
+  [super loadView];
 
+  // Setup search bar
 
-    // Setup search bar
+  UISearchBar *searchBar = [[UISearchBar alloc]
+      initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44.0)];
+  searchBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+  searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+  self.tableView.tableHeaderView = searchBar;
 
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44.0)];
-    searchBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
-    searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.tableView.tableHeaderView = searchBar;
+  self.mySearchDisplayController =
+      [[UISearchDisplayController alloc] initWithSearchBar:searchBar
+                                        contentsController:self];
+  self.mySearchDisplayController.delegate = self;
+  self.mySearchDisplayController.searchResultsDataSource = self;
+  self.mySearchDisplayController.searchResultsDelegate = self;
 
-    self.mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    self.mySearchDisplayController.delegate = self;
-    self.mySearchDisplayController.searchResultsDataSource = self;
-    self.mySearchDisplayController.searchResultsDelegate = self;
+  [self.mySearchDisplayController.searchResultsTableView
+               registerClass:ContactTableCell.class
+      forCellReuseIdentifier:@"contactCell"];
 
-    [self.mySearchDisplayController.searchResultsTableView registerClass:ContactTableCell.class forCellReuseIdentifier:@"contactCell"];
+  // Setup fetched results controllers
 
-
-    // Setup fetched results controllers
-
-    [self setupFetchedResultsController];
+  [self setupFetchedResultsController];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+  [super viewDidLoad];
 
-    [self enableDisableContinueButton];
+  [self enableDisableContinueButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
 
-    [self configureTableView:self.tableView];
+  [self configureTableView:self.tableView];
 
-    [self configureTableView:self.searchDisplayController.searchResultsTableView];
+  [self configureTableView:self.searchDisplayController.searchResultsTableView];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 - (void)configureTableView:(UITableView *)tableView {
-    [tableView setEditing:YES animated:NO];
-    tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+  [tableView setEditing:YES animated:NO];
+  tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
 
-    tableView.allowsMultipleSelectionDuringEditing = YES;
+  tableView.allowsMultipleSelectionDuringEditing = YES;
 }
 
 #pragma mark - Fetched Results Controller Initialization
 
 - (void)setupFetchedResultsController {
-    NSManagedObjectContext *context = [self managedObjectContext];
+  NSManagedObjectContext *context = [self managedObjectContext];
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
+  NSFetchRequest *fetchRequest =
+      [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
 
-    // Configure the request's entity, and optionally its predicate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+  // Configure the request's entity, and optionally its predicate.
+  NSSortDescriptor *sortDescriptor =
+      [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+  [fetchRequest setSortDescriptors:@[ sortDescriptor ]];
 
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:@"sectionName" cacheName:nil];
+  self.fetchedResultsController =
+      [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                          managedObjectContext:context
+                                            sectionNameKeyPath:@"sectionName"
+                                                     cacheName:nil];
 
-    self.fetchedResultsController.delegate = self;
+  self.fetchedResultsController.delegate = self;
 
-    NSError *error;
-    [self.fetchedResultsController performFetch:&error];
+  NSError *error;
+  [self.fetchedResultsController performFetch:&error];
 }
 
 - (NSFetchedResultsController *)searchFetchedResultsController {
-    if (searchFetchedResultsController) return searchFetchedResultsController;
+  if (searchFetchedResultsController)
+    return searchFetchedResultsController;
 
-    return [self configureSearchFetchedResultsController];
+  return [self configureSearchFetchedResultsController];
 }
 
 - (NSFetchedResultsController *)configureSearchFetchedResultsController {
-    NSManagedObjectContext *context = [self managedObjectContext];
+  NSManagedObjectContext *context = [self managedObjectContext];
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
+  NSFetchRequest *fetchRequest =
+      [[NSFetchRequest alloc] initWithEntityName:@"Contact"];
 
-    // Configure the request's entity, and optionally its predicate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+  // Configure the request's entity, and optionally its predicate.
+  NSSortDescriptor *sortDescriptor =
+      [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+  [fetchRequest setSortDescriptors:@[ sortDescriptor ]];
 
-    // Filter using search query
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", self.mySearchDisplayController.searchBar.text];
-    [fetchRequest setPredicate:predicate];
+  // Filter using search query
+  NSPredicate *predicate = [NSPredicate
+      predicateWithFormat:@"name contains[cd] %@",
+                          self.mySearchDisplayController.searchBar.text];
+  [fetchRequest setPredicate:predicate];
 
-    searchFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:@"sectionName" cacheName:nil];
+  searchFetchedResultsController =
+      [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                          managedObjectContext:context
+                                            sectionNameKeyPath:@"sectionName"
+                                                     cacheName:nil];
 
-    searchFetchedResultsController.delegate = self;
+  searchFetchedResultsController.delegate = self;
 
-    [searchFetchedResultsController performFetch:nil];
+  [searchFetchedResultsController performFetch:nil];
 
-    return searchFetchedResultsController;
+  return searchFetchedResultsController;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    [[self tableViewForFetchedResultsController:controller] beginUpdates];
+  [[self tableViewForFetchedResultsController:controller] beginUpdates];
 }
 
+- (void)controller:(NSFetchedResultsController *)controller
+    didChangeSection:(__unused id<NSFetchedResultsSectionInfo>)sectionInfo
+             atIndex:(NSUInteger)sectionIndex
+       forChangeType:(NSFetchedResultsChangeType)type {
+  UITableView *tableView =
+      [self tableViewForFetchedResultsController:controller];
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(__unused id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    UITableView *tableView = [self tableViewForFetchedResultsController:controller];
+  switch (type) {
+    case NSFetchedResultsChangeInsert:
+      [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+               withRowAnimation:UITableViewRowAnimationFade];
+      break;
 
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+    case NSFetchedResultsChangeDelete:
+      [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+               withRowAnimation:UITableViewRowAnimationFade];
+      break;
+  }
 }
 
+- (void)controller:(NSFetchedResultsController *)controller
+    didChangeObject:(__unused id)anObject
+        atIndexPath:(NSIndexPath *)indexPath
+      forChangeType:(NSFetchedResultsChangeType)type
+       newIndexPath:(NSIndexPath *)newIndexPath {
+  UITableView *tableView =
+      [self tableViewForFetchedResultsController:controller];
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(__unused id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    UITableView *tableView = [self tableViewForFetchedResultsController:controller];
+  switch (type) {
 
-    switch(type) {
+    case NSFetchedResultsChangeInsert:
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      break;
 
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+    case NSFetchedResultsChangeDelete:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      break;
 
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+    case NSFetchedResultsChangeUpdate:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      break;
 
-        case NSFetchedResultsChangeUpdate:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+    case NSFetchedResultsChangeMove:
+      [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                       withRowAnimation:UITableViewRowAnimationFade];
+      break;
+  }
 }
-
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [[self tableViewForFetchedResultsController:controller] endUpdates];
+  [[self tableViewForFetchedResultsController:controller] endUpdates];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return (int)[[self fetchedResultsControllerForTableView:tableView].sections count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return (int)
+      [[self fetchedResultsControllerForTableView:tableView].sections count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[[self fetchedResultsControllerForTableView:tableView] sections] objectAtIndex:(unsigned int)section];
-    return (int)[sectionInfo numberOfObjects];
+- (NSInteger)tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section {
+  id<NSFetchedResultsSectionInfo> sectionInfo =
+      [[[self fetchedResultsControllerForTableView:tableView] sections]
+          objectAtIndex:(unsigned int)section];
+  return (int)[sectionInfo numberOfObjects];
 }
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-{
-    return [[self fetchedResultsControllerForTableView:tableView] sectionIndexTitles];
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+  return
+      [[self
+           fetchedResultsControllerForTableView:tableView] sectionIndexTitles];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[[self fetchedResultsControllerForTableView:tableView] sections] objectAtIndex:(unsigned int)section];
-    return [sectionInfo name];
+- (NSString *)tableView:(UITableView *)tableView
+    titleForHeaderInSection:(NSInteger)section {
+  id<NSFetchedResultsSectionInfo> sectionInfo =
+      [[[self fetchedResultsControllerForTableView:tableView] sections]
+          objectAtIndex:(unsigned int)section];
+  return [sectionInfo name];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
-    return [[self fetchedResultsControllerForTableView:tableView] sectionForSectionIndexTitle:title atIndex:index];
+- (NSInteger)tableView:(UITableView *)tableView
+    sectionForSectionIndexTitle:(NSString *)title
+                        atIndex:(NSInteger)index {
+  return [[self fetchedResultsControllerForTableView:tableView]
+      sectionForSectionIndexTitle:title
+                          atIndex:index];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSFetchedResultsController *fetchedResultsController = [self fetchedResultsControllerForTableView:tableView];
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  NSFetchedResultsController *fetchedResultsController =
+      [self fetchedResultsControllerForTableView:tableView];
 
-    NSString *cellIdentifier = @"contactCell";
+  NSString *cellIdentifier = @"contactCell";
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+  UITableViewCell *cell =
+      [tableView dequeueReusableCellWithIdentifier:cellIdentifier
+                                      forIndexPath:indexPath];
 
-    Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
+  Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
 
-    cell.textLabel.text = contact.name;
-    cell.multipleSelectionBackgroundView = blankView;
-    
-    UIImage *avatar = [UIImage imageWithData:contact.avatar];
-    avatar = [avatar thumbnailImage:40 transparentBorder:0 cornerRadius:3 interpolationQuality:kCGInterpolationHigh];
-    
-    cell.imageView.image = avatar;
-    
-    return cell;
+  cell.textLabel.text = contact.name;
+  cell.multipleSelectionBackgroundView = blankView;
+
+  UIImage *avatar = [UIImage imageWithData:contact.avatar];
+  avatar = [avatar thumbnailImage:40
+                transparentBorder:0
+                     cornerRadius:3
+             interpolationQuality:kCGInterpolationHigh];
+
+  cell.imageView.image = avatar;
+
+  return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSFetchedResultsController *fetchedResultsController = [self fetchedResultsControllerForTableView:tableView];
+- (void)tableView:(UITableView *)tableView
+    didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  NSFetchedResultsController *fetchedResultsController =
+      [self fetchedResultsControllerForTableView:tableView];
 
-    Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
-    [selectedContacts addObject:contact];
+  Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
+  [selectedContacts addObject:contact];
 
-    [self enableDisableContinueButton];
+  [self enableDisableContinueButton];
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSFetchedResultsController *fetchedResultsController = [self fetchedResultsControllerForTableView:tableView];
+- (void)tableView:(UITableView *)tableView
+    didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+  NSFetchedResultsController *fetchedResultsController =
+      [self fetchedResultsControllerForTableView:tableView];
 
-    Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
-    [selectedContacts removeObject:contact];
+  Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
+  [selectedContacts removeObject:contact];
 
-    [self enableDisableContinueButton];
+  [self enableDisableContinueButton];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSFetchedResultsController *fetchedResultsController = [self fetchedResultsControllerForTableView:tableView];
+- (void)tableView:(UITableView *)tableView
+      willDisplayCell:(UITableViewCell *)cell
+    forRowAtIndexPath:(NSIndexPath *)indexPath {
+  NSFetchedResultsController *fetchedResultsController =
+      [self fetchedResultsControllerForTableView:tableView];
 
-    Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
+  Contact *contact = [fetchedResultsController objectAtIndexPath:indexPath];
 
-    if ([[selectedContacts objectsPassingTest:^BOOL(Contact *obj, __unused BOOL *stop) {
-        return [contact.relationshipPost.id isEqualToString:obj.relationshipPost.id];
-    }] count] > 0) {
-        cell.selected = YES;
-    } else {
-        cell.selected = NO;
-    }
+  if ([[selectedContacts
+           objectsPassingTest:^BOOL(Contact * obj, __unused BOOL * stop) {
+             return [contact.relationshipPost.id
+                 isEqualToString:obj.relationshipPost.id];
+           }] count] > 0) {
+    cell.selected = YES;
+  } else {
+    cell.selected = NO;
+  }
 }
 
 #pragma mark - UISearchDisplayController Delegate Methods
 
-- (void)searchDisplayController:(__unused UISearchDisplayController *)controller willHideSearchResultsTableView:(__unused UITableView *)tableView {
+- (void)searchDisplayController:(__unused UISearchDisplayController *)controller
+    willHideSearchResultsTableView:(__unused UITableView *)tableView {
     [selectedContacts enumerateObjectsUsingBlock:^(Contact *obj, __unused BOOL *stop) {
-        NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:obj];
+      NSIndexPath *indexPath =
+          [self.fetchedResultsController indexPathForObject:obj];
 
-        if (!indexPath) return;
+      if (!indexPath)
+        return;
 
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+      UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
-        cell.selected = YES;
+      cell.selected = YES;
     }];
 }
 
-- (BOOL)searchDisplayController:(__unused UISearchDisplayController *)controller shouldReloadTableForSearchString:(__unused NSString *)searchString {
-    [self configureSearchFetchedResultsController];
+- (BOOL)searchDisplayController:(__unused UISearchDisplayController *)controller
+    shouldReloadTableForSearchString:(__unused NSString *)searchString {
+  [self configureSearchFetchedResultsController];
 
-    // Return YES to cause the search results tableView to reload
-    return YES;
+  // Return YES to cause the search results tableView to reload
+  return YES;
 }
 
 #pragma mark - UISearchBarDelegate
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender
-{
-    if ([segue.identifier isEqualToString:@"newConversationSegue"]) {
-        ConversationViewController *conversationViewController = (ConversationViewController *)([segue destinationViewController]);
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(__unused id)sender {
+  if ([segue.identifier isEqualToString:@"newConversationSegue"]) {
+    ConversationViewController *conversationViewController =
+        (ConversationViewController *)([segue destinationViewController]);
 
-        NSManagedObjectContext *context = [self managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
 
-        Conversation *conversation = [NSEntityDescription insertNewObjectForEntityForName:@"Conversation" inManagedObjectContext:context];
-        [conversation addContacts:selectedContacts];
+    Conversation *conversation =
+        [NSEntityDescription insertNewObjectForEntityForName:@"Conversation"
+                                      inManagedObjectContext:context];
+    [conversation addContacts:selectedContacts];
 
-        conversationViewController.conversation = conversation;
-    }
+    conversationViewController.conversation = conversation;
+  }
 }
 
 #pragma mark -
 
 - (void)enableDisableContinueButton {
-    if (selectedContacts.count > 0) {
-        self.continueButton.enabled = YES;
-    } else {
-        self.continueButton.enabled = NO;
-    }
+  if (selectedContacts.count > 0) {
+    self.continueButton.enabled = YES;
+  } else {
+    self.continueButton.enabled = NO;
+  }
 }
 
-- (UITableView *)tableViewForFetchedResultsController:(NSFetchedResultsController *)controller {
-    if (controller == self.fetchedResultsController) {
-        return self.tableView;
-    } else {
-        return self.searchDisplayController.searchResultsTableView;
-    }
+- (UITableView *)tableViewForFetchedResultsController:
+                     (NSFetchedResultsController *)controller {
+  if (controller == self.fetchedResultsController) {
+    return self.tableView;
+  } else {
+    return self.searchDisplayController.searchResultsTableView;
+  }
 }
 
-- (NSFetchedResultsController *)fetchedResultsControllerForTableView:(UITableView *)tableView {
-    if (tableView == self.tableView) {
-        return self.fetchedResultsController;
-    } else {
-        return [self searchFetchedResultsController];
-    }
+- (NSFetchedResultsController *)fetchedResultsControllerForTableView:
+                                    (UITableView *)tableView {
+  if (tableView == self.tableView) {
+    return self.fetchedResultsController;
+  } else {
+    return [self searchFetchedResultsController];
+  }
 }
 
 @end

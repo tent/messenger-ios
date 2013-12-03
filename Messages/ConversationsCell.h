@@ -12,9 +12,9 @@
 
 @interface ConversationsCell : UITableViewCell
 
-@property (nonatomic) Conversation *conversation;
-@property (nonatomic) UITableViewController *tableViewController;
-@property (nonatomic) NSIndexPath *indexPath;
+@property(nonatomic) Conversation *conversation;
+@property(nonatomic) UITableViewController *tableViewController;
+@property(nonatomic) NSIndexPath *indexPath;
 
 - (void)initConversation:(Conversation *)conversation;
 

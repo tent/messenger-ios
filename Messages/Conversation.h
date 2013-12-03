@@ -9,14 +9,15 @@
 @import Foundation;
 @import CoreData;
 
-@class Contact, Message, TCPostManagedObject, TCParams, TentClient, AFHTTPRequestOperation, TCResponseEnvelope;
+@class Contact, Message, TCPostManagedObject, TCParams, TentClient,
+    AFHTTPRequestOperation, TCResponseEnvelope;
 
 @interface Conversation : NSManagedObject
 
-@property (nonatomic, retain) NSSet *contacts;
-@property (nonatomic, retain) NSSet *messages;
-@property (nonatomic, retain) Message *latestMessage;
-@property (nonatomic, retain) TCPostManagedObject *conversationPost;
+@property(nonatomic, retain) NSSet *contacts;
+@property(nonatomic, retain) NSSet *messages;
+@property(nonatomic, retain) Message *latestMessage;
+@property(nonatomic, retain) TCPostManagedObject *conversationPost;
 
 + (void)persistObjectID:(NSManagedObjectID *)objectID;
 
@@ -26,17 +27,21 @@
 
 + (void)fetchNewMessagesWithClient:(TentClient *)client
                             params:(TCParams *)feedParams
-                      successBlock:(void (^)(AFHTTPRequestOperation *operation, TCResponseEnvelope *responseEnvelope))success
-                      failureBlock:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+                      successBlock:
+                          (void (^)(AFHTTPRequestOperation *operation,
+                                    TCResponseEnvelope *responseEnvelope))
+    success
+                      failureBlock:(void (^)(AFHTTPRequestOperation *operation,
+                                             NSError *error))failure
                    completionBlock:(void (^)())completion;
 
 + (Contact *)contactForEntity:(NSString *)entity error:(NSError **)error;
 
 + (Conversation *)conversationForPostID:(NSString *)postID
-                                     error:(NSError *__autoreleasing *)error;
+                                  error:(NSError *__autoreleasing *)error;
 
 + (Message *)messageForPostID:(NSString *)postID
-                           error:(NSError *__autoreleasing *)error;
+                        error:(NSError *__autoreleasing *)error;
 
 @end
 

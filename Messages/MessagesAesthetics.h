@@ -9,9 +9,8 @@
 @import Foundation;
 
 typedef NS_ENUM(NSUInteger, MessagesAestheticsFontWeights) {
-    MessagesAestheticsFontWeightLight,
-    MessagesAestheticsFontWeightMedium,
-    MessagesAestheticsFontWeightRegular
+  MessagesAestheticsFontWeightLight, MessagesAestheticsFontWeightMedium,
+  MessagesAestheticsFontWeightRegular
 };
 
 @interface MessagesAesthetics : NSObject
@@ -30,9 +29,12 @@ typedef NS_ENUM(NSUInteger, MessagesAestheticsFontWeights) {
 #pragma mark - Fonts
 
 + (UIFont *)fontWithStyle:(NSString *)style;
-+ (UIFont *)fontWithSize:(CGFloat)size withWeight:(MessagesAestheticsFontWeights)weight;
++ (UIFont *)fontWithSize:(CGFloat)size
+              withWeight:(MessagesAestheticsFontWeights)weight;
 + (void)setFontForLabel:(UILabel *)label withStyle:(NSString *)style;
-+ (void)setFontForLabel:(UILabel *)label withSize:(CGFloat)size withWeight:(MessagesAestheticsFontWeights)weight;
++ (void)setFontForLabel:(UILabel *)label
+               withSize:(CGFloat)size
+             withWeight:(MessagesAestheticsFontWeights)weight;
 + (NSString *)fontName:(MessagesAestheticsFontWeights)weight;
 
 @end

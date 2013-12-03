@@ -11,5 +11,5 @@
 
 @interface ParticipantsViewController : UITableViewController
 
-@property (nonatomic) Conversation *conversationManagedObject;
+@property(nonatomic) Conversation *conversationManagedObject;
 @end

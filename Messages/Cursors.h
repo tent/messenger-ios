@@ -10,17 +10,18 @@
 
 @interface Cursors : NSObject
 
-@property (copy, nonatomic) NSDate *relationshipCursorTimestamp;
-@property (copy, nonatomic) NSString *relationshipCursorVersionID;
+@property(copy, nonatomic) NSDate *relationshipCursorTimestamp;
+@property(copy, nonatomic) NSString *relationshipCursorVersionID;
 
-@property (copy, nonatomic) NSDate *messageCursorTimestamp;
-@property (copy, nonatomic) NSString *messageCursorVersionID;
+@property(copy, nonatomic) NSDate *messageCursorTimestamp;
+@property(copy, nonatomic) NSString *messageCursorVersionID;
 
 - (BOOL)saveToPlistWithError:(NSError **)error;
 
 - (BOOL)deletePlistWithError:(NSError **)error;
 
-- (NSString *)stringFromTimestamp:(NSDate *)timestamp version:(NSString *)version;
+- (NSString *)stringFromTimestamp:(NSDate *)timestamp
+                          version:(NSString *)version;
 
 - (NSDate *)deserializeTimestamp:(NSNumber *)timestamp;
 

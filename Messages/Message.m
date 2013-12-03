@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "TCPost+CoreData.h"
 
-
 @implementation Message
 
 @dynamic state;
@@ -23,42 +22,49 @@
 @dynamic messagePost;
 
 - (ConversationMessageAlignment)getAlignment {
-    // TODO: calculate alignment based on who authored the message (us or them)
-    return ConversationMessageLeft;
+  // TODO: calculate alignment based on who authored the message (us or them)
+  return ConversationMessageLeft;
 }
 
 - (void)prepareForDeletion {
-    /*
-     * This message is about to be deleted
-     * Perform the delete operation on the Tent server
-     */
+  /*
+   * This message is about to be deleted
+   * Perform the delete operation on the Tent server
+   */
 
-    TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication].delegate)) currentAppPost];
+  TCAppPost *appPost = [((AppDelegate *)([UIApplication sharedApplication]
+                                             .delegate))currentAppPost];
 
-    // No authentication, abort
-    if (!appPost) return;
+  // No authentication, abort
+  if (!appPost)
+    return;
 
-    [((AppDelegate *)([UIApplication sharedApplication].delegate)) showNetworkActivityIndicator];
+  [((AppDelegate *)([UIApplication sharedApplication]
+                        .delegate))showNetworkActivityIndicator];
 
-    TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
+  TentClient *client = [TentClient clientWithEntity:appPost.entityURI];
 
-    client.credentialsPost = appPost.authCredentialsPost;
+  client.credentialsPost = appPost.authCredentialsPost;
 
-    TCPostManagedObject *messagePost = self.messagePost;
+  TCPostManagedObject *messagePost = self.messagePost;
 
-    void (^completion)() = ^ {
-        [((AppDelegate *)([UIApplication sharedApplication].delegate)) hideNetworkActivityIndicator];
-    };
+  void (^completion)() = ^{
+    [((AppDelegate *)([UIApplication sharedApplication]
+                          .delegate))hideNetworkActivityIndicator];
+  };
 
     [client deletePostWithEntity:messagePost.entityURI postID:messagePost.id successBlock:^(__unused AFHTTPRequestOperation *operation) {
-        NSLog(@"successfully deleted message post");
+      NSLog(@"successfully deleted message post");
 
-        completion();
-    } failureBlock:^(__unused AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error deleting message post: %@ via <%@ %@>", error, [operation.request HTTPMethod], operation.request.URL);
+      completion();
+    }
+failureBlock:
+  ^(__unused AFHTTPRequestOperation * operation, NSError * error) {
+    NSLog(@"Error deleting message post: %@ via <%@ %@>", error,
+          [operation.request HTTPMethod], operation.request.URL);
 
-        completion();
-    }];
+    completion();
+  }];
 }
 
 @end

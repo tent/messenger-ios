@@ -8,44 +8,44 @@
 
 #import "BubbleNibView.h"
 
-@implementation BubbleNibView
-
-{
-    UIColor *nibColor;
-    BubbleNibAlignment nibAlignment;
+@implementation BubbleNibView {
+  UIColor *nibColor;
+  BubbleNibAlignment nibAlignment;
 }
 
-- (void)setFrame:(__unused CGRect)frame fillColor:(UIColor *)color alignment:(BubbleNibAlignment)alignment {
-    nibColor = color;
-    nibAlignment = alignment;
+- (void)setFrame:(__unused CGRect)frame
+       fillColor:(UIColor *)color
+       alignment:(BubbleNibAlignment)alignment {
+  nibColor = color;
+  nibAlignment = alignment;
 }
 
--(void)drawRect:(__unused CGRect)rect {
-    // Create an oval shape to draw.
+- (void)drawRect:(__unused CGRect)rect {
+  // Create an oval shape to draw.
 
-    int width = (int)self.frame.size.width;
-    int height = (int)self.frame.size.height;
+  int width = (int)self.frame.size.width;
+  int height = (int)self.frame.size.height;
 
-    UIBezierPath *aPath = [UIBezierPath bezierPath];
+  UIBezierPath *aPath = [UIBezierPath bezierPath];
 
-    if (nibAlignment == BubbleNibAlignmentLeft) {
-        [aPath moveToPoint:CGPointMake(width, 0)];
-        [aPath addLineToPoint:CGPointMake(0, height / 2)];
-        [aPath addLineToPoint:CGPointMake(width, height)];
-    } else {
-        [aPath moveToPoint:CGPointMake(0, 0)];
-        [aPath addLineToPoint:CGPointMake(width, height / 2)];
-        [aPath addLineToPoint:CGPointMake(0, height)];
-    }
+  if (nibAlignment == BubbleNibAlignmentLeft) {
+    [aPath moveToPoint:CGPointMake(width, 0)];
+    [aPath addLineToPoint:CGPointMake(0, height / 2)];
+    [aPath addLineToPoint:CGPointMake(width, height)];
+  } else {
+    [aPath moveToPoint:CGPointMake(0, 0)];
+    [aPath addLineToPoint:CGPointMake(width, height / 2)];
+    [aPath addLineToPoint:CGPointMake(0, height)];
+  }
 
-    // Set the render colors.
-    [nibColor setFill];
+  // Set the render colors.
+  [nibColor setFill];
 
-    // Adjust the drawing options as needed.
-    aPath.lineWidth = 0;
-    aPath.lineJoinStyle = kCGLineJoinRound;
+  // Adjust the drawing options as needed.
+  aPath.lineWidth = 0;
+  aPath.lineJoinStyle = kCGLineJoinRound;
 
-    [aPath fill];
+  [aPath fill];
 }
 
 @end

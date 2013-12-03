@@ -14,23 +14,20 @@
 
 @implementation MessagesTests
 
-- (void)setUp
-{
-    [super setUp];
-    
-    // Set-up code here.
+- (void)setUp {
+  [super setUp];
+
+  // Set-up code here.
 }
 
-- (void)tearDown
-{
-    // Tear-down code here.
-    
-    [super tearDown];
+- (void)tearDown {
+  // Tear-down code here.
+
+  [super tearDown];
 }
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+- (void)testExample {
+  XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end

@@ -12,23 +12,24 @@
 @implementation ParticipantTableCell
 
 - (void)layoutSubviews {
-    [super layoutSubviews];
+  [super layoutSubviews];
 
-    CGRect imageFrame = self.imageView.frame;
-    imageFrame.origin.x = self.frame.origin.x + 10;
-    self.imageView.frame = imageFrame;
+  CGRect imageFrame = self.imageView.frame;
+  imageFrame.origin.x = self.frame.origin.x + 10;
+  self.imageView.frame = imageFrame;
 
-    CGRect textFrame = self.textLabel.frame;
-    textFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + 10;
-    self.textLabel.frame = textFrame;
+  CGRect textFrame = self.textLabel.frame;
+  textFrame.origin.x = imageFrame.origin.x + imageFrame.size.width + 10;
+  self.textLabel.frame = textFrame;
 
-    self.textLabel.textColor = [MessagesAesthetics blueColor];
+  self.textLabel.textColor = [MessagesAesthetics blueColor];
 
-    [MessagesAesthetics setFontForLabel:self.textLabel withStyle:UIFontTextStyleBody];
+  [MessagesAesthetics setFontForLabel:self.textLabel
+                            withStyle:UIFontTextStyleBody];
 
-    CGRect detailTextFrame = self.detailTextLabel.frame;
-    detailTextFrame.origin.x += 10;
-    self.detailTextLabel.frame = detailTextFrame;
+  CGRect detailTextFrame = self.detailTextLabel.frame;
+  detailTextFrame.origin.x += 10;
+  self.detailTextLabel.frame = detailTextFrame;
 }
 
 @end

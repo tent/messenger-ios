@@ -11,31 +11,35 @@
 
 @import UIKit;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder<UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property(strong, nonatomic) UIWindow *window;
 
-@property (readonly, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property(readonly, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property(readonly, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property(readonly, nonatomic)
+    NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (copy) void (^authCallbackBlock)(NSURL *);
+@property(copy) void (^authCallbackBlock)(NSURL *);
 
-@property (nonatomic) Cursors *cursors;
+@property(nonatomic) Cursors *cursors;
 
 - (NSManagedObjectContext *)mainManagedObjectContext;
 
-- (BOOL)saveContext:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error;
+- (BOOL)saveContext:(NSManagedObjectContext *)context
+              error:(NSError *__autoreleasing *)error;
 
 - (NSURL *)applicationDocumentsDirectory;
 
-- (void)syncRelationshipsAndMessagesWithCompletionBlock:(void (^)())completionBlock;
+- (void)syncRelationshipsAndMessagesWithCompletionBlock:
+        (void (^)())completionBlock;
 
 - (void)applicationAuthenticated;
 
 - (void)applicationDeauthenticated;
 
-- (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity error:(NSError *__autoreleasing *)error;
+- (TCMetaPost *)fetchMetaPostForEntity:(NSString *)entity
+                                 error:(NSError *__autoreleasing *)error;
 
 - (TCAppPost *)currentAppPost;
 

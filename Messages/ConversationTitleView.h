@@ -11,5 +11,6 @@
 
 @interface ConversationTitleView : UIView
 
-- (id)initWithFrame:(CGRect)frame withDataSource:(ConversationViewController *)source;
+- (id)initWithFrame:(CGRect)frame
+     withDataSource:(ConversationViewController *)source;
 @end

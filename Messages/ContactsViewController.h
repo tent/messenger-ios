@@ -8,11 +8,13 @@
 
 @import UIKit;
 
-@interface ContactsViewController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface ContactsViewController
+    : UITableViewController<NSFetchedResultsControllerDelegate,
+                            UISearchDisplayDelegate, UISearchBarDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *continueButton;
-@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic) UISearchDisplayController *mySearchDisplayController;
+@property(weak, nonatomic) IBOutlet UIBarButtonItem *continueButton;
+@property(nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property(nonatomic) UISearchDisplayController *mySearchDisplayController;
 
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)setupFetchedResultsController;

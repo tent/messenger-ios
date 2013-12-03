@@ -10,20 +10,23 @@
 #import "ConversationViewTableCell.h"
 #import "Conversation.h"
 
-@interface ConversationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+@interface ConversationViewController
+    : UIViewController<UITableViewDataSource, UITableViewDelegate,
+                       NSFetchedResultsControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextField *messageTextField;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (nonatomic) Conversation *conversation;
+@property(weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeight;
+@property(weak, nonatomic) IBOutlet UITableView *tableView;
+@property(weak, nonatomic) IBOutlet UITextField *messageTextField;
+@property(weak, nonatomic) IBOutlet UIButton *sendButton;
+@property(nonatomic) Conversation *conversation;
 
 - (void)participantsButtonPressed:(id)sender;
 - (void)sendButtonPressed:(id)sender;
 - (NSManagedObjectContext *)managedObjectContext;
 - (NSFetchedResultsController *)fetchedResultsController;
 - (void)performFetch;
-- (void)configureCell:(ConversationViewTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCell:(ConversationViewTableCell *)cell
+          atIndexPath:(NSIndexPath *)indexPath;
 - (void)scrollToBottom;
 - (void)handleTableTap:(id)sender;
 @end

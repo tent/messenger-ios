@@ -11,15 +11,15 @@
 #import "Message.h"
 
 @interface ConversationViewTableCell : UITableViewCell
-@property (nonatomic) NSString *name;
-@property (nonatomic) NSString *messageBody;
-@property (nonatomic) ConversationMessageState messageState;
-@property (nonatomic) ConversationMessageAlignment messageAlignment;
+@property(nonatomic) NSString *name;
+@property(nonatomic) NSString *messageBody;
+@property(nonatomic) ConversationMessageState messageState;
+@property(nonatomic) ConversationMessageAlignment messageAlignment;
 
-- (NSString*)getStringForMessageState;
-- (UIImage*)getIconForMessageState;
+- (NSString *)getStringForMessageState;
+- (UIImage *)getIconForMessageState;
 - (CGRect)getBubbleFrameForSide;
-- (UIColor*) getBubbleBackgroundColor;
+- (UIColor *)getBubbleBackgroundColor;
 - (CGRect)getBubbleNibFrameForFrame:(CGRect)frame;
 
 - (void)setupViews;
