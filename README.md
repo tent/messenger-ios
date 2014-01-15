@@ -29,6 +29,8 @@ Media will be addressed in the future.
 
 ### Conversation Post
 
+`https://tent.io/types/conversation/v0#`
+
 To create a converation, an entity creates a `conversation` post which _mentions_ all intended participants.
 
 The participants of a conversation are the entity who created the `conversation` post plus all those _mentioned_ in the `conversation` post.
@@ -40,6 +42,8 @@ The participants of a conversation are the entity who created the `conversation`
 (post contains no fields)
 
 ### Message Post
+
+`https://tent.io/types/message/v0#`
 
 Each message post must _mention_ and _ref_ both the `conversation` post and _mention_ each participant in the conversation.
 
