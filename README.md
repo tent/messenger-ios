@@ -3,8 +3,6 @@ messenger-ios
 
 This is the work in progress Tent-powered messenger app from Cupcake.
 
-We aren't sure what approach we'll take to licensing yet, so this code is currently all copyrighted with rights reserved, we're making it available for informational purposes only at present.
-
 One of the great things about Tent is that apps that do the same thing can be compatible and even swappable. The messenger space is an opportunity for the Tent ecosystem to demonstrate what's possible. The messenger market as a whole is extremely fragmented, Tent could be what unifies it. To that end, we **strongly** encourage everyone developing Tent powered messenger apps to standardize on a single post scheme.
 
 ## Roadmap
