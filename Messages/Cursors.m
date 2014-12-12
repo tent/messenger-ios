@@ -46,7 +46,7 @@
           errorDescription:&error];
 
   if (error) {
-    NSLog(@"Error reading plist: %@, format: %d", error, format);
+    NSLog(@"Error reading plist: %@, format: %lu", error, format);
   }
 
   // Relationship Cursor

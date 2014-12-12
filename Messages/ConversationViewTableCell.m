@@ -146,7 +146,7 @@
   UIImage *statusIcon = [self getIconForMessageState];
   UIImageView *statusIconView = [[UIImageView alloc] initWithImage:statusIcon];
   int iconSize = (int)textView.frame.size.height - 6;
-  float iconOffsetY = (textView.frame.size.height - iconSize) / 2;
+  float iconOffsetY = ([[NSNumber numberWithDouble:textView.frame.size.height] integerValue] - iconSize) / 2;
   statusIconView.frame = CGRectMake(0, iconOffsetY, iconSize, iconSize);
 
   // text frame clears icon

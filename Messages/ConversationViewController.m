@@ -253,8 +253,8 @@
           numberOfMatchesInString:messageText
                           options:NSMatchingAnchored
                             range:NSRangeFromString([NSString
-                                      stringWithFormat:@"0,%d",
-                                                       messageText.length])] >
+                                      stringWithFormat:@"0,%lu",
+                                                       (unsigned long)messageText.length])] >
       0) {
 
     return;
